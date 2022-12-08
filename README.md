@@ -93,7 +93,67 @@
 
 ### Person \<\<abstract>>
 
+|            | Type   | Desc |
+| ---------- | ------ | ---- |
+| id         | int    |      |
+| firstName  | String |      |
+| lastName   | String |      |
+| middleName | String |      |
+| email      | String |      |
+| contact    | String |      |
+| address    | String |      |
 
+### Manager <- Person
+
+|           | Type            | Desc |
+| --------- | --------------- | ---- |
+| stocks    | List<Stock\>    |      |
+| customers | List\<Customer> |      |
+
+### Customer <- Person
+
+|                               | Type           | Desc |
+| ----------------------------- | -------------- | ---- |
+| hasCollateral                 | Boolean        |      |
+| accounts                      | List\<Account> |      |
+| createSavingAccount(String)   | Boolean        |      |
+| createCheckingAccount(String) | Boolean        |      |
+| getTotalDebt()                | Money          |      |
+| createSecurityAccount(String) | Boolean        |      |
+
+### Transact \<\<interface>>
+
+|                                                         | Type               | Desc |
+| ------------------------------------------------------- | ------------------ | ---- |
+| makeTransaction(TransactionType, object, object, Money) | Boolean            |      |
+| getTransaction(int)                                     | Transaction        |      |
+| getTransactions()                                       | List\<Transaction> |      |
+
+### Transaction \<\<abstract>>
+
+|                    | Type               | Desc |
+| ------------------ | ------------------ | ---- |
+| id                 | int                |      |
+| date               | Date               |      |
+| from               | Account            |      |
+| to                 | Account            |      |
+| amount             | Money              |      |
+| transactionType    | TransactionType    |      |
+| transactionStatus  | TransacttionStatus |      |
+| printTransaction() | Void               |      |
+
+### TransactionType
+
+- REGULAR_TRANSACTION
+- BILL_PAY
+- SERVICE_FEE
+- ...
+
+### TransactionStatus
+
+- SUCCESS
+- FAILED
+- PENDING
 
 ## Database
 
