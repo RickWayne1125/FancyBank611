@@ -11,16 +11,16 @@
 ### Currency
 
 |              | Type   | Desc                                     |
-| ------------ | ------ | ---------------------------------------- |
+|--------------| ------ | ---------------------------------------- |
 | currencyName | String |                                          |
 | symbol       | String |                                          |
-| rateToUSD    | Double | The currency rate comparing to US dollar |
+| exchangeRate | Double | The currency rate comparing to US dollar |
 
 ### Money
 
 |                   | Type     | Desc                                     |
-| ----------------- | -------- | ---------------------------------------- |
-| unit              | int      |                                          |
+|-------------------|----------| ---------------------------------------- |
+| amount            | double   |                                          |
 | currency          | Currency |                                          |
 | convert(Currency) | Money    | Convert the currency into a new currency |
 | setUnit(int)      | int      |                                          |
@@ -28,26 +28,26 @@
 
 ### Bank
 
-|        | Type    | Desc |
-| ------ | ------- | ---- |
-| Name   | String  |      |
-| ID     | Integer |      |
-| isOpen | Boolean |      |
-| Branch | String  |      |
+|          | Type    | Desc |
+|----------| ------- | ---- |
+| bankName | String  |      |
+| bankId   | Integer |      |
+| isOpen   | Boolean |      |
+| Branch   | String  |      |
 
 ### Account <\<abstract>>
 
-|                          | Type    | Desc                                                         |
-| ------------------------ | ------- | ------------------------------------------------------------ |
-| accountNumber            | Integer |                                                              |
-| rountingNumber           | String  |                                                              |
-| swiftCode                | String  |                                                              |
-| currentBalance           | Money   |                                                              |
-| getBalance()             | Money   |                                                              |
-| updateBalance()          | Boolean | Return the status of operation                               |
-| close()                  | Boolean |                                                              |
-| open(String)             | Boolean |                                                              |
-| transact(Money, Account) | Boolean | Make a transaction from the current account to the target account |
+|                          | Type         | Desc                                                         |
+| ------------------------ |--------------| ------------------------------------------------------------ |
+| accountNumber            | Integer      |                                                              |
+| rountingNumber           | String       |                                                              |
+| swiftCode                | String       |                                                              |
+| currentBalance           | List\<Money> |                                                              |
+| getBalance()             | List\<Money> |                                                              |
+| updateBalance()          | Boolean      | Return the status of operation                               |
+| close()                  | Boolean      |                                                              |
+| open(String)             | Boolean      |                                                              |
+| transact(Money, Account) | Boolean      | Make a transaction from the current account to the target account |
 
 ### Saving <- Account
 
@@ -86,9 +86,9 @@
 ### Stock
 
 |              | Type   | Desc                                 |
-| ------------ | ------ | ------------------------------------ |
-| id           | int    |                                      |
-| name         | String |                                      |
+|--------------| ------ | ------------------------------------ |
+| stockId      | int    |                                      |
+| stockName    | String |                                      |
 | currentPrice | Money  | Current price of this stock per unit |
 
 ### Person \<\<abstract>>
