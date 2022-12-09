@@ -157,23 +157,82 @@
 
 ## Database
 
+### User
+
+This table includes both customers and managers
+
+| Attribute   | Type   | Desc |
+| ----------- | ------ | ---- |
+| User_id     | Pk     |      |
+| First_name  | String |      |
+| Middle_name | String |      |
+| last_name   | String |      |
+| Password    |        |      |
+| email       | String |      |
+| contact     | String |      |
+| address     | String |      |
+| is_customer | Bool   |      |
+
+### Currency
+
+| Attribute     | Type       | Desc                               |
+| ------------- | ---------- | ---------------------------------- |
+| currency_name | pk, string |                                    |
+| symbol        | string     |                                    |
+| usd_rate      | double     | the currency rate comparing to USD |
+
+### Bank(ATM)
+
+| Attribute | Type    | Desc |
+| --------- | ------- | ---- |
+| bank_id   | pk, int |      |
+| bank_name | string  |      |
+| branch    | string  |      |
+| is_open   | bool    |      |
+
+### Account
+
+The balance of the account can be get from the Money table, as one account can hold money of different currency 
+
+| Attribute     | Type    | Desc                          |
+| ------------- | ------- | ----------------------------- |
+| account_no    | pk, int | account number                |
+| user_id       | fk, int |                               |
+| routing_no    | string  | routing number                |
+| swift_code    | string  |                               |
+| account_type  | string  | Saving/Checking/Security/Loan |
+| Interest_rate | Double  |                               |
+
+### Money
+
+| Attribute  | Type   | Desc |
+| ---------- | ------ | ---- |
+| account_no | pk fk  |      |
+| currency   | pk fk  |      |
+| Amount     | double |      |
+
+### Loan
+
+| Attribute  | Type   | Desc                               |
+| ---------- | ------ | ---------------------------------- |
+| account_no | pk, fk | One loan account bind with one row |
+| start_date | date   |                                    |
+| End_date   | date   |                                    |
+
 ### Stock
 
-| Attribute     | Type    | Desc                |
-| ------------- | ------- | ------------------- |
-| stock_id      | pk, int |                     |
-| stock_name    | string  |                     |
-| current_price | Int     | Price of stock unit |
+| Attribute     | Type    | Desc                     |
+| ------------- | ------- | ------------------------ |
+| stock_id      | pk, int |                          |
+| stock_name    | string  |                          |
+| current_price | Int     | Price of stock unit(USD) |
 
 ### BoughtStock
 
-| Attribute    | Type | Desc |
-| ------------ | ---- | ---- |
-| Stock_id     |      |      |
-| Customer_id  |      |      |
-| Stock_unit   |      |      |
-| Bought_price |      |      |
+| Attribute  | Type   | Desc |
+| ---------- | ------ | ---- |
+| Stock_id   | pk, fk |      |
+| account_no | pk, fk |      |
+| Stock_unit | Int    |      |
 
-### 
-
-## User Panel Prototype
+##  Panel Prototype
