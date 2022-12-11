@@ -94,8 +94,8 @@
 ### Person \<\<abstract>>
 
 |            | Type   | Desc |
-| ---------- | ------ | ---- |
-| id         | int    |      |
+|------------|--------| ---- |
+| username   | String |      |
 | firstName  | String |      |
 | lastName   | String |      |
 | middleName | String |      |
@@ -162,8 +162,8 @@
 This table includes both customers and managers
 
 | Attribute   | Type   | Desc |
-| ----------- | ------ | ---- |
-| User_id     | Pk     |      |
+|-------------| ------ | ---- |
+| Username    | Pk     |      |
 | First_name  | String |      |
 | Middle_name | String |      |
 | last_name   | String |      |

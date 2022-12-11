@@ -1,69 +1,89 @@
 package Account;
 
 import Money.Money;
+import Transact.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Account {
     private int accountNumber;
     private String routingNumber;
     private String swiftCode;
-    private Map<String,Money> currentBalance;
-    private boolean frozen = false; // indicate that if the account is frozen or not.
+    private AccountType type;
+    private List<Money> currentBalance;
+    private List<Transaction> transactionHistory;
+    private double interestRate;
 
-    public Account(int accountNumber,String routingNumber, String swiftCode){
-        this.accountNumber =accountNumber;
-        this.routingNumber =routingNumber;
+    public Account(int accountNumber, String routingNumber, String swiftCode) {
+        this.accountNumber = accountNumber;
+        this.routingNumber = routingNumber;
         this.swiftCode = swiftCode;
+        this.currentBalance = new ArrayList<>();
+        this.transactionHistory = new ArrayList<>();
     }
 
-    public boolean open(){
-        this.frozen=false;
-        return frozen;
+    public void setType(AccountType type) {
+        this.type = type;
     }
 
-    public boolean close(){
-        this.frozen=true;
-        return frozen;
-    }
-
-    //todo
-    public boolean updateBalance(Money money, int value){
-        return false;
-    }
-
-    //todo
-    public boolean transact(Money money, Account account){
-        return false;
-    }
-
-    public int getAccountNumber() {
-        return accountNumber;
+    public AccountType getType() {
+        return type;
     }
 
     public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
 
-    public String getRoutingNumber() {
-        return routingNumber;
+    public int getAccountNumber() {
+        return accountNumber;
     }
 
     public void setRoutingNumber(String routingNumber) {
         this.routingNumber = routingNumber;
     }
 
-    public String getSwiftCode() {
-        return swiftCode;
+    public String getRoutingNumber() {
+        return routingNumber;
     }
 
     public void setSwiftCode(String swiftCode) {
         this.swiftCode = swiftCode;
     }
 
-    public Map<String, Money> getCurrentBalance() {
+    public String getSwiftCode() {
+        return swiftCode;
+    }
+
+    public void setCurrentBalance(List<Money> currentBalance) {
+        this.currentBalance = currentBalance;
+    }
+
+    public List<Money> getCurrentBalance() {
         return currentBalance;
     }
 
+    public void setTransactionHistory(List<Transaction> transactionHistory) {
+        this.transactionHistory = transactionHistory;
+    }
+
+    public List<Transaction> getTransactionHistory() {
+        return transactionHistory;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        this.transactionHistory.add(transaction);
+    }
+
+    public void removeTransaction(Transaction transaction) {
+        this.transactionHistory.remove(transaction);
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
 }

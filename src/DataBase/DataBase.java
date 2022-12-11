@@ -1,5 +1,8 @@
 package DataBase;
 
+import Utils.IO;
+import Utils.MessageType;
+
 import java.sql.*;
 
 public class DataBase {
@@ -15,7 +18,7 @@ public class DataBase {
     private void createTables() {
         // Create User table
         String sql = "CREATE TABLE IF NOT EXISTS User (\n"
-                + "    user_id integer PRIMARY KEY autoincrement,\n"
+                + "    user_id text PRIMARY KEY,\n"
                 + "    first_name text NOT NULL,\n"
                 + "    middle_name text,\n"
                 + "    last_name text NOT NULL,\n"
@@ -23,7 +26,8 @@ public class DataBase {
                 + "    contact text,\n"
                 + "    password text NOT NULL,\n"
                 + "    address text,\n"
-                + "    is_customer integer\n"   // 0 for false, 1 for true
+                + "    is_customer integer,\n"   // 0 for false, 1 for true
+                + "    last_login text\n"   // This is used to store the last login time
                 + ");";
         this.execute(sql);
         IO.displayMessage("User table created", MessageType.INFO);
@@ -38,6 +42,7 @@ public class DataBase {
         // Create Account table
         sql = "CREATE TABLE IF NOT EXISTS Account (\n"
                 + "    account_no integer PRIMARY KEY autoincrement,\n"
+                + "    account_type text NOT NULL,\n"
                 + "    user_id integer NOT NULL,\n"
                 + "    routing_no integer NOT NULL,\n"
                 + "    swift_code text,\n"
@@ -101,6 +106,13 @@ public class DataBase {
                 + ");";
         this.execute(sql);
         IO.displayMessage("BoughtStock table created", MessageType.INFO);
+        // Create SecurityAccount table
+        sql = "CREATE TABLE IF NOT EXISTS SecurityAccount (\n"
+                + "    account_no integer PRIMARY KEY,\n"
+                + "    realized real,\n"
+                + "    total_paid real,\n"
+                + "    FOREIGN KEY (account_no) REFERENCES Account(account_no)\n"
+                + ");";
         // Create Bank table
         sql = "CREATE TABLE IF NOT EXISTS Bank (\n"
                 + "    bank_id integer PRIMARY KEY autoincrement,\n"

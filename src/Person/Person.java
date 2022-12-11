@@ -1,8 +1,10 @@
 package Person;
 
+import java.util.Date;
+
 // Abstract class Person
 public abstract class Person {
-    private int userId;
+    private String username;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -10,8 +12,11 @@ public abstract class Person {
     private String password;
     private String contact;
     private String address;
+    private Date lastLogin;
 
-    public Person(String firstName, String middleName, String lastName, String email, String password, String contact, String address) {
+
+    public Person(String username, String firstName, String middleName, String lastName, String email, String password, String contact, String address) {
+        this.username = username;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -21,23 +26,12 @@ public abstract class Person {
         this.address = address;
     }
 
-    public Person(int userId, String firstName, String middleName, String lastName, String email, String password, String contact, String address) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.contact = contact;
-        this.address = address;
+    public String getUsername() {
+        return username;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -94,5 +88,13 @@ public abstract class Person {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
     }
 }

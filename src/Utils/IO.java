@@ -1,10 +1,4 @@
-package DataBase;
-
-enum MessageType{
-    INFO,
-    WARNING,
-    ERROR
-}
+package Utils;
 
 public class IO {
     public static void displayMessage(String message, MessageType type){

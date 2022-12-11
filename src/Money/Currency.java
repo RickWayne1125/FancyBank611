@@ -4,9 +4,10 @@ public class Currency {
     private String currencyName;
     private String symbol;
     private double exchangeRate;    // Exchange rate to USD
-    public Currency(String currencyName,String symbol,double exchangeRate){
-        this.currencyName =currencyName;
-        this.symbol=symbol;
+
+    public Currency(String currencyName, String symbol, double exchangeRate) {
+        this.currencyName = currencyName;
+        this.symbol = symbol;
         this.exchangeRate = exchangeRate;
     }
 
@@ -24,5 +25,17 @@ public class Currency {
 
     public void setCurrencyName(String currencyName) {
         this.currencyName = currencyName;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public String toString() {
+        return this.currencyName + " (" + this.symbol + ")";
     }
 }
