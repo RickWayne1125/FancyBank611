@@ -13,21 +13,24 @@ import Transact.TransactionType;
 import Utils.Config;
 import Utils.IO;
 
-import java.util.Scanner;
-
 public class AccountService {
     private static AccountDAO accountDAO = new AccountDAO();
 
-    public static void openAccount(Customer customer, Account account) {
+    public static boolean openAccount(Customer customer, Account account) {
+        // Check if the account id is unique
+        if (accountDAO.readByAccountNumber(account.getAccountNumber()) != null) {
+            return false;
+        }
         account.setUsername(customer.getUsername());
         accountDAO.create(account);
+        return true;
     }
 
     public static void closeAccount(Account account) {
         accountDAO.delete(account);
     }
 
-    public static void deposit(Account account, Money money) {
+    public static boolean deposit(Account account, Money money) {
         // start transaction
         Transaction transaction = TransactionService.create(account, account, money, TransactionType.DEPOSIT);
         // check money list in account
@@ -36,7 +39,7 @@ public class AccountService {
                 MoneyService.update(m, money.getAmount());
                 // update transaction status
                 TransactionService.setTransactionStatus(transaction, TransactionStatus.SUCCESS);
-                return;
+                return true;
             }
         }
         // if not found, add new money to account
@@ -46,6 +49,7 @@ public class AccountService {
         accountDAO.update(account);
         // update transaction status
         TransactionService.setTransactionStatus(transaction, TransactionStatus.SUCCESS);
+        return true;
     }
 
     public static boolean withdraw(Account account, Money money) {

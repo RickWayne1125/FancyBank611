@@ -1,4 +1,5 @@
 import Account.Account;
+import Account.AccountService;
 import Account.Loan.Loan;
 import Account.Security.SecurityAccount;
 import Money.Money;
@@ -9,6 +10,7 @@ import Person.Manager.Manager;
 import Stock.Stock;
 import Transact.Transaction;
 import Account.AccountType;
+import Transact.TransactionService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.Map;
 public class Controller {
     /* Services */
     private static CustomerService customerService = new CustomerService();
+    private static AccountService accountService = new AccountService();
+    private static TransactionService transactionService = new TransactionService();
 
     /* General Functions */
     // Get All Currency
@@ -62,55 +66,48 @@ public class Controller {
 
     // Customer Register
     public boolean registerCustomer(Customer customer) {
-        // TODO: implement this method
         // If the customer is successfully registered, return true, otherwise return false
-        return false;
+        return customerService.registerCustomer(customer);
     }
 
     // Get Account Details (This can be accessed by using the customer object)
 
     // Refresh Account
     public Account refreshAccount(Account account) {
-        // TODO: implement this method
         // This method will check the database and return the updated account object
-        return null;
+        return accountService.refreshAccount(account);
     }
 
     // Deposit
     public boolean deposit(Account account, Money money) {
-        // TODO: implement this method
         // If the deposit is successful, return true, otherwise return false
-        return false;
+        return accountService.deposit(account, money);
     }
 
     // Withdraw
     public boolean withdraw(Account account, Money money) {
-        // TODO: implement this method
         // If the withdraw is successful, return true, otherwise return false
-        return false;
+        return accountService.withdraw(account, money);
     }
 
     // Transfer
     public boolean transfer(Account fromAccount, Account toAccount, Money money) {
-        // TODO: implement this method
         // If the transfer is successful, return true, otherwise return false
-        return false;
+        return accountService.transfer(fromAccount, toAccount, money);
     }
 
     // Get Transaction History (This can be accessed by using the getTransactionHistory() in account object)
     // However, this method still needs to be implemented when the transaction history needs to be updated
     public List<Transaction> getTransactionHistory(Account account) {
-        // TODO: implement this method
         // This method will check the database and update the transaction history in the account object
-        return null;
+        return transactionService.getTransactionsByAccount(account);
     }
 
     // Open Account
-    public boolean openAccount(Customer customer, Account account, AccountType accountType) {
-        // TODO: implement this method
+    public boolean openAccount(Customer customer, Account account) {
         // If the account is successfully opened, return true, otherwise return false
-        // The account type need to be specified
-        return false;
+        // The account type need to be specified when creating the account object
+        return accountService.openAccount(customer, account);
     }
 
     // Get Bought Stock Details (This can be accessed by using the SecurityAccount object)
