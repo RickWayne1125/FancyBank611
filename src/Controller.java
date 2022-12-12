@@ -6,6 +6,7 @@ import Money.Currency;
 import Person.Customer.Customer;
 import Person.Customer.CustomerService;
 import Person.Manager.Manager;
+import Person.Manager.ManagerService;
 import Stock.Stock;
 import Transact.Transaction;
 import Account.AccountType;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class Controller {
     /* Services */
     private static CustomerService customerService = new CustomerService();
+    private static ManagerService managerService = new ManagerService();
 
     /* General Functions */
     // Get All Currency
