@@ -1,5 +1,6 @@
 package DataBase;
 
+import Utils.Config;
 import Utils.IO;
 import Utils.MessageType;
 
@@ -45,7 +46,7 @@ public class DataBase {
         IO.displayMessage("Currency table created", MessageType.INFO);
         // Create Account table
         sql = "CREATE TABLE IF NOT EXISTS Account (\n"
-                + "    account_no integer PRIMARY KEY autoincrement,\n"
+                + "    account_no integer PRIMARY KEY,\n"
                 + "    account_type text NOT NULL,\n"
                 + "    username text NOT NULL,\n"
                 + "    routing_no integer NOT NULL,\n"
@@ -57,7 +58,8 @@ public class DataBase {
         IO.displayMessage("Account table created", MessageType.INFO);
         // Create Transaction table
         sql = "CREATE TABLE IF NOT EXISTS TransactionTable (\n"
-                + "    transaction_id integer PRIMARY KEY autoincrement,\n"
+                + "    transaction_id text PRIMARY KEY,\n"
+                + "    transaction_status text NOT NULL,\n"
                 + "    from_account integer NOT NULL,\n"
                 + "    to_account integer NOT NULL,\n"
                 + "    transaction_type text NOT NULL,\n"
@@ -143,7 +145,7 @@ public class DataBase {
             for (int i = 0; i < values.length; i++) {
                 preparedStatement.setString(i + 1, values[i]);
             }
-            IO.displayMessage("Executing: " + preparedStatement.toString(), MessageType.INFO);
+//            IO.displayMessage("Executing: " + preparedStatement.toString(), MessageType.INFO);
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -157,7 +159,7 @@ public class DataBase {
             for (int i = 0; i < args.length; i++) {
                 statement.setString(i + 1, args[i]);
             }
-            IO.displayMessage("Executing: " + statement.toString(), MessageType.INFO);
+//            IO.displayMessage("Executing: " + statement.toString(), MessageType.INFO);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Map<String, String> row = new HashMap<>();
@@ -173,23 +175,11 @@ public class DataBase {
         return null;
     }
 
-    public void clearTable(String tableName) {
+    public static void clearTable(String tableName) {
         String sql = "DELETE FROM " + tableName;
         IO.displayMessage("Clearing table " + tableName, MessageType.WARNING);
         execute(sql);
         IO.displayMessage("Table " + tableName + " cleared", MessageType.INFO);
-    }
-
-    public void clearAllTables() {
-        clearTable("User");
-        clearTable("Currency");
-        clearTable("Account");
-        clearTable("TransactionTable");
-        clearTable("Money");
-        clearTable("Loan");
-        clearTable("Stock");
-        clearTable("BoughtStock");
-        clearTable("Bank");
     }
 
     public void clearDatabase() {
@@ -215,6 +205,18 @@ public class DataBase {
         IO.displayMessage("All tables dropped", MessageType.INFO);
     }
 
+    public static void clearTables() {
+        clearTable("User");
+        clearTable("Currency");
+        clearTable("Account");
+        clearTable("TransactionTable");
+        clearTable("Money");
+        clearTable("Loan");
+        clearTable("Stock");
+        clearTable("BoughtStock");
+        clearTable("Bank");
+    }
+
 //    private List<Map<String,String>> query(String sql) {
 //        try {
 //            return connection.createStatement().executeQuery(sql).getResultSet();
@@ -228,7 +230,7 @@ public class DataBase {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:fancybank.db";
+            String url = Config.DB_URL;
             // create a connection to the database
             conn = DriverManager.getConnection(url);
 

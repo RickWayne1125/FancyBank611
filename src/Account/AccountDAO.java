@@ -4,6 +4,8 @@ import Account.Loan.Loan;
 import Account.Loan.LoanDAO;
 import Account.Security.SecurityAccount;
 import DataBase.DataBase;
+import Money.Money;
+import Money.MoneyDAO;
 import Utils.DAO;
 
 import java.util.Date;
@@ -20,6 +22,18 @@ public class AccountDAO implements DAO<Account> {
         dataBase.execute(sql, new String[]{String.valueOf(account.getAccountNumber()), String.valueOf(account.getType()),
                 String.valueOf(account.getUsername()), String.valueOf(account.getRoutingNumber()), String.valueOf(account.getSwiftCode()),
                 String.valueOf(account.getInterestRate())});
+        switch (account.getType()) {
+            case LOAN:
+                Loan loan = (Loan) account;
+                LoanDAO loanDAO = new LoanDAO();
+                loanDAO.create(loan);
+                break;
+            case SECURITY:
+                SecurityAccount securityAccount = (SecurityAccount) account;
+                AccountDAO accountDAO = new AccountDAO();
+                accountDAO.create(securityAccount);
+                break;
+        }
     }
 
     @Override
@@ -49,19 +63,25 @@ public class AccountDAO implements DAO<Account> {
         }
         Map<String, String> row = results.get(0);
         AccountType type = AccountType.valueOf(row.get("account_type"));
+        MoneyDAO moneyDAO = new MoneyDAO();
         switch (type) {
             case LOAN:
-                return new LoanDAO().readByAccountNumber(accountNumber);
+                Loan loan=new LoanDAO().readByAccountNumber(accountNumber);
+                loan.setInterestRate(Double.parseDouble(row.get("interest_rate")));
+                loan.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
             case SAVING:
                 Saving saving = new Saving(Integer.parseInt(row.get("account_no")), row.get("routing_no"), row.get("swift_code"));
                 saving.setInterestRate(Double.parseDouble(row.get("interest_rate")));
+                saving.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
                 return saving;
             case CHECKING:
                 Checking checking = new Checking(Integer.parseInt(row.get("account_no")), row.get("routing_no"), row.get("swift_code"));
                 checking.setInterestRate(Double.parseDouble(row.get("interest_rate")));
+                checking.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
                 return checking;
             case SECURITY:
                 SecurityAccount securityAccount = new SecurityAccount(Integer.parseInt(row.get("account_no")), row.get("routing_no"), row.get("swift_code"));
+                securityAccount.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
                 // TODO: check the BoughtStock table to set stock map
                 return securityAccount;
         }

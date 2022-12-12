@@ -95,4 +95,9 @@ public abstract class Account {
     public String getUsername() {
         return username;
     }
+
+    @Override
+    public String toString() {
+        return "AccountNo: " + accountNumber + ", AccountType: " + type + ", RoutingNo: " + routingNumber + ", SwiftCode: " + swiftCode;
+    }
 }
