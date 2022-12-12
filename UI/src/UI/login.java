@@ -9,6 +9,7 @@ public class login extends AbstractJPanel {
     private JButton submitButton;
     private JTextField usernameField;
     private JPasswordField passwordField;
+    private JButton signUpButton;
 
     public login() {
         submitButton.addActionListener(new ActionListener() {

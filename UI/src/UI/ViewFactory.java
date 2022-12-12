@@ -16,5 +16,6 @@ public class ViewFactory {
     public static AbstractJPanel getCheckingAccount(){
         return new Account("Checking");
     }
+    public static AbstractJPanel getCustomersListView() {return new Customers();}
 
 }

@@ -32,6 +32,12 @@ public class Menu extends AbstractJPanel {
                 root.getRoot().next(ViewFactory.getCheckingAccount());
             }
         });
+        profileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                root.getRoot().next(ViewFactory.getCustomersListView());
+            }
+        });
     }
 
     @Override
