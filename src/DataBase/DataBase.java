@@ -16,7 +16,7 @@ public class DataBase {
         // Establish connection to database
         connection = connect();
         // Create tables if they don't exist
-        createTables();
+//        createTables();
     }
 
     private void createTables() {
@@ -47,11 +47,11 @@ public class DataBase {
         sql = "CREATE TABLE IF NOT EXISTS Account (\n"
                 + "    account_no integer PRIMARY KEY autoincrement,\n"
                 + "    account_type text NOT NULL,\n"
-                + "    user_id integer NOT NULL,\n"
+                + "    username text NOT NULL,\n"
                 + "    routing_no integer NOT NULL,\n"
                 + "    swift_code text,\n"
                 + "    interest_rate real,\n"
-                + "    FOREIGN KEY (user_id) REFERENCES User(user_id)\n"
+                + "    FOREIGN KEY (username) REFERENCES User(username)\n"
                 + ");";
         execute(sql);
         IO.displayMessage("Account table created", MessageType.INFO);
@@ -143,6 +143,7 @@ public class DataBase {
             for (int i = 0; i < values.length; i++) {
                 preparedStatement.setString(i + 1, values[i]);
             }
+            IO.displayMessage("Executing: " + preparedStatement.toString(), MessageType.INFO);
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -156,6 +157,7 @@ public class DataBase {
             for (int i = 0; i < args.length; i++) {
                 statement.setString(i + 1, args[i]);
             }
+            IO.displayMessage("Executing: " + statement.toString(), MessageType.INFO);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Map<String, String> row = new HashMap<>();

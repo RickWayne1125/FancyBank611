@@ -3,6 +3,7 @@ package Money;
 import DataBase.DataBase;
 import Utils.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,23 @@ public class MoneyDAO implements DAO<Money> {
         Money money = new Money(Double.parseDouble(row.get("amount")), new CurrencyDAO().read(row.get("currency")));
         money.setAccountNumber(Integer.parseInt(row.get("account_no")));
         return money;
+    }
+
+    public List<Money> readByAccount(Integer accountNumber) {
+        String sql = "SELECT * FROM Money WHERE account_no = ?";
+        List<Map<String, String>> results = dataBase.query(sql, new String[]{String.valueOf(accountNumber)});
+        // if result does not contain any row, return null
+        if (results.size() == 0) {
+            return null;
+        } else {
+            List<Money> moneys = new ArrayList<>();
+            for (Map<String, String> row : results) {
+                Money money = new Money(Double.parseDouble(row.get("amount")), new CurrencyDAO().read(row.get("currency")));
+                money.setAccountNumber(Integer.parseInt(row.get("account_no")));
+                moneys.add(money);
+            }
+            return moneys;
+        }
     }
 
     @Override

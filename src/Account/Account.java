@@ -14,6 +14,7 @@ public abstract class Account {
     private List<Money> currentBalance;
     private List<Transaction> transactionHistory;
     private double interestRate;
+    private String username;
 
     public Account(int accountNumber, String routingNumber, String swiftCode) {
         this.accountNumber = accountNumber;
@@ -85,5 +86,13 @@ public abstract class Account {
 
     public double getInterestRate() {
         return interestRate;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
