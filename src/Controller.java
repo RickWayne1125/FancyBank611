@@ -55,7 +55,7 @@ public class Controller {
 
     /* Customer Functions */
     // Customer Login
-    public Customer loginCustomer(String username, String password) {
+    public static Customer loginCustomer(String username, String password) {
         // If the username and password are correct, return the customer object, otherwise return null
         return customerService.loginCustomer(username, password);
     }
