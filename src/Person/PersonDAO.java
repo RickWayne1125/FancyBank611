@@ -9,11 +9,6 @@ public class PersonDAO implements DAO<Person> {
     }
 
     @Override
-    public Person read(String id) {
-        return null;
-    }
-
-    @Override
     public void delete(Person person) {
 
     }

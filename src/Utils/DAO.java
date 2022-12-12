@@ -1,11 +1,11 @@
 package Utils;
 
 public interface DAO<T> {
-    public void create(T t);
+    void create(T t);
 
-    public T read(String id);
+//    T read(String id);
 
-    public void update(T t);
+    void update(T t);
 
-    public void delete(T t);
+    void delete(T t);
 }

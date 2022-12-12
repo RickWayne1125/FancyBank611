@@ -3,10 +3,12 @@ package Money;
 public class Money {
     private double amount;
     private Currency currency;
+    private Integer accountNumber;
 
     public Money(double amount, Currency currency) {
         this.amount = amount;
         this.currency = currency;
+        this.accountNumber = null;
     }
 
     public double getAmount() {
@@ -31,5 +33,13 @@ public class Money {
 
     public String toString() {
         return this.currency.getSymbol() + " " + this.amount;
+    }
+
+    public Integer getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(Integer accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }
