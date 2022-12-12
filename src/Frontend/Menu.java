@@ -1,4 +1,4 @@
-package UI;
+package Frontend;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,25 +17,25 @@ public class Menu extends AbstractJPanel {
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                root.getRoot().back();
+                Frontend.getInstance().back();
             }
         });
         savingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                root.getRoot().next(ViewFactory.getSavingsAccount());
+                Frontend.getInstance().next(ViewFactory.getSavingsAccount());
             }
         });
         checkingButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                root.getRoot().next(ViewFactory.getCheckingAccount());
+                Frontend.getInstance().next(ViewFactory.getCheckingAccount());
             }
         });
         profileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                root.getRoot().next(ViewFactory.getCustomersListView());
+                Frontend.getInstance().next(ViewFactory.getCustomersListView());
             }
         });
     }

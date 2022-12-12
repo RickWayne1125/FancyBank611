@@ -1,4 +1,4 @@
-package UI;
+package Frontend;
 
 public class ViewFactory {
     public static AbstractJPanel getLoginPage(){

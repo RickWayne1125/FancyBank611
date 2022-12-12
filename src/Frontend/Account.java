@@ -1,4 +1,4 @@
-package UI;
+package Frontend;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,7 +23,7 @@ public class Account extends AbstractJPanel{
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                root.getRoot().back();
+                Frontend.getInstance().back();
             }
         });
 

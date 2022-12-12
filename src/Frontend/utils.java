@@ -1,4 +1,4 @@
-package UI;
+package Frontend;
 
 import javax.swing.table.DefaultTableModel;
 

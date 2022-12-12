@@ -1,4 +1,4 @@
-package UI;
+package Frontend;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +19,7 @@ public class login extends AbstractJPanel {
                 String password = passwordField.getText();
                 Boolean success = api.customerLogin(username, password);
                 if (success) {
-                    root.getRoot().next(ViewFactory.getMenuPage());
+                    Frontend.getInstance().next(ViewFactory.getMenuPage());
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid username or password");
                 }

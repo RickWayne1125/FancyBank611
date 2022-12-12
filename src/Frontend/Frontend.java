@@ -1,17 +1,18 @@
-package UI;
+package Frontend;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class root extends JFrame {
-    private static root r;
+public class Frontend extends JFrame {
+    // Singleton class
+    private static Frontend r;
     private List<AbstractJPanel> panels;
     private final int WIDTH = 500;
     private final int HEIGHT = 500;
 
-    private root(AbstractJPanel firstPanel){
+    private Frontend(AbstractJPanel firstPanel){
         panels = new ArrayList<>();
         panels.add(firstPanel);
 
@@ -19,14 +20,14 @@ public class root extends JFrame {
         this.refresh();
     }
 
-    public static root getRoot(AbstractJPanel firstPanel){
+    public static Frontend getInstance(AbstractJPanel firstPanel){
         if (r == null){
-            r = new root(firstPanel);
+            r = new Frontend(firstPanel);
         };
         return r;
     }
 
-    public static root getRoot(){
+    public static Frontend getInstance(){
         return r;
     }
 
