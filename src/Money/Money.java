@@ -42,4 +42,9 @@ public class Money {
     public void setAccountNumber(Integer accountNumber) {
         this.accountNumber = accountNumber;
     }
+
+    @Override
+    public Money clone() throws CloneNotSupportedException {
+        return new Money(this.amount, this.currency);
+    }
 }

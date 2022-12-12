@@ -5,7 +5,7 @@ public class MoneyService {
     private static CurrencyDAO currencyDAO = new CurrencyDAO();
 
     public static boolean update(Money money, Double amount) {
-        if (amount < 0) {
+        if (money.getAmount() + amount < 0) {
             return false;
         }
         money.setAmount(money.getAmount() + amount);
@@ -21,5 +21,9 @@ public class MoneyService {
         money.convert(currency);
         moneyDAO.update(money);
         return true;
+    }
+
+    public static void create(Money money) {
+        moneyDAO.create(money);
     }
 }

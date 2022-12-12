@@ -8,7 +8,7 @@ import java.util.Date;
 public class Loan extends Account {
     private Date dueDate;
 
-    public Loan(int accountNumber, String routingNumber, String swiftCode, double interestRate, Date dueDate) {
+    public Loan(Integer accountNumber, String routingNumber, String swiftCode, double interestRate, Date dueDate) {
         super(accountNumber, routingNumber, swiftCode);
         super.setType(AccountType.LOAN);
         this.setInterestRate(interestRate);

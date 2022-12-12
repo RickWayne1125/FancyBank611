@@ -6,7 +6,6 @@ import Money.Currency;
 import Person.Customer.Customer;
 import Person.Customer.CustomerService;
 import Person.Manager.Manager;
-import Person.PersonService;
 import Stock.Stock;
 import Transact.Transaction;
 import Account.AccountType;
@@ -17,7 +16,6 @@ import java.util.Map;
 
 public class Controller {
     /* Services */
-    private static PersonService personService = new PersonService();
     private static CustomerService customerService = new CustomerService();
 
     /* General Functions */
@@ -58,9 +56,8 @@ public class Controller {
     /* Customer Functions */
     // Customer Login
     public Customer loginCustomer(String username, String password) {
-        // TODO: implement this method
         // If the username and password are correct, return the customer object, otherwise return null
-        return null;
+        return customerService.loginCustomer(username, password);
     }
 
     // Customer Register
