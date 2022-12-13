@@ -13,6 +13,8 @@ public class Stock {
         this.currentPrice =currentPrice;
     }
 
+
+
     public int getStockId() {
         return stockId;
     }
