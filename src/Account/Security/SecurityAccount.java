@@ -17,6 +17,13 @@ public class SecurityAccount extends Account {
     public SecurityAccount(int accountNumber,String routingNumber, String swiftCode){
         super(accountNumber,routingNumber,swiftCode);
         super.setType(AccountType.SECURITY);
+        setInterestRate(0.0);
+    }
+
+    public SecurityAccount(String routingNumber, String swiftCode){
+        super(routingNumber,swiftCode);
+        super.setType(AccountType.SECURITY);
+        setInterestRate(0.0);
     }
 
 
