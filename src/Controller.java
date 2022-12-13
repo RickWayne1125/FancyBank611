@@ -9,11 +9,13 @@ import Money.Currency;
 import Person.Customer.Customer;
 import Person.Customer.CustomerService;
 import Person.Manager.Manager;
+import Person.Manager.ManagerService;
 import Stock.Stock;
 import Transact.Transaction;
 import Account.AccountType;
 import Transact.TransactionService;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,7 @@ import java.util.Map;
 public class Controller {
     /* Services */
     private static CustomerService customerService = new CustomerService();
+    private static ManagerService managerService = new ManagerService();
     private static AccountService accountService = new AccountService();
     private static TransactionService transactionService = new TransactionService();
     private static LoanService loanService = new LoanService();
@@ -157,16 +160,28 @@ public class Controller {
     /* Manager Functions */
     // ManagerLogin
     public Manager loginManager(String username, String password) {
-        // TODO: implement this method
         // If the username and password are correct, return the manager object, otherwise return null
-        return null;
+        return managerService.loginManager(username,password);
+    }
+
+    // manager sign up
+    public boolean registerManager(Manager manager){
+        return managerService.registerManager(manager);
     }
 
     // Get Customer By Username
     public Customer getCustomerByUsername(String username) {
-        // TODO: implement this method
         // Return the customer object
-        return null;
+        return managerService.viewCustomerByName(username);
+    }
+
+    public List<Customer> getAllCustomer(){
+        return managerService.viewAllCustomer();
+    }
+
+    //day must be in the format of mm-dd-yyyy
+    public List<Transaction> getTransactionByDate(String day) throws ParseException {
+        return managerService.readDailyReport(day);
     }
 
     // Add Stock
