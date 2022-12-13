@@ -9,11 +9,14 @@ import Money.Currency;
 import Person.Customer.Customer;
 import Person.Customer.CustomerService;
 import Person.Manager.Manager;
+import Person.Manager.ManagerService;
 import Stock.Stock;
+import Stock.StockService;
 import Transact.Transaction;
 import Account.AccountType;
 import Transact.TransactionService;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +24,13 @@ import java.util.Map;
 public class Controller {
     /* Services */
     private static CustomerService customerService = new CustomerService();
+    private static ManagerService managerService = new ManagerService();
     private static AccountService accountService = new AccountService();
     private static TransactionService transactionService = new TransactionService();
     private static LoanService loanService = new LoanService();
     private static MoneyService moneyService = new MoneyService();
+
+    private static StockService stockService = new StockService();
 
     /* General Functions */
     // Get All Currency
@@ -157,37 +163,57 @@ public class Controller {
     /* Manager Functions */
     // ManagerLogin
     public Manager loginManager(String username, String password) {
-        // TODO: implement this method
         // If the username and password are correct, return the manager object, otherwise return null
-        return null;
+        return managerService.loginManager(username,password);
+    }
+
+    // manager sign up
+    public boolean registerManager(Manager manager){
+        return managerService.registerManager(manager);
     }
 
     // Get Customer By Username
     public Customer getCustomerByUsername(String username) {
-        // TODO: implement this method
         // Return the customer object
-        return null;
+        return managerService.viewCustomerByName(username);
+    }
+
+    public List<Customer> getAllCustomer(){
+        return managerService.viewAllCustomer();
+    }
+
+    //day must be in the format of mm-dd-yyyy
+    public List<Transaction> getTransactionByDate(String day) throws ParseException {
+        return managerService.readDailyReport(day);
     }
 
     // Add Stock
-    public boolean addStock(Stock stock) {
-        // TODO: implement this method
-        // If the stock is successfully added, return true, otherwise return false
-        return false;
+//    public boolean addStock(Stock stock) {
+//        // If the stock is successfully added, return true, otherwise return false
+//        return false;
+//    }
+
+    public boolean addStock(String name, int price){
+        return StockService.addNewStock(name,price);
     }
 
     // Delete Stock
-    public boolean deleteStock(Stock stock) {
-        // TODO: implement this method
-        // If the stock is successfully deleted, return true, otherwise return false
-        return false;
+//    public boolean deleteStock(Stock stock) {
+//        // If the stock is successfully deleted, return true, otherwise return false
+//        return false;
+//    }
+
+    public boolean deleteStock(String name){
+        return StockService.deleteStock(name);
     }
 
     // Update Stock
-    public boolean updateStock(Stock stock) {
-        // TODO: implement this method
-        // If the stock is successfully updated, return true, otherwise return false
-        return false;
+//    public boolean updateStock(Stock stock) {
+//        // If the stock is successfully updated, return true, otherwise return false
+//        return false;
+//    }
+    public boolean updateStock(String name, int price){
+        return StockService.updateStock(name,price);
     }
 
     // Get Unapproved Loan List

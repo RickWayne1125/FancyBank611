@@ -7,6 +7,8 @@ import Money.Money;
 import Money.CurrencyDAO;
 import Utils.DAO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +52,60 @@ public class TransactionDAO implements DAO<Transaction> {
         String sql = "SELECT * FROM TransactionTable WHERE from_account = ? OR to_account = ?";
         List<Map<String, String>> results = dataBase.query(sql, new String[]{String.valueOf(account.getAccountNumber()),
                 String.valueOf(account.getAccountNumber())});
+        List<Transaction> transactions = new ArrayList<>();
+        if (results.size() == 0) {
+            return transactions;
+        }
+        for (Map<String, String> result : results) {
+            Account from = new AccountDAO().readByAccountNumber(Integer.parseInt(result.get("from_account")));
+            Account to = new AccountDAO().readByAccountNumber(Integer.parseInt(result.get("to_account")));
+            Money money = new Money(Double.parseDouble(result.get("amount")), new CurrencyDAO().read(result.get("currency")));
+            TransactionType transactionType = TransactionType.valueOf(result.get("transaction_type"));
+            Date date = new Date(result.get("date"));
+            Transaction transaction= new Transaction(date, from, to, money, transactionType);
+            transaction.setTransactionStatus(TransactionStatus.valueOf(result.get("transaction_status")));
+            transaction.setId(result.get("transaction_id"));
+            transactions.add(transaction);
+        }
+        return transactions;
+    }
+
+    public String convertFormat(String str) throws ParseException {
+        String input = str;
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+
+
+        Date date = inputFormat.parse(input);
+        String output = outputFormat.format(date);
+        return output;
+    }
+
+    public String convertFormatEnd(String str) throws ParseException {
+        String input = str;
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+
+
+        Date date = inputFormat.parse(input);
+        date.setHours(23);
+        date.setMinutes(59);
+        date.setSeconds(59);
+        String output = outputFormat.format(date);
+        return output;
+    }
+
+    public List<Transaction> readByDay(String day) throws ParseException {
+        String dayStart= "" ;
+        String dayEnd ="";
+        try{
+            dayStart = convertFormat(day);
+            dayEnd = convertFormatEnd(day);
+        }catch (ParseException e) {
+            System.out.println("Error parsing input date string: " + e.getMessage());
+        }
+        String sql = "SELECT * FROM TransactionTable WHERE date >= ? AND date <= ?";
+        List<Map<String, String>> results = dataBase.query(sql, new String[]{dayStart, dayEnd});
         List<Transaction> transactions = new ArrayList<>();
         if (results.size() == 0) {
             return transactions;

@@ -3,6 +3,7 @@ package Transact;
 import Account.Account;
 import Money.Money;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +25,12 @@ public class TransactionService {
         transactionDAO.update(transaction);
     }
 
-    public static void main(String[] args) {
+
+
+    public static void main(String[] args) throws ParseException {
         // Test
-        System.out.println(transactionDAO.readByTransactionId("1670885637221/987654321"));
+
+        //System.out.println(transactionDAO.readByTransactionId("1670900174744/123456789").getDate());
+        System.out.println(transactionDAO.convertFormatEnd("12-12-2022"));
     }
 }
