@@ -32,7 +32,7 @@ public class DataBase {
                 + "    password text NOT NULL,\n"
                 + "    address text,\n"
                 + "    is_customer integer,\n"   // 0 for false, 1 for true
-                + "    last_login text\n"   // This is used to store the last login time
+                + "    last_login text,\n"   // This is used to store the last login time
                 + "    has_collateral integer\n"   // 0 for false, 1 for true
                 + ");";
         execute(sql);
@@ -147,7 +147,7 @@ public class DataBase {
             for (int i = 0; i < values.length; i++) {
                 preparedStatement.setString(i + 1, values[i]);
             }
-//            IO.displayMessage("Executing: " + preparedStatement.toString(), MessageType.INFO);
+            IO.displayMessage("Executing: " + preparedStatement.toString(), MessageType.INFO);
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -161,7 +161,7 @@ public class DataBase {
             for (int i = 0; i < args.length; i++) {
                 statement.setString(i + 1, args[i]);
             }
-//            IO.displayMessage("Executing: " + statement.toString(), MessageType.INFO);
+            IO.displayMessage("Executing: " + statement.toString(), MessageType.INFO);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Map<String, String> row = new HashMap<>();

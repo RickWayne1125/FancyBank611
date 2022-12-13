@@ -23,10 +23,12 @@ public class AccountService {
         }
         account.setUsername(customer.getUsername());
         accountDAO.create(account);
+        customer.getAccounts().add(account);
         return true;
     }
 
-    public static void closeAccount(Account account) {
+    public static void closeAccount(Customer customer, Account account) {
+        customer.getAccounts().remove(account);
         accountDAO.delete(account);
     }
 
@@ -34,7 +36,7 @@ public class AccountService {
         // start transaction
         Transaction transaction = TransactionService.create(account, account, money, TransactionType.DEPOSIT);
         // if the account is a loan account
-        if (account.getType() == AccountType.LOAN){
+        if (account.getType() == AccountType.LOAN) {
             TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
             return false;
         }
@@ -61,7 +63,7 @@ public class AccountService {
         // start transaction
         Transaction transaction = TransactionService.create(account, account, money, TransactionType.WITHDRAW);
         // if the account is a loan account
-        if (account.getType() == AccountType.LOAN){
+        if (account.getType() == AccountType.LOAN) {
             TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
             return false;
         }
@@ -86,7 +88,7 @@ public class AccountService {
         // start transaction
         Transaction transaction = TransactionService.create(fromAccount, toAccount, money, TransactionType.TRANSFER);
         // if any of the accounts is a loan account
-        if (fromAccount.getType() == AccountType.LOAN || toAccount.getType() == AccountType.LOAN){
+        if (fromAccount.getType() == AccountType.LOAN || toAccount.getType() == AccountType.LOAN) {
             TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
             return false;
         }

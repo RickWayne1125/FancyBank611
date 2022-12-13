@@ -1,6 +1,7 @@
 package Account.Loan;
 
 import Account.Account;
+import Account.AccountService;
 import Account.AccountType;
 import Money.Money;
 import Money.MoneyService;
@@ -15,8 +16,8 @@ import java.util.List;
 public class LoanService {
     private static LoanDAO loanDAO = new LoanDAO();
 
-    public static void createLoan(Loan loan) {
-        loanDAO.create(loan);
+    public static Loan getLoan(Integer accountNumber) {
+        return loanDAO.readByAccountNumber(accountNumber);
     }
 
     public static List<Loan> getUnapprovedLoans() {
@@ -74,8 +75,7 @@ public class LoanService {
             if (!customer.getHasCollateral()) {
                 return false;
             }
-            loanDAO.create(loan);
-            return true;
+            return AccountService.openAccount(customer, loan);
         } catch (Exception e) {
             return false;
         }

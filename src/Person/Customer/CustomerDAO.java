@@ -86,7 +86,7 @@ public class CustomerDAO implements DAO<Customer> {
             return customer;
         }
         for (Map<String, String> result : results) {
-            accounts.add(accountDAO.readByAccountNumber(Integer.parseInt(result.get("account_number"))));
+            accounts.add(accountDAO.readByAccountNumber(Integer.parseInt(result.get("account_no"))));
         }
         customer.setAccounts(accounts);
         return customer;
