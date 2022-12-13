@@ -5,43 +5,31 @@ import Money.Money;
 
 import java.util.Date;
 
-enum TransactionType {
-    REGULAR_TRANSACTION,
-    BILL_PAY,
-    SERVICE_FEE
-}
-
-enum TransactionStatus {
-    SUCCESS,
-    FAILED,
-    PENDING
-}
-
 public class Transaction {
-    private int id;
+    private String id;
     private Date date;
     private Account from;
     private Account to;
-    private Money amount;
+    private Money money;
     private TransactionType transactionType;
     private TransactionStatus transactionStatus;
 
-    public Transaction(int id, Date date, Account from, Account to, Money amount, TransactionType transactionType,
-                       TransactionStatus transacttionStatus) {
-        this.id = id;
+    public Transaction(Date date, Account from, Account to, Money money, TransactionType transactionType) {
+        // Use timestamp and from account number to generate unique id
+        this.id = date.getTime() + "/" + from.getAccountNumber();
         this.date = date;
         this.from = from;
         this.to = to;
-        this.amount = amount;
+        this.money = money;
         this.transactionType = transactionType;
-        this.transactionStatus = transacttionStatus;
+        this.transactionStatus = TransactionStatus.PENDING;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -69,12 +57,12 @@ public class Transaction {
         this.to = to;
     }
 
-    public Money getAmount() {
-        return amount;
+    public Money getMoney() {
+        return money;
     }
 
-    public void setAmount(Money amount) {
-        this.amount = amount;
+    public void setMoney(Money money) {
+        this.money = money;
     }
 
     public TransactionType getTransactionType() {
@@ -89,8 +77,12 @@ public class Transaction {
         return transactionStatus;
     }
 
+    public void setTransactionStatus(TransactionStatus transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
+
     public String toString() {
-        return this.transactionType + " " + this.transactionStatus + " " + this.amount + " from " + this.from + " to "
-                + this.to + " on " + this.date;
+        return this.transactionType + " " + this.transactionStatus + " " + this.money + " from " + this.from.getAccountNumber() + " to "
+                + this.to.getAccountNumber() + " on " + this.date;
     }
 }

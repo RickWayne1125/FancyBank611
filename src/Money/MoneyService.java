@@ -1,5 +1,7 @@
 package Money;
 
+import java.util.List;
+
 public class MoneyService {
     private static final MoneyDAO moneyDAO = new MoneyDAO();
     private static CurrencyDAO currencyDAO = new CurrencyDAO();
@@ -25,5 +27,9 @@ public class MoneyService {
 
     public static void create(Money money) {
         moneyDAO.create(money);
+    }
+
+    public List<Currency> getAllCurrency() {
+        return currencyDAO.readAll();
     }
 }

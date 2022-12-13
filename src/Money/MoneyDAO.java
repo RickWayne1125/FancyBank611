@@ -12,9 +12,9 @@ public class MoneyDAO implements DAO<Money> {
 
     @Override
     public void create(Money money) {
-        String sql = "INSERT INTO Money (amount,currency) VALUES ("
-                + money.getAmount() + ",'" + money.getCurrency().getCurrencyName() + "')";
-        dataBase.execute(sql);
+        String sql = "INSERT INTO Money (account_no,amount,currency) VALUES (?, ?, ?)";
+        dataBase.execute(sql, new String[]{String.valueOf(money.getAccountNumber()), String.valueOf(money.getAmount()),
+                money.getCurrency().getCurrencyName()});
     }
 
 
