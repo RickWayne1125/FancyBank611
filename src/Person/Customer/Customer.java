@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Customer extends Person {
-    //    private boolean hasCollateral;
+    private boolean hasCollateral;
     private List<Account> accounts;
 
 
@@ -16,16 +16,16 @@ public class Customer extends Person {
                     String address) {
         super(username, firstName, middleName, lastName, email, password, contact, address);
         this.accounts = new ArrayList<>();
-//        this.hasCollateral = hasCollateral;
+        this.hasCollateral = false;
     }
 
-//    public void setHasCollateral(boolean hasCollateral) {
-//        this.hasCollateral = hasCollateral;
-//    }
-//
-//    public boolean getHasCollateral() {
-//        return hasCollateral;
-//    }
+    public void setHasCollateral(boolean hasCollateral) {
+        this.hasCollateral = hasCollateral;
+    }
+
+    public boolean getHasCollateral() {
+        return hasCollateral;
+    }
 
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;

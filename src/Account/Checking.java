@@ -5,4 +5,9 @@ public class Checking extends Account {
         super(accountNumber, routingNumber, swiftCode);
         super.setType(AccountType.CHECKING);
     }
+
+    public Checking(String routingNumber, String swiftCode) {
+        super(routingNumber, swiftCode);
+        super.setType(AccountType.CHECKING);
+    }
 }

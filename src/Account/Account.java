@@ -4,6 +4,7 @@ import Money.Money;
 import Transact.Transaction;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public abstract class Account {
@@ -18,6 +19,15 @@ public abstract class Account {
 
     public Account(int accountNumber, String routingNumber, String swiftCode) {
         this.accountNumber = accountNumber;
+        this.routingNumber = routingNumber;
+        this.swiftCode = swiftCode;
+        this.currentBalance = new ArrayList<>();
+        this.transactionHistory = new ArrayList<>();
+    }
+
+    public Account(String routingNumber, String swiftCode) {
+        // generate unique account number using timestamp and random number
+        this.accountNumber = (int) (new Date().getTime() + (int) (Math.random() * 1000000000));
         this.routingNumber = routingNumber;
         this.swiftCode = swiftCode;
         this.currentBalance = new ArrayList<>();

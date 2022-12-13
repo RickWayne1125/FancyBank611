@@ -28,21 +28,40 @@ public class CustomerDAO implements DAO<Customer> {
     @Override
     public void create(Customer customer) {
         String sql = "INSERT INTO User (username, first_name, middle_name, last_name, email, contact, password, address, " +
-                "is_customer, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "is_customer, last_login, has_collateral) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         dataBase.execute(sql, new String[]{customer.getUsername(), customer.getFirstName(), customer.getMiddleName(),
                 customer.getLastName(), customer.getEmail(), customer.getContact(), customer.getPassword(), customer.getAddress(),
-                "1", customer.getLastLogin().toString()});
-        // TODO: Update all accounts of customer (including modifying Loan table, BoughtStock table, etc.)
+                "1", customer.getLastLogin().toString(), String.valueOf(customer.getHasCollateral())});
+        // Update all accounts of customer (including modifying Loan table, BoughtStock table, etc.)
+        AccountDAO accountDAO = new AccountDAO();
+        for (Account account : customer.getAccounts()) {
+            accountDAO.create(account);
+        }
     }
 
     @Override
     public void delete(Customer customer) {
-        // TODO: Update all accounts of customer (including modifying Loan table, BoughtStock table, etc.)
+        String sql = "DELETE FROM User WHERE username = ?";
+        dataBase.execute(sql, new String[]{customer.getUsername()});
+        // Update all accounts of customer (including modifying Loan table, BoughtStock table, etc.)
+        AccountDAO accountDAO = new AccountDAO();
+        for (Account account : customer.getAccounts()) {
+            accountDAO.delete(account);
+        }
     }
 
     @Override
     public void update(Customer customer) {
-        // TODO: Update all accounts of customer (including modifying Loan table, BoughtStock table, etc.)
+        String sql = "UPDATE User SET first_name = ?, middle_name = ?, last_name = ?, email = ?, contact = ?, password = ?, address = ?, " +
+                "is_customer = ?, last_login = ?, has_collateral = ? WHERE username = ?";
+        dataBase.execute(sql, new String[]{customer.getFirstName(), customer.getMiddleName(), customer.getLastName(), customer.getEmail(),
+                customer.getContact(), customer.getPassword(), customer.getAddress(), "1", customer.getLastLogin().toString(),
+                String.valueOf(customer.getHasCollateral()), customer.getUsername()});
+        // Update all accounts of customer (including modifying Loan table, BoughtStock table, etc.)
+        for (Account account : customer.getAccounts()) {
+            AccountDAO accountDAO = new AccountDAO();
+            accountDAO.update(account);
+        }
     }
 
     public Customer read(String username) {

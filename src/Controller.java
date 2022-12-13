@@ -1,8 +1,10 @@
 import Account.Account;
 import Account.AccountService;
 import Account.Loan.Loan;
+import Account.Loan.LoanService;
 import Account.Security.SecurityAccount;
 import Money.Money;
+import Money.MoneyService;
 import Money.Currency;
 import Person.Customer.Customer;
 import Person.Customer.CustomerService;
@@ -21,13 +23,14 @@ public class Controller {
     private static CustomerService customerService = new CustomerService();
     private static AccountService accountService = new AccountService();
     private static TransactionService transactionService = new TransactionService();
+    private static LoanService loanService = new LoanService();
+    private static MoneyService moneyService = new MoneyService();
 
     /* General Functions */
     // Get All Currency
     public static List<Currency> getAllCurrency() {
-        // TODO: implement this function
         // This method will check the database and return all the updated currency
-        return null;
+        return moneyService.getAllCurrency();
     }
 
     // Get All Stocks
@@ -127,18 +130,21 @@ public class Controller {
     }
 
     // Add Loan
-    public boolean addLoan(Customer customer, Money money) {
-        // TODO: implement this method
+    public boolean requestLoan(Customer customer, Loan loan) {
         // This method will add a new loan account to the customer
         // If the loan is successfully added, return true, otherwise return false
-        return false;
+        return loanService.requestLoan(customer, loan);
     }
 
     // Pay Loan
-    public boolean payLoan(Loan account, Money money) {
-        // TODO: implement this method
+    public boolean payLoanByCash(Loan account, Money money) {
         // If the loan is successfully paid, return true, otherwise return false
-        return false;
+        return loanService.payLoanByCash(account, money);
+    }
+
+    public boolean payLoanByTransfer(Loan account, Account fromAccount, Money money) {
+        // If the loan is successfully paid, return true, otherwise return false
+        return loanService.payLoanByTransfer(account, fromAccount, money);
     }
 
     // Convert Currency
@@ -182,5 +188,15 @@ public class Controller {
         // TODO: implement this method
         // If the stock is successfully updated, return true, otherwise return false
         return false;
+    }
+
+    // Get Unapproved Loan List
+    public List<Loan> getUnapprovedLoanList() {
+        return loanService.getUnapprovedLoans();
+    }
+
+    // Approve Loan
+    public boolean approveLoan(Loan loan) {
+        return loanService.approveLoan(loan);
     }
 }

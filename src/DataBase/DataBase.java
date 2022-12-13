@@ -33,6 +33,7 @@ public class DataBase {
                 + "    address text,\n"
                 + "    is_customer integer,\n"   // 0 for false, 1 for true
                 + "    last_login text\n"   // This is used to store the last login time
+                + "    has_collateral integer\n"   // 0 for false, 1 for true
                 + ");";
         execute(sql);
         IO.displayMessage("User table created", MessageType.INFO);
@@ -88,6 +89,7 @@ public class DataBase {
                 + "    account_no integer PRIMARY KEY,\n"
                 + "    start_date text NOT NULL,\n"
                 + "    end_date text NOT NULL,\n"
+                + "    approved integer NOT NULL,\n"   // 0 for false, 1 for true
                 + "    FOREIGN KEY (account_no) REFERENCES Account(account_no)\n"
                 + ");";
         execute(sql);
@@ -172,7 +174,7 @@ public class DataBase {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return results;
     }
 
     public static void clearTable(String tableName) {

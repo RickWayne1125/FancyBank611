@@ -33,6 +33,11 @@ public class AccountService {
     public static boolean deposit(Account account, Money money) {
         // start transaction
         Transaction transaction = TransactionService.create(account, account, money, TransactionType.DEPOSIT);
+        // if the account is a loan account
+        if (account.getType() == AccountType.LOAN){
+            TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
+            return false;
+        }
         // check money list in account
         for (Money m : account.getCurrentBalance()) {
             if (m.getCurrency().getCurrencyName().equals(money.getCurrency().getCurrencyName())) {
@@ -55,6 +60,11 @@ public class AccountService {
     public static boolean withdraw(Account account, Money money) {
         // start transaction
         Transaction transaction = TransactionService.create(account, account, money, TransactionType.WITHDRAW);
+        // if the account is a loan account
+        if (account.getType() == AccountType.LOAN){
+            TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
+            return false;
+        }
         // check money list in account
         for (Money m : account.getCurrentBalance()) {
             if (m.getCurrency().getCurrencyName().equals(money.getCurrency().getCurrencyName())) {
@@ -75,6 +85,11 @@ public class AccountService {
     public static boolean transfer(Account fromAccount, Account toAccount, Money money) {
         // start transaction
         Transaction transaction = TransactionService.create(fromAccount, toAccount, money, TransactionType.TRANSFER);
+        // if any of the accounts is a loan account
+        if (fromAccount.getType() == AccountType.LOAN || toAccount.getType() == AccountType.LOAN){
+            TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
+            return false;
+        }
         // check money list in account
         for (Money m : fromAccount.getCurrentBalance()) {
             if (m.getCurrency().getCurrencyName().equals(money.getCurrency().getCurrencyName())) {

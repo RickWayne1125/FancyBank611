@@ -6,4 +6,9 @@ public class Saving extends Account {
         super.setType(AccountType.SAVING);
     }
 
+    public Saving(String routingNumber, String swiftCode) {
+        super(routingNumber, swiftCode);
+        super.setType(AccountType.SAVING);
+    }
+
 }

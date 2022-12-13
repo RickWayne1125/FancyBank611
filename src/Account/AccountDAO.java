@@ -3,6 +3,7 @@ package Account;
 import Account.Loan.Loan;
 import Account.Loan.LoanDAO;
 import Account.Security.SecurityAccount;
+import Account.Security.SecurityDAO;
 import DataBase.DataBase;
 import Money.Money;
 import Money.MoneyDAO;
@@ -30,8 +31,8 @@ public class AccountDAO implements DAO<Account> {
                 break;
             case SECURITY:
                 SecurityAccount securityAccount = (SecurityAccount) account;
-                AccountDAO accountDAO = new AccountDAO();
-                accountDAO.create(securityAccount);
+                SecurityDAO securityDAO = new SecurityDAO();
+                securityDAO.create(securityAccount);
                 break;
         }
     }
@@ -39,17 +40,40 @@ public class AccountDAO implements DAO<Account> {
     @Override
     public void delete(Account account) {
         String sql = "DELETE FROM Account WHERE account_no = ?";
-        // TODO: Consider security account and loan account(need to modify other tables)
         dataBase.execute(sql, new String[]{String.valueOf(account.getAccountNumber())});
+        switch (account.getType()) {
+            case LOAN:
+                Loan loan = (Loan) account;
+                LoanDAO loanDAO = new LoanDAO();
+                loanDAO.delete(loan);
+                break;
+            case SECURITY:
+                SecurityAccount securityAccount = (SecurityAccount) account;
+                SecurityDAO securityDAO = new SecurityDAO();
+                securityDAO.delete(securityAccount);
+                break;
+        }
     }
 
     @Override
     public void update(Account account) {
         String sql = "UPDATE Account SET account_type = ?, username = ?, routing_no = ?, swift_code = ?, interest_rate = ? WHERE account_no = ?";
-        // TODO: Consider security account and loan account(need to modify other tables)
         dataBase.execute(sql, new String[]{String.valueOf(account.getType()), String.valueOf(account.getUsername()),
                 String.valueOf(account.getRoutingNumber()), String.valueOf(account.getSwiftCode()), String.valueOf(account.getInterestRate()),
                 String.valueOf(account.getAccountNumber())});
+        // Consider security account and loan account(need to modify other tables)
+        switch (account.getType()) {
+            case LOAN:
+                Loan loan = (Loan) account;
+                LoanDAO loanDAO = new LoanDAO();
+                loanDAO.update(loan);
+                break;
+            case SECURITY:
+                SecurityAccount securityAccount = (SecurityAccount) account;
+                SecurityDAO securityDAO = new SecurityDAO();
+                securityDAO.update(securityAccount);
+                break;
+        }
     }
 
     public Account readByAccountNumber(int accountNumber) {

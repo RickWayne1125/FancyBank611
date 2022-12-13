@@ -19,6 +19,11 @@ public class SecurityAccount extends Account {
         super.setType(AccountType.SECURITY);
     }
 
+    public SecurityAccount(String routingNumber, String swiftCode){
+        super(routingNumber,swiftCode);
+        super.setType(AccountType.SECURITY);
+    }
+
 
     // everything in stock market will need USD
     public boolean buyStockByUnit(Stock stock, int unit){
