@@ -67,6 +67,10 @@ public abstract class Account {
     }
 
     public void setCurrentBalance(List<Money> currentBalance) {
+        if (currentBalance == null) {
+            this.currentBalance = new ArrayList<>();
+            return;
+        }
         this.currentBalance = currentBalance;
         for (Money money : currentBalance) {
             money.setAccountNumber(this.accountNumber);

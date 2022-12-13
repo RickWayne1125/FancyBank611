@@ -61,6 +61,13 @@ public class AccountDAO implements DAO<Account> {
         dataBase.execute(sql, new String[]{String.valueOf(account.getType()), String.valueOf(account.getUsername()),
                 String.valueOf(account.getRoutingNumber()), String.valueOf(account.getSwiftCode()), String.valueOf(account.getInterestRate()),
                 String.valueOf(account.getAccountNumber())});
+        // Update Money table
+        MoneyDAO moneyDAO = new MoneyDAO();
+        List<Money> moneyList = account.getCurrentBalance();
+        for (Money money : moneyList) {
+            money.setAccountNumber(account.getAccountNumber());
+            moneyDAO.update(money);
+        }
         // Consider security account and loan account(need to modify other tables)
         switch (account.getType()) {
             case LOAN:
