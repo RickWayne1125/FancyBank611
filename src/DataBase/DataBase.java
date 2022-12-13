@@ -161,7 +161,7 @@ public class DataBase {
             for (int i = 0; i < args.length; i++) {
                 statement.setString(i + 1, args[i]);
             }
-//            IO.displayMessage("Executing: " + statement.toString(), MessageType.INFO);
+            //IO.displayMessage("Executing: " + statement.toString(), MessageType.INFO);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Map<String, String> row = new HashMap<>();

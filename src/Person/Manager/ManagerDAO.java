@@ -2,10 +2,14 @@ package Person.Manager;
 
 import Account.Account;
 import DataBase.DataBase;
+import Money.CurrencyDAO;
 import Person.Customer.Customer;
+import Person.Customer.CustomerDAO;
+import Transact.Transaction;
 import Utils.DAO;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import java.util.Map;
 
@@ -57,5 +61,26 @@ public class ManagerDAO implements DAO<Manager> {
                 row.get("last_name"), row.get("email"), row.get("password"), row.get("contact"), row.get("address"));
 
         return manager;
+    }
+
+    // get a single customer
+    public Customer getCustomer(String username){
+        Customer customer = new CustomerDAO().read(username);
+        return customer;
+    }
+
+    // get all customers
+    public List<Customer> getAllCustomer(){
+        String sql = "SELECT * FROM User WHERE is_customer = ?";
+        List<Map<String, String>> results = dataBase.query(sql, new String[]{String.valueOf(1)});
+        List<Customer> customers = new ArrayList<>();
+        if (results.size() == 0) {
+            return customers;
+        }
+        for (Map<String, String> result : results) {
+            Customer customer = new CustomerDAO().read(result.get("username"));
+            customers.add(customer);
+        }
+        return customers;
     }
 }

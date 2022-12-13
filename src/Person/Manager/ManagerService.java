@@ -2,19 +2,25 @@ package Person.Manager;
 
 import Person.Customer.Customer;
 import Person.Customer.CustomerDAO;
+import Transact.Transaction;
+import Transact.TransactionDAO;
 import Utils.IO;
 import Utils.MessageType;
 
+import java.text.ParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 
 public class ManagerService {
     private static CustomerDAO customerDAO = new CustomerDAO();
     private static ManagerDAO managerDAO = new ManagerDAO();
 
     // get daily transaction report
-    public boolean readDailyReport(){
+    public static List<Transaction> readDailyReport(String day) throws ParseException {
         // todo: finish transact part first
-        return true;
+        List<Transaction> transactions = new TransactionDAO().readByDay(day);
+        return transactions;
     }
 
     public static boolean registerManager(Manager manager) {
@@ -31,7 +37,6 @@ public class ManagerService {
         IO.displayMessage("ManagerService: loginManger", MessageType.INFO);
         Manager manager = managerDAO.read(username);
         if (manager != null && manager.getPassword().equals(password)) {
-            // TODO: Update all the interests then update the last login time
             Date date = new Date();
             manager.setLastLogin(date);
             return manager;
@@ -42,7 +47,15 @@ public class ManagerService {
         return null;
     }
 
-    public static void main(String[] args) {
+    public static Customer viewCustomerByName(String username){
+        return managerDAO.getCustomer(username);
+    }
+
+    public static List<Customer> viewAllCustomer(){
+        return managerDAO.getAllCustomer();
+    }
+
+    public static void main(String[] args) throws ParseException {
         // Test
         // Create a customer
         Manager manager = new Manager("mira", "Mira", "test", "test",
@@ -51,6 +64,8 @@ public class ManagerService {
         System.out.println(registerManager(manager));
         // Login
         Manager manager1 = loginManager("mira","test");
-        System.out.println(manager1);
+        //System.out.println(manager1);
+        //System.out.println(viewAllCustomer());
+        System.out.println(readDailyReport("12-13-2022"));
     }
 }
