@@ -11,6 +11,7 @@ import Person.Customer.CustomerService;
 import Person.Manager.Manager;
 import Person.Manager.ManagerService;
 import Stock.Stock;
+import Stock.StockService;
 import Transact.Transaction;
 import Account.AccountType;
 import Transact.TransactionService;
@@ -28,6 +29,8 @@ public class Controller {
     private static TransactionService transactionService = new TransactionService();
     private static LoanService loanService = new LoanService();
     private static MoneyService moneyService = new MoneyService();
+
+    private static StockService stockService = new StockService();
 
     /* General Functions */
     // Get All Currency
@@ -185,24 +188,32 @@ public class Controller {
     }
 
     // Add Stock
-    public boolean addStock(Stock stock) {
-        // TODO: implement this method
-        // If the stock is successfully added, return true, otherwise return false
-        return false;
+//    public boolean addStock(Stock stock) {
+//        // If the stock is successfully added, return true, otherwise return false
+//        return false;
+//    }
+
+    public boolean addStock(String name, int price){
+        return StockService.addNewStock(name,price);
     }
 
     // Delete Stock
-    public boolean deleteStock(Stock stock) {
-        // TODO: implement this method
-        // If the stock is successfully deleted, return true, otherwise return false
-        return false;
+//    public boolean deleteStock(Stock stock) {
+//        // If the stock is successfully deleted, return true, otherwise return false
+//        return false;
+//    }
+
+    public boolean deleteStock(String name){
+        return StockService.deleteStock(name);
     }
 
     // Update Stock
-    public boolean updateStock(Stock stock) {
-        // TODO: implement this method
-        // If the stock is successfully updated, return true, otherwise return false
-        return false;
+//    public boolean updateStock(Stock stock) {
+//        // If the stock is successfully updated, return true, otherwise return false
+//        return false;
+//    }
+    public boolean updateStock(String name, int price){
+        return StockService.updateStock(name,price);
     }
 
     // Get Unapproved Loan List
