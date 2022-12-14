@@ -1,5 +1,7 @@
 package Frontend;
 
+import Person.Person;
+
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ import java.util.List;
 public class Frontend extends JFrame {
     // Singleton class
     private static Frontend r;
+    private Person user;
+    private String userType;
     private List<AbstractJPanel> panels;
     private final int WIDTH = 500;
     private final int HEIGHT = 500;
@@ -20,6 +24,19 @@ public class Frontend extends JFrame {
         this.refresh();
     }
 
+    public void setUser(Person user) {
+        this.user = user;
+    }
+    public void setUserType(String userType){
+        this.userType = userType;
+    }
+
+    public Person getUser() {
+        return this.user;
+    }
+    public String getUserType(){
+        return this.userType;
+    }
     public static Frontend getInstance(AbstractJPanel firstPanel){
         if (r == null){
             r = new Frontend(firstPanel);

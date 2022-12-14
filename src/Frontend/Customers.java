@@ -30,7 +30,7 @@ public class Customers extends AbstractJPanel {
     private void getCustomers(){
         customers.clear();
         for (int i = 0; i< 100; i++){
-            customers.add((new Customer("abc "+i)).getBasePanel());
+            customers.add((new CustomerView("abc "+i)).getBasePanel());
         }
         this.refresh();
     }

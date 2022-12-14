@@ -1,5 +1,7 @@
 package Frontend;
 
+import Account.AccountType;
+
 public class ViewFactory {
     public static AbstractJPanel getLoginPage(){
         return new login();
@@ -10,12 +12,19 @@ public class ViewFactory {
     }
 
     public static AbstractJPanel getSavingsAccount(){
-        return new Account("Savings");
+        return new AccountView(AccountType.SAVING);
     }
 
     public static AbstractJPanel getCheckingAccount(){
-        return new Account("Checking");
+        return new AccountView(AccountType.CHECKING);
     }
     public static AbstractJPanel getCustomersListView() {return new Customers();}
+
+    public static AbstractJPanel getCreateEditUserView(String action, String userType) {
+        /*
+        *   action is either "edit" or "create
+        * */
+        return new NewUserForm(action, userType);
+    }
 
 }

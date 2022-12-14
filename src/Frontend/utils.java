@@ -1,5 +1,6 @@
 package Frontend;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class utils {
@@ -17,5 +18,9 @@ public class utils {
                 return String.class;
             }
         };
+    }
+
+    public static void showNotice(String text){
+        JOptionPane.showMessageDialog(null, text);
     }
 }

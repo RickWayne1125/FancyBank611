@@ -1,5 +1,8 @@
 package Frontend;
 
+import Account.Account;
+import Account.AccountType;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +20,8 @@ public class Menu extends AbstractJPanel {
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Frontend.getInstance().setUser(null);
+                Frontend.getInstance().setUserType(null);
                 Frontend.getInstance().back();
             }
         });
@@ -35,10 +40,12 @@ public class Menu extends AbstractJPanel {
         profileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frontend.getInstance().next(ViewFactory.getCustomersListView());
+                Frontend.getInstance().next(ViewFactory.getCreateEditUserView("edit", Frontend.getInstance().getUserType()));
             }
         });
     }
+
+
 
     @Override
     public JPanel getBasePanel() {
