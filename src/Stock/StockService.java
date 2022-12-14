@@ -3,6 +3,8 @@ package Stock;
 import Money.Money;
 import Money.Currency;
 
+import java.util.List;
+
 
 public class StockService {
     private static StockDao stockDao= new StockDao();
@@ -32,6 +34,10 @@ public class StockService {
         }
         stockDao.delete(stock);
         return true;
+    }
+
+    public List<Stock> getAllStock(){
+        return stockDao.readAll();
     }
 
     public static void main(String[] args){

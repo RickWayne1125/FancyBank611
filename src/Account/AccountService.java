@@ -1,5 +1,6 @@
 package Account;
 
+import API.Controller;
 import DataBase.DataBase;
 import Money.Money;
 import Money.MoneyService;
@@ -17,6 +18,13 @@ public class AccountService {
     private static AccountDAO accountDAO = new AccountDAO();
 
     public static boolean openAccount(Customer customer, Account account) {
+        // This function is only used to create a Checking or Saving account
+        // For Loan account, use the function in LoanService
+        // For Security account, use the function in SecurityService
+        if (!account.getType().equals(AccountType.CHECKING) && !account.getType().equals(AccountType.SAVING)) {
+            IO.displayMessage("AccountService: openAccount: Invalid account type", Utils.MessageType.ERROR);
+            return false;
+        }
         // Check if the account id is unique
         if (accountDAO.readByAccountNumber(account.getAccountNumber()) != null) {
             return false;
@@ -160,46 +168,5 @@ public class AccountService {
 
     public static Account getAccountByAccountNumber(int accountNumber) {
         return accountDAO.readByAccountNumber(accountNumber);
-    }
-
-    public static void main(String[] args) {
-        DataBase.clearTables();
-        DataBase.generateTestData();
-        // Test
-        Customer customer = new Customer("rick", "Rick", "test", "test",
-                "test", "test", "test", "test");
-        CustomerService.registerCustomer(customer);
-        // Test open account
-        IO.displayMessage("Test open account", Utils.MessageType.INFO);
-        Checking checking = new Checking(123456789, "checking1", "checking1");
-        checking.setInterestRate(Config.DEFAULT_INTEREST_RATE);
-        AccountService.openAccount(customer, checking);
-        System.out.println(getAccountByAccountNumber(123456789));
-        // Test deposit
-        IO.displayMessage("Test deposit", Utils.MessageType.INFO);
-        CurrencyDAO currencyDAO = new CurrencyDAO();
-        Money money = new Money(100, currencyDAO.read("USD"));
-        AccountService.deposit(checking, money);
-        System.out.println(getAccountByAccountNumber(123456789).getCurrentBalance());
-        System.out.println(TransactionService.getTransactionsByAccount(checking));
-        // Test withdraw
-        IO.displayMessage("Test withdraw", Utils.MessageType.INFO);
-        AccountService.withdraw(checking, money);
-        System.out.println(getAccountByAccountNumber(123456789).getCurrentBalance());
-        System.out.println(TransactionService.getTransactionsByAccount(checking));
-        // Test transfer
-        money = new Money(100, currencyDAO.read("USD"));
-        IO.displayMessage("Test transfer", Utils.MessageType.INFO);
-        AccountService.deposit(checking, money);
-        System.out.println(getAccountByAccountNumber(123456789).getCurrentBalance());
-        Saving saving = new Saving(987654321, "saving1", "saving1");
-        saving.setInterestRate(Config.DEFAULT_INTEREST_RATE);
-        AccountService.openAccount(customer, saving);
-        System.out.println(getAccountByAccountNumber(987654321));
-        AccountService.transfer(checking, saving, money);
-        System.out.println(getAccountByAccountNumber(123456789).getCurrentBalance());
-        System.out.println(getAccountByAccountNumber(987654321).getCurrentBalance());
-        System.out.println(TransactionService.getTransactionsByAccount(checking));
-        System.out.println(TransactionService.getTransactionsByAccount(saving));
     }
 }

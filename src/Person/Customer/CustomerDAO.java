@@ -5,8 +5,11 @@ import Account.AccountDAO;
 import DataBase.DataBase;
 import Person.Person;
 import Utils.DAO;
+import Utils.IO;
+import Utils.MessageType;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +63,7 @@ public class CustomerDAO implements DAO<Customer> {
         // Update all accounts of customer (including modifying Loan table, BoughtStock table, etc.)
         for (Account account : customer.getAccounts()) {
             AccountDAO accountDAO = new AccountDAO();
+            IO.displayMessage(account.getUsername(), MessageType.ERROR);
             accountDAO.update(account);
         }
     }
@@ -75,8 +79,13 @@ public class CustomerDAO implements DAO<Customer> {
             throw new RuntimeException("More than one row returned");
         }
         Map<String, String> row = results.get(0);
+        if (row.get("is_customer").equals("0")) {
+            return null;
+        }
         Customer customer = new Customer(row.get("username"), row.get("first_name"), row.get("middle_name"),
                 row.get("last_name"), row.get("email"), row.get("password"), row.get("contact"), row.get("address"));
+        customer.setLastLogin(new Date(row.get("last_login")));
+        customer.setHasCollateral(Boolean.parseBoolean(row.get("has_collateral")));
         // Read all accounts of customer
         List<Account> accounts = new ArrayList<>();
         sql = "SELECT * FROM Account WHERE username = ?";

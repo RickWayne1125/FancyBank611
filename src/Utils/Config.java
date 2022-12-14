@@ -9,4 +9,5 @@ public class Config {
     public static final double DEFAULT_LOAN_INTEREST_RATE = 0.05;
     public static final double DEFAULT_CHECKING_INTEREST_RATE = 0.02;
     public static final double DEFAULT_SAVING_INTEREST_RATE = 0.03;
+    public static boolean DEBUG = true;
 }
