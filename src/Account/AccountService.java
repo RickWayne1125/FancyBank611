@@ -1,5 +1,6 @@
 package Account;
 
+import API.Controller;
 import DataBase.DataBase;
 import Money.Money;
 import Money.MoneyService;
@@ -163,6 +164,10 @@ public class AccountService {
     }
 
     public static void main(String[] args) {
+//        Customer customer = Controller.loginCustomer("rick", "test");
+////        Customer c1 = CustomerService.loginCustomer("rick", "test");
+////        System.out.println(c.getAccounts());
+////        System.out.println(c1.getAccounts());
         DataBase.clearTables();
         DataBase.generateTestData();
         // Test

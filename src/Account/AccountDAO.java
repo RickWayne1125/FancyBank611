@@ -97,22 +97,26 @@ public class AccountDAO implements DAO<Account> {
         MoneyDAO moneyDAO = new MoneyDAO();
         switch (type) {
             case LOAN:
-                Loan loan=new LoanDAO().readByAccountNumber(accountNumber);
+                Loan loan = new LoanDAO().readByAccountNumber(accountNumber);
                 loan.setInterestRate(Double.parseDouble(row.get("interest_rate")));
+                loan.setUsername(row.get("username"));
                 loan.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
             case SAVING:
                 Saving saving = new Saving(Integer.parseInt(row.get("account_no")), row.get("routing_no"), row.get("swift_code"));
                 saving.setInterestRate(Double.parseDouble(row.get("interest_rate")));
+                saving.setUsername(row.get("username"));
                 saving.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
                 return saving;
             case CHECKING:
                 Checking checking = new Checking(Integer.parseInt(row.get("account_no")), row.get("routing_no"), row.get("swift_code"));
                 checking.setInterestRate(Double.parseDouble(row.get("interest_rate")));
+                checking.setUsername(row.get("username"));
                 checking.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
                 return checking;
             case SECURITY:
                 SecurityAccount securityAccount = new SecurityAccount(Integer.parseInt(row.get("account_no")), row.get("routing_no"), row.get("swift_code"));
                 securityAccount.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
+                securityAccount.setUsername(row.get("username"));
                 // TODO: check the BoughtStock table to set stock map
                 return securityAccount;
         }

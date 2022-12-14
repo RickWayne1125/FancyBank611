@@ -25,7 +25,8 @@ public class CustomerService {
             // TODO: Update all the interests then update the last login time
             Date date = new Date();
             customer.setLastLogin(date);
-            customerDAO.update(customer);
+            IO.displayMessage(customer.toString(), MessageType.WARNING);
+//            customerDAO.update(customer);
             return customer;
         }
         return null;
