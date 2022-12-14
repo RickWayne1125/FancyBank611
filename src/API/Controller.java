@@ -237,8 +237,8 @@ public class Controller {
 //        return false;
 //    }
 
-    public boolean deleteStock(String name){
-        return StockService.deleteStock(name);
+    public boolean deleteStock(int id){
+        return StockService.deleteStock(id);
     }
 
     // Update Stock
@@ -246,8 +246,8 @@ public class Controller {
 //        // If the stock is successfully updated, return true, otherwise return false
 //        return false;
 //    }
-    public boolean updateStock(String name, int price){
-        return StockService.updateStock(name,price);
+    public boolean updateStock(int id , int price){
+        return StockService.updateStock(id,price);
     }
 
     // Get Unapproved Loan List
