@@ -6,6 +6,7 @@ import Utils.MessageType;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -263,7 +264,7 @@ public class DataBase {
             statement.setString(7, "");
             statement.setString(8, "");
             statement.setInt(9, 0);
-            statement.setString(10, "");
+            statement.setString(10, new Date().toString());
             statement.setInt(11, 0);
             statement.executeUpdate();
         } catch (SQLException e) {

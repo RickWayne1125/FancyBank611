@@ -17,10 +17,12 @@ import Transact.TransactionService;
 
 import DataBase.DataBase;
 
+import java.util.Date;
+
 import static Account.AccountService.getAccountByAccountNumber;
 
 public class Tests {
-    public static void unitTest1(){
+    public static void unitTest1() {
         DataBase.clearTables();
         DataBase.generateTestData();
         // Test
@@ -39,7 +41,7 @@ public class Tests {
         AccountService.openAccount(customer, saving);
     }
 
-    public static void unitTest2(){
+    public static void unitTest2() {
         Customer customer = Controller.loginCustomer("rick", "test");
         Checking checking = null;
         Saving saving = null;
@@ -77,15 +79,30 @@ public class Tests {
         System.out.println(TransactionService.getTransactionsByAccount(saving));
     }
 
-    public static void customerLoginAsManager(){
+    public static void customerLoginAsManager() {
         Manager manager = Controller.loginManager("rick", "test");
         IO.displayMessage("Test manager login", Utils.MessageType.INFO);
         System.out.println(manager);
     }
 
+    public static void managerLogin() {
+        Manager manager = Controller.loginManager("admin", "admin");
+        IO.displayMessage("Test manager login", Utils.MessageType.INFO);
+        System.out.println(manager);
+    }
+
+    public static void requestLoan() {
+        Customer customer = Controller.loginCustomer("rick", "test");
+        Controller.setHasCollateral(customer, true);
+        Loan loan = new Loan("loan1", "loan1", 0.1, new Date(), new Date());
+        Controller.requestLoan(customer, loan);
+    }
+
     public static void main(String[] args) {
-        //unitTest1();
+        unitTest1();
         //unitTest2();
-        customerLoginAsManager();
+//        customerLoginAsManager();
+//        managerLogin();
+        requestLoan();
     }
 }
