@@ -154,7 +154,7 @@ public class Controller {
     }
 
     // Add Loan
-    public boolean requestLoan(Customer customer, Loan loan) {
+    public static boolean requestLoan(Customer customer, Loan loan) {
         // This method will add a new loan account to the customer
         // If the loan is successfully added, return true, otherwise return false
         return loanService.requestLoan(customer, loan);

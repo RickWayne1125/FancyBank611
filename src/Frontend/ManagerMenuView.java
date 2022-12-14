@@ -9,6 +9,7 @@ public class ManagerMenuView extends AbstractJPanel{
     private JButton logOutButton;
     private JButton viewCustomersButton;
     private JPanel basePanel;
+    private JButton loansButton;
 
     public ManagerMenuView() {
         logOutButton.addActionListener(new ActionListener() {

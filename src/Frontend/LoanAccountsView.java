@@ -55,9 +55,13 @@ public class LoanAccountsView extends AbstractJPanel{
                     Date end = new Date();
                     end.setYear(start.getYear()+years);
                     Loan loan = Helpers.createLoanAccount(new Money(amount, currency), interest, start, end);
-                    Controller.openAccount((Customer) Frontend.getInstance().getUser(), loan);
+                    if(Controller.requestLoan((Customer) Frontend.getInstance().getUser(), loan)){
 
-                    utils.showNotice("Loan request submitted");
+                        utils.showNotice("Loan request submitted");
+                    } else {
+                        utils.showNotice("You don't have any collateral for this loan.");
+                    }
+
 
                     amountField.setText("");
                     refresh();
