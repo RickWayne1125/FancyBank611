@@ -245,7 +245,7 @@ public class Controller {
     }
 
     // Get Loans By Customer
-    public List<Loan> getLoansByCustomer(Customer customer) {
+    public static List<Loan> getLoansByCustomer(Customer customer) {
         return loanService.getLoansByCustomer(customer);
     }
 
@@ -255,7 +255,7 @@ public class Controller {
     }
 
     // Set Has Collateral
-    public boolean setHasCollateral(Customer customer, boolean hasCollateral) {
+    public static boolean setHasCollateral(Customer customer, boolean hasCollateral) {
         return loanService.setHasCollateral(customer, hasCollateral);
     }
 }

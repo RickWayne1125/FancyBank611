@@ -29,7 +29,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="a9c44" class="javax.swing.JTextField" binding="amountField" custom-create="true">
+          <component id="a9c44" class="javax.swing.JTextField" binding="amountField">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -137,7 +137,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="15c5a" class="javax.swing.JTable" binding="table1" default-binding="true">
+                  <component id="15c5a" class="javax.swing.JTable" binding="approvedLoansTable">
                     <constraints/>
                     <properties/>
                   </component>
@@ -160,7 +160,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="f684f" class="javax.swing.JTable" binding="table2" default-binding="true">
+                  <component id="f684f" class="javax.swing.JTable" binding="pendingLoansTable">
                     <constraints/>
                     <properties/>
                   </component>

@@ -1,5 +1,6 @@
 package Frontend;
 
+import API.Controller;
 import Person.Customer.Customer;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class CustomerView extends AbstractJPanel{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 customer.setHasCollateral(hasCollateralRadioButton.isSelected());
+                Controller.setHasCollateral(customer, hasCollateralRadioButton.isSelected());
             }
         });
     }

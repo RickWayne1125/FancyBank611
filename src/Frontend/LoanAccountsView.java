@@ -5,13 +5,14 @@ import Account.Loan.Loan;
 import Money.Currency;
 import Money.Money;
 import Person.Customer.Customer;
+import Transact.Transaction;
+import Transact.TransactionType;
 import Utils.Helpers;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class LoanAccountsView extends AbstractJPanel{
     private JTextField amountField;
     private JButton requestButton;
     private JTabbedPane tabbedPane1;
-    private JTable table1;
-    private JTable table2;
+    private JTable approvedLoansTable;
+    private JTable pendingLoansTable;
     private JComboBox interestField;
     private JComboBox dueDateField;
     private JComboBox currencyField;
@@ -32,6 +33,9 @@ public class LoanAccountsView extends AbstractJPanel{
         this.currencies = Controller.getAllCurrency();
         this.seletedCurrency = this.currencies.get(0);
 
+        loadCurrenciesDropdown();
+
+        refresh();
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,7 +69,38 @@ public class LoanAccountsView extends AbstractJPanel{
     }
 
     public void refresh(){
+        List<Loan> loans = Controller.getLoansByCustomer((Customer) Frontend.getInstance().getUser());
+        System.out.println("asfsdfsdfdasf");
+        System.out.println(loans);
+        List<Loan> approvedLoans = new ArrayList<>();
+        List<Loan> pendingLoans = new ArrayList<>();
 
+        for(Loan loan:loans){
+            if(loan.isApproved()){
+                approvedLoans.add(loan);
+            } else {
+                pendingLoans.add(loan);
+            }
+        }
+
+        loadLoansTable(approvedLoans, approvedLoansTable);
+        loadLoansTable(pendingLoans, pendingLoansTable);
+
+    }
+
+    public void loadLoansTable(List<Loan> loans, JTable table){
+        table.removeAll();
+        String[] columns = new String[] {
+                "account", "start", "end", "amount", "interest"
+        };
+        Object[][] data = new Object[loans.size()][5];
+        for (int i = 0; i<loans.size(); i++){
+            Loan loan = loans.get(i);
+            data[loans.size()-i-1] = new Object[]{loan.getAccountNumber(), loan.getStartDate().toString(), loan.getDueDate().toString(), loan.getCurrentBalance(), loan.getInterestRate() };
+        }
+        table.setModel(utils.getTableModel(data, columns));
+        table.revalidate();
+        Frontend.getInstance().render();
     }
 
     public void loadCurrenciesDropdown(){
@@ -77,9 +112,5 @@ public class LoanAccountsView extends AbstractJPanel{
     @Override
     public JPanel getBasePanel() {
         return basePanel;
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }
