@@ -63,7 +63,6 @@ public class CustomerDAO implements DAO<Customer> {
         // Update all accounts of customer (including modifying Loan table, BoughtStock table, etc.)
         for (Account account : customer.getAccounts()) {
             AccountDAO accountDAO = new AccountDAO();
-            IO.displayMessage(account.getUsername(), MessageType.ERROR);
             accountDAO.update(account);
         }
     }

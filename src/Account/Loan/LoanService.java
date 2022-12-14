@@ -1,7 +1,7 @@
 package Account.Loan;
 
 import Account.Account;
-import Account.AccountService;
+import Account.AccountDAO;
 import Account.AccountType;
 import Money.Money;
 import Money.MoneyService;
@@ -77,7 +77,15 @@ public class LoanService {
             if (!customer.getHasCollateral()) {
                 return false;
             }
-            return AccountService.openAccount(customer, loan);
+            AccountDAO accountDAO = new AccountDAO();
+            // Check if the account id is unique
+            if (accountDAO.readByAccountNumber(loan.getAccountNumber()) != null) {
+                return false;
+            }
+            loan.setUsername(customer.getUsername());
+            accountDAO.create(loan);
+            customer.getAccounts().add(loan);
+            return true;
         } catch (Exception e) {
             return false;
         }
