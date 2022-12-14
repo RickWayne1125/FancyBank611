@@ -108,6 +108,10 @@ public class SecurityService {
         return true;
     }
 
+    public double getRealizedByAccountNumber(int accountNumber){
+        return securityDAO.readByAccountNumber(accountNumber).getRealized().getAmount();
+    }
+
     public static void main(String[] args) {
         SecurityAccount securityAccount1= new SecurityAccount(123,"te","te");
         securityAccount1.setRealized(new Money(0,currencyDAO.read("USD")));

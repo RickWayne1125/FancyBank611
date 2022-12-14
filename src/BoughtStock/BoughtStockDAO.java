@@ -2,6 +2,7 @@ package BoughtStock;
 
 import Account.Security.SecurityAccount;
 import DataBase.DataBase;
+import Stock.StockService;
 import Utils.DAO;
 
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.Map;
 
 public class BoughtStockDAO implements DAO<BoughtStock> {
     private static DataBase dataBase = new DataBase();
+
+    private static StockService stockService = new StockService();
 
     @Override
     public void create(BoughtStock boughtStock) {
