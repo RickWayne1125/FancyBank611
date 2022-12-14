@@ -91,6 +91,13 @@ public class Tests {
         System.out.println(manager);
     }
 
+    public static void customerLogin(){
+        Customer customer = Controller.loginCustomer("rick", "test");
+        IO.displayMessage("Test customer login", Utils.MessageType.INFO);
+        System.out.println(customer);
+        System.out.println(customer.getAccounts());
+    }
+
     public static void requestLoan() {
         Customer customer = Controller.loginCustomer("rick", "test");
         Controller.setHasCollateral(customer, true);
@@ -99,10 +106,10 @@ public class Tests {
     }
 
     public static void main(String[] args) {
-        unitTest1();
-        //unitTest2();
+//        unitTest1();
+//        unitTest2();
 //        customerLoginAsManager();
-//        managerLogin();
-        requestLoan();
+        customerLogin();
+//        requestLoan();
     }
 }
