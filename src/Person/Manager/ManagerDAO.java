@@ -57,6 +57,9 @@ public class ManagerDAO implements DAO<Manager> {
             throw new RuntimeException("More than one row returned");
         }
         Map<String, String> row = results.get(0);
+        if (row.get("is_customer").equals("1")) {
+            return null;
+        }
         Manager manager = new Manager(row.get("username"), row.get("first_name"), row.get("middle_name"),
                 row.get("last_name"), row.get("email"), row.get("password"), row.get("contact"), row.get("address"));
 

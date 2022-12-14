@@ -6,11 +6,13 @@ import Account.AccountType;
 import Money.Money;
 import Money.MoneyService;
 import Person.Customer.Customer;
+import Person.Customer.CustomerDAO;
 import Transact.Transaction;
 import Transact.TransactionService;
 import Transact.TransactionStatus;
 import Transact.TransactionType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoanService {
@@ -48,7 +50,7 @@ public class LoanService {
         // start transaction
         Transaction transaction = TransactionService.create(fromAccount, loanAccount, money, TransactionType.PAY_LOAN);
         // if the fromAccount is a loan account
-        if (fromAccount.getType() == AccountType.LOAN){
+        if (fromAccount.getType() == AccountType.LOAN) {
             TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
             return false;
         }
@@ -89,5 +91,30 @@ public class LoanService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public List<Loan> getApprovedLoans() {
+        return loanDAO.readApprovedLoans();
+    }
+
+    public boolean setHasCollateral(Customer customer, boolean hasCollateral) {
+        CustomerDAO customerDAO = new CustomerDAO();
+        try {
+            customer.setHasCollateral(hasCollateral);
+            customerDAO.update(customer);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public List<Loan> getLoansByCustomer(Customer customer) {
+        List<Loan> loans = new ArrayList<>();
+        for (Account account : customer.getAccounts()) {
+            if (account.getType() == AccountType.LOAN) {
+                loans.add(loanDAO.readByAccountNumber(account.getAccountNumber()));
+            }
+        }
+        return loans;
     }
 }

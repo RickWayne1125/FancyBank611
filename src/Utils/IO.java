@@ -1,10 +1,14 @@
 package Utils;
 
+import API.Controller;
+
 public class IO {
     public static void displayMessage(String message, MessageType type) {
         switch (type) {
             case INFO:
-                System.out.println(TextColors.GREEN + "[INFO] " + TextColors.RESET + message);
+                if (Config.DEBUG) {
+                    System.out.println(TextColors.GREEN + "[INFO] " + TextColors.RESET + message);
+                }
                 break;
             case WARNING:
                 System.out.println(TextColors.YELLOW + "[WARNING] " + TextColors.RESET + message);

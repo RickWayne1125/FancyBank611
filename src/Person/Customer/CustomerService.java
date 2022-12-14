@@ -21,11 +21,13 @@ public class CustomerService {
     public static Customer loginCustomer(String username, String password) {
         IO.displayMessage("CustomerService: loginCustomer", MessageType.INFO);
         Customer customer = customerDAO.read(username);
+        // check if the user is a customer
         if (customer != null && customer.getPassword().equals(password)) {
             // TODO: Update all the interests then update the last login time
             Date date = new Date();
             customer.setLastLogin(date);
-//            customerDAO.update(customer);
+            IO.displayMessage(customer.toString(), MessageType.WARNING);
+            customerDAO.update(customer);
             return customer;
         }
         return null;
