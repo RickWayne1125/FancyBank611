@@ -104,10 +104,12 @@ public class DataBase {
         IO.displayMessage("Stock table created", MessageType.INFO);
         // Create BoughtStock table
         sql = "CREATE TABLE IF NOT EXISTS BoughtStock (\n"
+                + "    bought_id integer PRIMARY KEY autoincrement,\n"
                 + "    account_no integer NOT NULL,\n"
                 + "    stock_id integer NOT NULL,\n"
                 + "    stock_unit integer NOT NULL,\n"
-                + "    PRIMARY KEY (account_no, stock_id),\n"
+                + "    stock_price real NOT NULL,\n"
+//                + "    PRIMARY KEY (account_no, stock_id),\n"
                 + "    FOREIGN KEY (account_no) REFERENCES Account(account_no),\n"
                 + "    FOREIGN KEY (stock_id) REFERENCES Stock(stock_id)\n"
                 + ");";
@@ -297,8 +299,19 @@ public class DataBase {
 
     public static void main(String[] args) {
         DataBase db = new DataBase();
-        db.clearDatabase();
-        db.createTables();
-        db.generateTestData();
+//        db.clearDatabase();
+//        db.createTables();
+//        db.generateTestData();
+        String sql = "CREATE TABLE IF NOT EXISTS BoughtStock (\n"
+                + "    bought_id integer PRIMARY KEY autoincrement,\n"
+                + "    account_no integer NOT NULL,\n"
+                + "    stock_id integer NOT NULL,\n"
+                + "    stock_unit integer NOT NULL,\n"
+                + "    stock_price real NOT NULL,\n"
+//                + "    PRIMARY KEY (account_no, stock_id),\n"
+                + "    FOREIGN KEY (account_no) REFERENCES Account(account_no),\n"
+                + "    FOREIGN KEY (stock_id) REFERENCES Stock(stock_id)\n"
+                + ");";
+        execute(sql);
     }
 }

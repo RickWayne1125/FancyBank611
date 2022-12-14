@@ -8,7 +8,7 @@ import Account.AccountType;
 import java.util.Map;
 
 public class SecurityAccount extends Account {
-    private Map<Stock, Integer> stocks;
+    private Map<Stock, Integer> stocks; // stock
     private Money realized;
     private Money unrealized;
     private Money totalPaid;    // total paid for all stocks, this is used to calculate the unrealized gain/loss

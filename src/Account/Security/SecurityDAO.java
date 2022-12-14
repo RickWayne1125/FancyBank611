@@ -1,25 +1,32 @@
 package Account.Security;
 
+import Account.AccountDAO;
+import DataBase.DataBase;
 import Utils.DAO;
 
 public class SecurityDAO implements DAO<SecurityAccount> {
+    private static DataBase dataBase = new DataBase();
     @Override
     public void create(SecurityAccount securityAccount) {
-        // TODO: Implement
+        String sql = "INSERT INTO SecurityAccount (account_no, realized, total_paid) VALUES (?,?,?)";
+        dataBase.execute(sql,new String[]{String.valueOf(securityAccount.getAccountNumber()),String.valueOf(securityAccount.getRealized()),String.valueOf(securityAccount.getTotalPaid())});
     }
 
     @Override
     public void update(SecurityAccount securityAccount) {
-        // TODO: Implement
+        String sql = "UPDATE SecurityAccount SET realized=?, total_paid=? WHERE account_no=?";
+        dataBase.execute(sql,new String[]{String.valueOf(securityAccount.getRealized()),String.valueOf(securityAccount.getTotalPaid()),String.valueOf(securityAccount.getAccountNumber())});
     }
 
     @Override
     public void delete(SecurityAccount securityAccount) {
-        // TODO: Implement
+        String sql = "DELETE FROM SecurityAccount WHERE account_no=?";
+        dataBase.execute(sql,new String[]{String.valueOf(securityAccount.getAccountNumber())});
     }
 
     public SecurityAccount readByAccountNumber(int accountNumber) {
-        // TODO: Implement
-        return null;
+        return (SecurityAccount) new AccountDAO().readByAccountNumber(accountNumber);
     }
+
+
 }
