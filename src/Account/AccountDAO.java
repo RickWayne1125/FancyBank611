@@ -103,6 +103,7 @@ public class AccountDAO implements DAO<Account> {
                 loan.setInterestRate(Double.parseDouble(row.get("interest_rate")));
                 loan.setUsername(row.get("username"));
                 loan.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
+                return loan;
             case SAVING:
                 Saving saving = new Saving(Integer.parseInt(row.get("account_no")), row.get("routing_no"), row.get("swift_code"));
                 saving.setInterestRate(Double.parseDouble(row.get("interest_rate")));
