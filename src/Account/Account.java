@@ -117,4 +117,13 @@ public abstract class Account {
     public String toString() {
         return "AccountNo: " + accountNumber + ", AccountType: " + type + ", RoutingNo: " + routingNumber + ", SwiftCode: " + swiftCode;
     }
+
+    public double getBalanceByCurrency(String currency) {
+        for (Money money : currentBalance) {
+            if (money.getCurrency().getCurrencyName().equals(currency)) {
+                return money.getAmount();
+            }
+        }
+        return 0;
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DataBase {
-    private static Connection connection;
+    private static Connection connection = connect();
 
     public DataBase() {
         // Establish connection to database
@@ -149,7 +149,7 @@ public class DataBase {
             for (int i = 0; i < values.length; i++) {
                 preparedStatement.setString(i + 1, values[i]);
             }
-//            IO.displayMessage("Executing: " + preparedStatement.toString(), MessageType.INFO);
+            IO.displayMessage("Executing: " + preparedStatement.toString(), MessageType.INFO);
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -182,11 +182,13 @@ public class DataBase {
     public static void clearTable(String tableName) {
         String sql = "DELETE FROM " + tableName;
         IO.displayMessage("Clearing table " + tableName, MessageType.WARNING);
+        IO.displayMessage("Executing: " + sql, MessageType.INFO);
         execute(sql);
         IO.displayMessage("Table " + tableName + " cleared", MessageType.INFO);
     }
 
     public void clearDatabase() {
+        IO.displayMessage("Clearing database", MessageType.WARNING);
         // Drop all tables
         String sql = "DROP TABLE IF EXISTS User";
         execute(sql);
@@ -238,7 +240,7 @@ public class DataBase {
             // create a connection to the database
             conn = DriverManager.getConnection(url);
 
-            System.out.println("Connection to SQLite has been established.");
+            IO.displayMessage("Connection to SQLite has been established.", MessageType.INFO);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -249,7 +251,7 @@ public class DataBase {
     public static void generateTestData() {
         // Create User Data
         String sql = "INSERT INTO User (username, password, first_name, middle_name, last_name, email, contact, address, " +
-                "is_customer, last_login) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                "is_customer, last_login, has_collateral) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, "admin");
@@ -262,9 +264,10 @@ public class DataBase {
             statement.setString(8, "");
             statement.setInt(9, 0);
             statement.setString(10, "");
+            statement.setInt(11, 0);
             statement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            IO.displayMessage(e.getMessage(), MessageType.ERROR);
         }
         IO.displayMessage("Admin user created", MessageType.INFO);
         // Create Currency Data
@@ -299,19 +302,8 @@ public class DataBase {
 
     public static void main(String[] args) {
         DataBase db = new DataBase();
-//        db.clearDatabase();
-//        db.createTables();
-//        db.generateTestData();
-        String sql = "CREATE TABLE IF NOT EXISTS BoughtStock (\n"
-                + "    bought_id integer PRIMARY KEY autoincrement,\n"
-                + "    account_no integer NOT NULL,\n"
-                + "    stock_id integer NOT NULL,\n"
-                + "    stock_unit integer NOT NULL,\n"
-                + "    stock_price real NOT NULL,\n"
-//                + "    PRIMARY KEY (account_no, stock_id),\n"
-                + "    FOREIGN KEY (account_no) REFERENCES Account(account_no),\n"
-                + "    FOREIGN KEY (stock_id) REFERENCES Stock(stock_id)\n"
-                + ");";
-        execute(sql);
+        db.clearDatabase();
+        db.createTables();
+        db.generateTestData();
     }
 }

@@ -75,4 +75,18 @@ public class LoanDAO implements DAO<Loan> {
         }
         return loans;
     }
+
+    public List<Loan> readApprovedLoans() {
+        String sql = "SELECT * FROM Loan WHERE approved = 1";
+        List<Map<String, String>> results = dataBase.query(sql, new String[]{});
+        List<Loan> loans = new ArrayList<>();
+        if (results.size() == 0) {
+            return loans;
+        }
+        for (Map<String, String> row : results) {
+            Loan loan = readByAccountNumber(Integer.parseInt(row.get("account_no")));
+            loans.add(loan);
+        }
+        return loans;
+    }
 }

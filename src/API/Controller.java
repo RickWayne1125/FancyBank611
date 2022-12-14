@@ -179,7 +179,7 @@ public class Controller {
 
     /* Manager Functions */
     // ManagerLogin
-    public Manager loginManager(String username, String password) {
+    public static Manager loginManager(String username, String password) {
         // If the username and password are correct, return the manager object, otherwise return null
         return managerService.loginManager(username,password);
     }
@@ -238,8 +238,23 @@ public class Controller {
         return loanService.getUnapprovedLoans();
     }
 
+    // Get Approved Loan List
+    public List<Loan> getApprovedLoanList() {
+        return loanService.getApprovedLoans();
+    }
+
+    // Get Loans By Customer
+    public List<Loan> getLoansByCustomer(Customer customer) {
+        return loanService.getLoansByCustomer(customer);
+    }
+
     // Approve Loan
     public boolean approveLoan(Loan loan) {
         return loanService.approveLoan(loan);
+    }
+
+    // Set Has Collateral
+    public boolean setHasCollateral(Customer customer, boolean hasCollateral) {
+        return loanService.setHasCollateral(customer, hasCollateral);
     }
 }

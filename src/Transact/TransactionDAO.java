@@ -6,6 +6,8 @@ import DataBase.DataBase;
 import Money.Money;
 import Money.CurrencyDAO;
 import Utils.DAO;
+import Utils.IO;
+import Utils.MessageType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -102,7 +104,7 @@ public class TransactionDAO implements DAO<Transaction> {
             dayStart = convertFormat(day);
             dayEnd = convertFormatEnd(day);
         }catch (ParseException e) {
-            System.out.println("Error parsing input date string: " + e.getMessage());
+            IO.displayMessage("Error parsing input date string: " + e.getMessage(), MessageType.ERROR);
         }
         String sql = "SELECT * FROM TransactionTable WHERE date >= ? AND date <= ?";
         List<Map<String, String>> results = dataBase.query(sql, new String[]{dayStart, dayEnd});

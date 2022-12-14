@@ -8,6 +8,8 @@ import DataBase.DataBase;
 import Money.Money;
 import Money.MoneyDAO;
 import Utils.DAO;
+import Utils.IO;
+import Utils.MessageType;
 
 import java.util.Date;
 import java.util.List;
@@ -58,8 +60,8 @@ public class AccountDAO implements DAO<Account> {
     @Override
     public void update(Account account) {
         String sql = "UPDATE Account SET account_type = ?, username = ?, routing_no = ?, swift_code = ?, interest_rate = ? WHERE account_no = ?";
-        dataBase.execute(sql, new String[]{String.valueOf(account.getType()), String.valueOf(account.getUsername()),
-                String.valueOf(account.getRoutingNumber()), String.valueOf(account.getSwiftCode()), String.valueOf(account.getInterestRate()),
+        dataBase.execute(sql, new String[]{String.valueOf(account.getType()), account.getUsername(),
+                String.valueOf(account.getRoutingNumber()), account.getSwiftCode(), String.valueOf(account.getInterestRate()),
                 String.valueOf(account.getAccountNumber())});
         // Update Money table
         MoneyDAO moneyDAO = new MoneyDAO();
