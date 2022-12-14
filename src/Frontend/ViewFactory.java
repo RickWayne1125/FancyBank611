@@ -34,4 +34,8 @@ public class ViewFactory {
         return new LoanAccountsView();
     }
 
+    public static AbstractJPanel getManagerStockView(){
+        return new ManagerStocksView();
+    }
+
 }

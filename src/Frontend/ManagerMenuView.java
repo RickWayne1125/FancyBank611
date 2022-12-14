@@ -10,6 +10,7 @@ public class ManagerMenuView extends AbstractJPanel{
     private JButton viewCustomersButton;
     private JPanel basePanel;
     private JButton loansButton;
+    private JButton stocksButton;
 
     public ManagerMenuView() {
         logOutButton.addActionListener(new ActionListener() {
@@ -28,6 +29,12 @@ public class ManagerMenuView extends AbstractJPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Frontend.getInstance().next(ViewFactory.getCustomersListView());
+            }
+        });
+        stocksButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frontend.getInstance().next(ViewFactory.getManagerStockView());
             }
         });
     }

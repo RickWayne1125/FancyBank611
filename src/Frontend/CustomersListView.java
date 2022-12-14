@@ -58,7 +58,6 @@ public class CustomersListView extends AbstractJPanel {
         for (JPanel panel:customerPanels){
             customersListPanel.add(panel);
         }
-        System.out.println(customersListPanel);
         Frontend.getInstance().render();
     }
 

@@ -211,7 +211,7 @@ public class Controller {
 //        return false;
 //    }
 
-    public boolean addStock(String name, int price){
+    public static boolean addStock(String name, int price){
         return StockService.addNewStock(name,price);
     }
 
@@ -221,7 +221,7 @@ public class Controller {
 //        return false;
 //    }
 
-    public boolean deleteStock(String name){
+    public static boolean deleteStock(String name){
         return StockService.deleteStock(name);
     }
 

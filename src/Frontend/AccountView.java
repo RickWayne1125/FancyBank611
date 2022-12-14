@@ -7,6 +7,7 @@ import Money.Currency;
 import Money.Money;
 import Person.Customer.Customer;
 import Transact.Transaction;
+import Transact.TransactionStatus;
 import Transact.TransactionType;
 import Utils.Helpers;
 
@@ -146,7 +147,7 @@ public class AccountView extends AbstractJPanel{
     public void loadTransactionDetails(List<Transaction> transactions){
         transactionsView.removeAll();
         String[] columns = new String[] {
-                "id", "date", "from", "to", "amount", "balance"
+                "id", "status", "date", "from", "to", "amount", "balance"
         };
         Object[][] data = new Object[transactions.size()][5];
         double balance = 0;
@@ -162,8 +163,10 @@ public class AccountView extends AbstractJPanel{
                 to = null;
                 money = money*-1;
             }
-            balance += money;
-            data[transactions.size()-i-1] = new Object[]{transaction.getId(), transaction.getDate().toString(), from, to, money, balance };
+            if(transaction.getTransactionStatus().equals(TransactionStatus.SUCCESS)) {
+                balance += money;
+            }
+            data[transactions.size()-i-1] = new Object[]{transaction.getId(), transaction.getTransactionStatus(),transaction.getDate().toString(), from, to, money, balance };
         }
         transactionsView.setModel(utils.getTableModel(data, columns));
         transactionsView.revalidate();
