@@ -40,6 +40,14 @@ public class StockService {
         return stockDao.readAll();
     }
 
+    public Stock getStockByID(int id){
+        return stockDao.readByID(id);
+    }
+
+    public double getCurrentStockPriceByID(int id){
+        return getStockByID(id).getCurrentPrice().getAmount();
+    }
+
     public static void main(String[] args){
         //addNewStock("google",5);
         //updateStock("google",3);

@@ -28,5 +28,4 @@ public class SecurityDAO implements DAO<SecurityAccount> {
         return (SecurityAccount) new AccountDAO().readByAccountNumber(accountNumber);
     }
 
-
 }

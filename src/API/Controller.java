@@ -53,6 +53,11 @@ public class Controller {
         return stockService.getAllStock();
     }
 
+    // get stock price by id
+    public double getCurrentStockPriceByID(int id){
+        return stockService.getCurrentStockPriceByID(id);
+    }
+
     // Get All Currency Map
     public static Map<String, Currency> getAllCurrencyMap() {
         List<Currency> currencyList = getAllCurrency();
@@ -151,6 +156,18 @@ public class Controller {
     public static List<BoughtStock> viewBoughtStock(SecurityAccount securityAccount){
         return boughtStockService.viewBoughtStock(securityAccount);
     }
+
+    // get realized
+    public double getRealizedByAccountNumber(int accountNumber){
+        return securityService.getRealizedByAccountNumber(accountNumber);
+    }
+
+    // get un realized
+    public double getUnrealized(SecurityAccount securityAccount){
+        return boughtStockService.getUnrealized(securityAccount);
+    }
+
+
 
     // Add Loan
     public static boolean requestLoan(Customer customer, Loan loan) {
