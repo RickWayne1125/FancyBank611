@@ -43,7 +43,6 @@ public class AccountView extends AbstractJPanel{
 
         this.loadCurrenciesDropdown();
         this.customer =  (Customer) Frontend.getInstance().getUser();
-        System.out.println("number of accounts" + customer.getAccounts().size());
         this.account = Helpers.getAccount(accountType, customer.getAccounts());
         if (this.account == null) {
             this.account = Helpers.createNewAccount(accountType);

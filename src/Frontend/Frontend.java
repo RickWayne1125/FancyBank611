@@ -90,4 +90,10 @@ public class Frontend extends JFrame {
         panels.add(nextPanel);
         this.refresh();
     }
+
+    public void render(){
+        this.pack();
+        this.setSize(WIDTH, HEIGHT);
+        this.setLocationRelativeTo(null);
+    }
 }

@@ -165,7 +165,7 @@ public class Controller {
 
     /* Manager Functions */
     // ManagerLogin
-    public Manager loginManager(String username, String password) {
+    public static Manager loginManager(String username, String password) {
         // If the username and password are correct, return the manager object, otherwise return null
         return managerService.loginManager(username,password);
     }
@@ -181,7 +181,7 @@ public class Controller {
         return managerService.viewCustomerByName(username);
     }
 
-    public List<Customer> getAllCustomer(){
+    public static List<Customer> getAllCustomer(){
         return managerService.viewAllCustomer();
     }
 

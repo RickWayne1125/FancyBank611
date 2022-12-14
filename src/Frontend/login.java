@@ -3,10 +3,10 @@ package Frontend;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
+
 import API.Controller;
 import Person.Customer.Customer;
+import Person.Person;
 
 public class login extends AbstractJPanel {
     private JPanel basePanel;
@@ -14,6 +14,7 @@ public class login extends AbstractJPanel {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton signUpButton;
+    private JRadioButton isManagerLogin;
 
     public login() {
         submitButton.addActionListener(new ActionListener() {
@@ -22,14 +23,20 @@ public class login extends AbstractJPanel {
                 String username = usernameField.getText();
                 String password = passwordField.getText();
 
+                Person person = login(username, password);
 
-                Customer customer = Controller.loginCustomer(username, password);
-
-                if (customer != null) {
-                    Frontend.getInstance().setUser(customer);
-                    Frontend.getInstance().setUserType("customer");
-                    Frontend.getInstance().next(ViewFactory.getMenuPage());
+                if (person != null) {
+                    Frontend.getInstance().setUser(person);
+                    if(isManagerLogin.isSelected()){
+                        Frontend.getInstance().setUserType("manager");
+                        Frontend.getInstance().next(ViewFactory.getManagerMenuPage());
+                    } else {
+                        Frontend.getInstance().setUserType("customer");
+                        Frontend.getInstance().next(ViewFactory.getCustomerMenuPage());
+                    }
                 } else {
+                    Frontend.getInstance().setUser(null);
+                    Frontend.getInstance().setUserType(null);
                     utils.showNotice("Invalid username or password");
                 }
             }
@@ -40,6 +47,14 @@ public class login extends AbstractJPanel {
                 Frontend.getInstance().next(ViewFactory.getCreateEditUserView("create", "customer"));
             }
         });
+    }
+
+    public Person login(String username, String password) {
+        if(isManagerLogin.isSelected()){
+            return Controller.loginManager(username, password);
+        } else {
+            return Controller.loginCustomer(username, password);
+        }
     }
 
     @Override

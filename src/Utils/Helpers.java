@@ -2,16 +2,19 @@ package Utils;
 
 import API.Controller;
 import Account.Account;
+import Account.Loan.Loan;
 import Account.Saving;
 import Account.Checking;
 import Account.AccountType;
 import Money.Currency;
+import Money.Money;
 import Person.Customer.Customer;
 import Person.Manager.Manager;
 import Person.Person;
 import Transact.Transaction;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Helpers {
@@ -29,6 +32,18 @@ public class Helpers {
         }
         return null;
     };
+
+    public static Loan createLoanAccount(Money money, Double interest, Date start, Date end){
+        int accountNumber =  (int) ((Math.random() * (9999999 - 1111111)) + 1111111);
+        String routingNumber = "1234ABCD";
+        String swiftCode = "ABCDPEQ";
+
+        Loan loan = new Loan(accountNumber, routingNumber, swiftCode, interest, start, end);
+        List<Money> balance = new ArrayList<>();
+        balance.add(money);
+        loan.setCurrentBalance(balance);
+        return loan;
+    }
 
     public static String getAccountTypeString(AccountType accountType){
         if (accountType.equals(AccountType.SAVING)) {

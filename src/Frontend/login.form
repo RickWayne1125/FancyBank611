@@ -10,7 +10,7 @@
     <children>
       <component id="e5bcc" class="javax.swing.JButton" binding="submitButton">
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <label value="Login"/>
@@ -48,7 +48,7 @@
       </hspacer>
       <component id="95639" class="javax.swing.JLabel">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Username: "/>
@@ -61,7 +61,7 @@
       </hspacer>
       <component id="c037b" class="javax.swing.JLabel">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Password"/>
@@ -80,6 +80,14 @@
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
+      <component id="91b9b" class="javax.swing.JRadioButton" binding="isManagerLogin">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Manager"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>
