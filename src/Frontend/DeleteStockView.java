@@ -19,7 +19,7 @@ public class DeleteStockView  extends AbstractJPanel {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Controller.deleteStock(stock.getStockName());
+                Controller.deleteStock(stock.getStockId());
                 parent.refresh();
             }
         });
