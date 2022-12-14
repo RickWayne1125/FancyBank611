@@ -26,4 +26,8 @@ public class Stock {
     public Money getCurrentPrice() {
         return currentPrice;
     }
+
+    public void setCurrentPrice(Money currentPrice) {
+        this.currentPrice = currentPrice;
+    }
 }
