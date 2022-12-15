@@ -12,5 +12,7 @@ public class Config {
     public static final String BANK_ROUTING_NUMBER = "123456789";
     public static final String BANK_SWIFT_CODE = "123456789";
     public static boolean DEBUG = true;
-    public static double DEFAULT_SERVICE_FEE_RATE = 0.01;
+    public static double DEFAULT_TRANSACT_SERVICE_FEE_RATE = 0.01;
+    public static double DEFAULT_OPEN_SERVICE_FEE = 10.00;  // open account fee (USD)
+    public static double DEFAULT_CLOSE_SERVICE_FEE = 10.00;  // loan service fee (USD)
 }

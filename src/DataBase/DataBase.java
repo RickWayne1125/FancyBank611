@@ -34,7 +34,7 @@ public class DataBase {
                 + "    address text,\n"
                 + "    is_customer integer,\n"   // 0 for false, 1 for true
                 + "    last_login text,\n"   // This is used to store the last login time
-                + "    has_collateral integer\n"   // 0 for false, 1 for true
+                + "    has_collateral text\n"   // 0 for false, 1 for true
                 + ");";
         execute(sql);
         IO.displayMessage("User table created", MessageType.INFO);
@@ -265,7 +265,7 @@ public class DataBase {
             statement.setString(8, "");
             statement.setInt(9, 0);
             statement.setString(10, new Date().toString());
-            statement.setInt(11, 0);
+            statement.setString(11, "false");
             statement.executeUpdate();
             IO.displayMessage("Admin user created", MessageType.INFO);
             sql = "INSERT INTO Account (account_no, account_type, username, routing_no, swift_code, interest_rate) VALUES(?,?,?,?,?,?)";

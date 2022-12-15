@@ -54,7 +54,7 @@ public class Controller {
     }
 
     // get stock price by id
-    public double getCurrentStockPriceByID(int id){
+    public double getCurrentStockPriceByID(int id) {
         return stockService.getCurrentStockPriceByID(id);
     }
 
@@ -141,42 +141,47 @@ public class Controller {
         return accountService.openAccount(customer, account);
     }
 
+    // Close Account
+    public boolean closeAccount(Customer customer, Account account) {
+        // If the account is successfully closed, return true, otherwise return false
+        return accountService.closeAccount(customer, account);
+    }
+
     // open stock account, must indicate the saving and security account, and the initial money at least 1000.0
     // initially, there will be no deals in the security account, set all to be zero
-    public static boolean openStock(Customer customer, Account account, SecurityAccount securityAccount,double initAmount){
-        return securityService.openStock(customer, account,securityAccount,initAmount);
+    public static boolean openStock(Customer customer, Account account, SecurityAccount securityAccount, double initAmount) {
+        return securityService.openStock(customer, account, securityAccount, initAmount);
     }
 
     // Get Bought Stock Details (This can be accessed by using the SecurityAccount object)
 
     // Buy Stock
     // must indicate the money goes to which bankAccount
-    public boolean buyStock(SecurityAccount account, Account bankAccount ,Stock stock, int unit) {
+    public boolean buyStock(SecurityAccount account, Account bankAccount, Stock stock, int unit) {
         // If the stock is successfully bought, return true, otherwise return false
-        return securityService.buyStock(account,bankAccount,stock,unit);
+        return securityService.buyStock(account, bankAccount, stock, unit);
     }
 
     // Sell Stock
-    public boolean sellStock(SecurityAccount securityAccount,Account bankAccount, BoughtStock boughtStock, int unit) {
+    public boolean sellStock(SecurityAccount securityAccount, Account bankAccount, BoughtStock boughtStock, int unit) {
         // If the stock is successfully sold, return true, otherwise return false
-        return securityService.sellStock(securityAccount,bankAccount,boughtStock,unit);
+        return securityService.sellStock(securityAccount, bankAccount, boughtStock, unit);
     }
 
     // get bought stock
-    public static List<BoughtStock> viewBoughtStock(SecurityAccount securityAccount){
+    public static List<BoughtStock> viewBoughtStock(SecurityAccount securityAccount) {
         return boughtStockService.viewBoughtStock(securityAccount);
     }
 
     // get realized
-    public double getRealizedByAccountNumber(int accountNumber){
+    public double getRealizedByAccountNumber(int accountNumber) {
         return securityService.getRealizedByAccountNumber(accountNumber);
     }
 
     // get un realized
-    public double getUnrealized(SecurityAccount securityAccount){
+    public double getUnrealized(SecurityAccount securityAccount) {
         return boughtStockService.getUnrealized(securityAccount);
     }
-
 
 
     // Add Loan
@@ -208,11 +213,11 @@ public class Controller {
     // ManagerLogin
     public static Manager loginManager(String username, String password) {
         // If the username and password are correct, return the manager object, otherwise return null
-        return managerService.loginManager(username,password);
+        return managerService.loginManager(username, password);
     }
 
     // manager sign up
-    public boolean registerManager(Manager manager){
+    public boolean registerManager(Manager manager) {
         return managerService.registerManager(manager);
     }
 
@@ -222,7 +227,7 @@ public class Controller {
         return managerService.viewCustomerByName(username);
     }
 
-    public List<Customer> getAllCustomer(){
+    public List<Customer> getAllCustomer() {
         return managerService.viewAllCustomer();
     }
 
@@ -237,8 +242,8 @@ public class Controller {
 //        return false;
 //    }
 
-    public boolean addStock(String name, int price){
-        return StockService.addNewStock(name,price);
+    public boolean addStock(String name, int price) {
+        return StockService.addNewStock(name, price);
     }
 
     // Delete Stock
@@ -247,7 +252,7 @@ public class Controller {
 //        return false;
 //    }
 
-    public boolean deleteStock(int id){
+    public boolean deleteStock(int id) {
         return StockService.deleteStock(id);
     }
 
@@ -256,8 +261,8 @@ public class Controller {
 //        // If the stock is successfully updated, return true, otherwise return false
 //        return false;
 //    }
-    public boolean updateStock(int id , int price){
-        return StockService.updateStock(id,price);
+    public boolean updateStock(int id, int price) {
+        return StockService.updateStock(id, price);
     }
 
     // Get Unapproved Loan List
