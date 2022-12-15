@@ -190,4 +190,14 @@ public class Helpers {
             Frontend.getInstance().next(ViewFactory.getAccount(customer, accountType, account, managerView, false));
         }
     }
+
+    public static void editStockPrice(Stock stock){
+        try {
+            String count = javax.swing.JOptionPane.showInputDialog("Enter new value");
+            int cnt = Integer.parseInt(count);
+            Controller.updateStock(stock.getStockId(), cnt);
+        } catch (Exception e) {
+            utils.showNotice("Failed");
+        }
+    }
 }

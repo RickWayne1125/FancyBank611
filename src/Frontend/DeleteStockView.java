@@ -2,6 +2,7 @@ package Frontend;
 
 import API.Controller;
 import Stock.Stock;
+import Utils.Helpers;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +13,7 @@ public class DeleteStockView  extends AbstractJPanel {
     private JLabel stockName;
     private JButton deleteButton;
     private JLabel stockValue;
+    private JButton editValueButton;
 
     public DeleteStockView(Stock stock, ManagerStocksView parent) {
         stockName.setText(stock.getStockName());
@@ -20,6 +22,13 @@ public class DeleteStockView  extends AbstractJPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Controller.deleteStock(stock.getStockId());
+                parent.refresh();
+            }
+        });
+        editValueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Helpers.editStockPrice(stock);
                 parent.refresh();
             }
         });

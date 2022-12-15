@@ -261,7 +261,7 @@ public class Controller {
 //        // If the stock is successfully updated, return true, otherwise return false
 //        return false;
 //    }
-    public boolean updateStock(int id, int price) {
+    public static boolean updateStock(int id, int price) {
         return StockService.updateStock(id, price);
     }
 
