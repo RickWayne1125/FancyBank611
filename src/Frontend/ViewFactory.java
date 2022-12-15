@@ -1,6 +1,7 @@
 package Frontend;
 
 import Account.AccountType;
+import Account.Security.SecurityAccount;
 import Person.Customer.Customer;
 
 public class ViewFactory {
@@ -44,5 +45,9 @@ public class ViewFactory {
 
     public static AbstractJPanel getLoansView(Boolean hideBackButton, Customer customer, Boolean managerView){
         return new LoansView(hideBackButton, customer, managerView);
+    }
+
+    public static AbstractJPanel getSecurityAccount(SecurityAccount account){
+        return new SecurityAccountView(account);
     }
 }

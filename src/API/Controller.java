@@ -119,7 +119,7 @@ public class Controller {
     }
 
     // Get Account By Account Number
-    public Account getAccountByAccountNumber(Integer accountNumber) {
+    public static Account getAccountByAccountNumber(Integer accountNumber) {
         // This method will check the database and return the account object
         return accountService.getAccountByAccountNumber(accountNumber);
     }
@@ -148,13 +148,13 @@ public class Controller {
 
     // Buy Stock
     // must indicate the money goes to which bankAccount
-    public boolean buyStock(SecurityAccount account, Account bankAccount ,Stock stock, int unit) {
+    public static boolean buyStock(SecurityAccount account, Account bankAccount ,Stock stock, int unit) {
         // If the stock is successfully bought, return true, otherwise return false
         return securityService.buyStock(account,bankAccount,stock,unit);
     }
 
     // Sell Stock
-    public boolean sellStock(SecurityAccount securityAccount,Account bankAccount, BoughtStock boughtStock, int unit) {
+    public static boolean sellStock(SecurityAccount securityAccount,Account bankAccount, BoughtStock boughtStock, int unit) {
         // If the stock is successfully sold, return true, otherwise return false
         return securityService.sellStock(securityAccount,bankAccount,boughtStock,unit);
     }

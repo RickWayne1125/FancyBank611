@@ -7,12 +7,17 @@ import Account.Saving;
 import Account.Checking;
 import Account.AccountType;
 import Account.Security.SecurityAccount;
+import BoughtStock.BoughtStock;
+import Frontend.Frontend;
 import Money.Currency;
 import Money.Money;
 import Person.Customer.Customer;
 import Person.Manager.Manager;
 import Person.Person;
+import Stock.Stock;
 import Transact.Transaction;
+import Frontend.utils;
+import Frontend.ViewFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -103,6 +108,70 @@ public class Helpers {
         } catch (Exception e){
             return false;
         }
+    }
+
+    public static void securityAccountView(){
+        Customer customer =  (Customer) Frontend.getInstance().getUser();
+        SecurityAccount account = (SecurityAccount) Helpers.getAccount(AccountType.SECURITY, customer.getAccounts());
+        System.out.println("asd");
+        System.out.println(account);
+        if (account == null) {
+            String amount = javax.swing.JOptionPane.showInputDialog("Enter initial amount");
+            try{
+                int amt = Integer.parseInt(amount);
+                if ( amt < 1000 ){
+                    utils.showNotice("Minimum 1000 USD required.");
+
+                } else {
+                    Account savingsAccount = Helpers.getAccount(AccountType.SAVING, customer.getAccounts());
+                    if (savingsAccount == null){
+                        utils.showNotice("You need to open a savings account first");
+                    } else {
+                        account = (SecurityAccount) Helpers.createNewAccount(AccountType.SECURITY);
+                        if(!Controller.openStock(savingsAccount, account, amt)){
+                            utils.showNotice("Minimum 5000 required in savings to create a securities account");
+                        }else {
+                            utils.showNotice("New " + Helpers.getAccountTypeString(AccountType.SECURITY) + " account created!");
+                            Frontend.getInstance().next(ViewFactory.getSecurityAccount(account));
+                        }
+                    }
+                }
+            }catch(Exception e){
+                utils.showNotice("Please enter a valid amount");
+            }
+        } else {
+            Frontend.getInstance().next(ViewFactory.getSecurityAccount(account));
+        }
+    }
+
+    public static boolean sellStock(SecurityAccount secAcc, BoughtStock stock){
+        try {
+            String count = javax.swing.JOptionPane.showInputDialog("Enter units");
+            int cnt = Integer.parseInt(count);
+            if(!Controller.sellStock(secAcc, Controller.getAccountByAccountNumber(1), stock, cnt)){
+                utils.showNotice("Failed");
+            } else {
+                return true;
+            }
+        } catch (Exception e){
+            utils.showNotice("Failed");
+        }
+        return false;
+    }
+
+    public static boolean buyStock(SecurityAccount secAcc, Stock stock){
+        try {
+            String count = javax.swing.JOptionPane.showInputDialog("Enter units");
+            int cnt = Integer.parseInt(count);
+            if(!Controller.buyStock(secAcc, Controller.getAccountByAccountNumber(1), stock, cnt)){
+                utils.showNotice("Failed");
+            } else {
+                return true;
+            }
+        } catch (Exception e){
+            utils.showNotice("Failed");
+        }
+        return false;
     }
 
 }

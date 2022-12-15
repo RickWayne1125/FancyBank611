@@ -57,15 +57,15 @@ public class LoansView extends AbstractJPanel{
             approvedLoans = Controller.getApprovedLoanList();
             pendingLoans = Controller.getUnapprovedLoanList();
         }
-        loadLoanPanel(approvedLoans, this.approvedLoans);
-        loadLoanPanel(pendingLoans, this.pendingLoans);
+        loadLoanPanel(approvedLoans, this.approvedLoans, false);
+        loadLoanPanel(pendingLoans, this.pendingLoans, this.managerView);
     }
 
-    public void loadLoanPanel(List<Loan> loans, JPanel panel){
+    public void loadLoanPanel(List<Loan> loans, JPanel panel, Boolean showApproveButton){
         panel.removeAll();
         if(loans!=null){
             for(Loan loan:loans){
-                panel.add((new LoanView(loan, this.managerView,this)).getBasePanel());
+                panel.add((new LoanView(loan,showApproveButton,this)).getBasePanel());
             }
         }
         panel.revalidate();

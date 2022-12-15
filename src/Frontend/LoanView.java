@@ -14,9 +14,9 @@ public class LoanView extends AbstractJPanel{
     private JTable loanDetail;
     private Loan loan;
 
-    public LoanView(Loan loan, Boolean managerView, LoansView parent) {
+    public LoanView(Loan loan, Boolean showApproveButton, LoansView parent) {
         this.loan = loan;
-        if(!managerView){
+        if(!showApproveButton){
             approveButton.setVisible(false);
         }
         refresh();
@@ -36,7 +36,7 @@ public class LoanView extends AbstractJPanel{
     public void loadAccountDetails(){
         loanDetail.removeAll();
         String[] columns = new String[] {
-                "", ""
+                "", "", "", ""
         };
 
         String name = this.loan.getUsername();

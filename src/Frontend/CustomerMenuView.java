@@ -2,6 +2,7 @@ package Frontend;
 
 import Account.AccountType;
 import Person.Customer.Customer;
+import Utils.Helpers;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -47,6 +48,12 @@ public class CustomerMenuView extends AbstractJPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Frontend.getInstance().next(ViewFactory.getLoanView());
+            }
+        });
+        securitiesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Helpers.securityAccountView();
             }
         });
     }
