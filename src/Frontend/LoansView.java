@@ -21,8 +21,8 @@ public class LoansView extends AbstractJPanel{
 
     public LoansView(Boolean hideBackButton, Customer customer, Boolean managerView) {
         this.customer = customer;
-        approvedLoans.setLayout(new java.awt.BorderLayout());
-        pendingLoans.setLayout(new java.awt.BorderLayout());
+        approvedLoans.setLayout(new BoxLayout(approvedLoans, BoxLayout.Y_AXIS));
+        pendingLoans.setLayout(new BoxLayout(pendingLoans, BoxLayout.Y_AXIS));
         if(hideBackButton){
             backButton.setVisible(false);
         }

@@ -38,7 +38,9 @@ public class LoanAccountsView extends AbstractJPanel{
 
         loadCurrenciesDropdown();
 
-        refresh();
+        loansView = new LoansView(true, (Customer) Frontend.getInstance().getUser(), false);
+        loansPanel.add(loansView.getBasePanel());
+
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,13 +61,12 @@ public class LoanAccountsView extends AbstractJPanel{
                     end.setYear(start.getYear()+years);
                     Loan loan = Helpers.createLoanAccount(new Money(amount, currency), interest, start, end);
                     if(Controller.requestLoan((Customer) Frontend.getInstance().getUser(), loan)){
-
                         utils.showNotice("Loan request submitted");
+                        amountField.setText("");
+                        refresh();
                     } else {
                         utils.showNotice("You don't have any collateral for this loan.");
                     }
-                    amountField.setText("");
-                    refresh();
                 } catch (Exception ex){
                     utils.showNotice("Invalid data");
                 }
@@ -74,9 +75,7 @@ public class LoanAccountsView extends AbstractJPanel{
     }
 
     public void refresh(){
-        loansPanel.removeAll();
-        loansView = new LoansView(true, (Customer) Frontend.getInstance().getUser(), false);
-        loansPanel.add(loansView.getBasePanel());
+        loansView.refresh();
     }
 
     public void loadLoansTable(List<Loan> loans, JTable table){

@@ -23,8 +23,8 @@ public class SecurityAccountView extends AbstractJPanel{
 
     public SecurityAccountView(SecurityAccount account) {
         this.customer =  (Customer) Frontend.getInstance().getUser();
-        allStocksPanel.setLayout(new java.awt.BorderLayout());
-        ownedStocksPanel.setLayout(new java.awt.BorderLayout());
+        allStocksPanel.setLayout(new BoxLayout(allStocksPanel, BoxLayout.Y_AXIS));
+        ownedStocksPanel.setLayout(new BoxLayout(ownedStocksPanel, BoxLayout.Y_AXIS));
 
         this.account = account;
         if (this.account == null) {
