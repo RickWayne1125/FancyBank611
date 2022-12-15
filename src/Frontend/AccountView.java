@@ -153,7 +153,7 @@ public class AccountView extends AbstractJPanel{
     public void loadTransactionDetails(List<Transaction> transactions){
         transactionsView.removeAll();
         String[] columns = new String[] {
-                "id", "status", "date", "from", "to", "amount", "balance"
+                "id", "type", "status", "date", "from", "to", "amount", "balance"
         };
         Object[][] data = new Object[transactions.size()][7];
         double balance = 0;
@@ -172,7 +172,7 @@ public class AccountView extends AbstractJPanel{
             if(transaction.getTransactionStatus().equals(TransactionStatus.SUCCESS)) {
                 balance += money;
             }
-            data[transactions.size()-i-1] = new Object[]{transaction.getId(), transaction.getTransactionStatus(),transaction.getDate().toString(), from, to, money, balance };
+            data[transactions.size()-i-1] = new Object[]{transaction.getId(), transaction.getTransactionType(),transaction.getTransactionStatus(),transaction.getDate().toString(), from, to, money, balance };
         }
         transactionsView.setModel(utils.getTableModel(data, columns));
         transactionsView.revalidate();
