@@ -18,6 +18,7 @@ import Transact.TransactionService;
 import DataBase.DataBase;
 
 import java.util.Date;
+import java.util.List;
 
 import static Account.AccountService.getAccountByAccountNumber;
 
@@ -105,11 +106,22 @@ public class Tests {
         Controller.requestLoan(customer, loan);
     }
 
+    public static void approveLoan(){
+        List<Loan> loans = Controller.getUnapprovedLoanList();
+        for (Loan loan : loans) {
+            System.out.println(loan);
+            System.out.println(loan.getUsername());
+            Controller.approveLoan(loan);
+        }
+        System.out.println(Controller.getUnapprovedLoanList());
+    }
+
     public static void main(String[] args) {
 //        unitTest1();
 //        unitTest2();
 //        customerLoginAsManager();
-        customerLogin();
+//        customerLogin();
 //        requestLoan();
+        approveLoan();
     }
 }

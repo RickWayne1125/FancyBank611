@@ -257,7 +257,7 @@ public class Controller {
     }
 
     // Get Unapproved Loan List
-    public List<Loan> getUnapprovedLoanList() {
+    public static List<Loan> getUnapprovedLoanList() {
         return loanService.getUnapprovedLoans();
     }
 
@@ -272,7 +272,7 @@ public class Controller {
     }
 
     // Approve Loan
-    public boolean approveLoan(Loan loan) {
+    public static boolean approveLoan(Loan loan) {
         return loanService.approveLoan(loan);
     }
 
