@@ -139,8 +139,8 @@ public class Controller {
 
     // open stock account, must indicate the saving and security account, and the initial money at least 1000.0
     // initially, there will be no deals in the security account, set all to be zero
-    public static boolean openStock(Account account, SecurityAccount securityAccount,double initAmount){
-        return securityService.openStock(account,securityAccount,initAmount);
+    public static boolean openStock(Customer customer, Account account, SecurityAccount securityAccount,double initAmount){
+        return securityService.openStock(customer, account,securityAccount,initAmount);
     }
 
     // Get Bought Stock Details (This can be accessed by using the SecurityAccount object)
