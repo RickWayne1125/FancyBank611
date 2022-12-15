@@ -1,7 +1,9 @@
 package Frontend;
 
+import Account.Account;
 import Account.AccountType;
 import Person.Customer.Customer;
+import Utils.Helpers;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,9 +34,17 @@ public class CustomerDetailView extends AbstractJPanel{
     }
 
     public void refresh(){
-        savingsAccountPanel.removeAll();
-        savingsAccountPanel.add(ViewFactory.getAccount(this.customer, AccountType.SAVING, true).getBasePanel());
-        checkingAccountPanel.add(ViewFactory.getAccount(this.customer, AccountType.CHECKING, true).getBasePanel());
+        Account savingsAcc = Helpers.getAccount(AccountType.SAVING, customer.getAccounts());
+        if(savingsAcc != null){
+            savingsAccountPanel.removeAll();
+            savingsAccountPanel.add(ViewFactory.getAccount(this.customer, AccountType.SAVING, savingsAcc, true, false).getBasePanel());
+        }
+
+        Account checkingAcc = Helpers.getAccount(AccountType.CHECKING, customer.getAccounts());
+        if(checkingAcc != null){
+            checkingAccountPanel.removeAll();
+            checkingAccountPanel.add(ViewFactory.getAccount(this.customer, AccountType.CHECKING, checkingAcc, true, false).getBasePanel());
+        }
         loanAccountPanel.add(ViewFactory.getLoansView(true, this.customer, true).getBasePanel());
     }
 

@@ -192,7 +192,7 @@ public class Controller {
     }
 
     // Pay Loan
-    public boolean payLoanByCash(Loan account, Money money) {
+    public static boolean payLoanByCash(Loan account, Money money) {
         // If the loan is successfully paid, return true, otherwise return false
         return loanService.payLoanByCash(account, money);
     }

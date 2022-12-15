@@ -29,13 +29,13 @@ public class CustomerMenuView extends AbstractJPanel {
         savingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frontend.getInstance().next(ViewFactory.getAccount((Customer) Frontend.getInstance().getUser(), AccountType.SAVING, false));
+                Helpers.openAccountView((Customer) Frontend.getInstance().getUser(), AccountType.SAVING, false);
             }
         });
         checkingButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frontend.getInstance().next(ViewFactory.getAccount((Customer) Frontend.getInstance().getUser(), AccountType.CHECKING, false));
+                Helpers.openAccountView((Customer) Frontend.getInstance().getUser(), AccountType.CHECKING, false);
             }
         });
         profileButton.addActionListener(new ActionListener() {
