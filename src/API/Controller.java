@@ -82,11 +82,12 @@ public class Controller {
     // Customer Login
     public static Customer loginCustomer(String username, String password) {
         // If the username and password are correct, return the customer object, otherwise return null
+        System.out.println(username +  password);
         return customerService.loginCustomer(username, password);
     }
 
     // Customer Register
-    public boolean registerCustomer(Customer customer) {
+    public static boolean registerCustomer(Customer customer) {
         // If the customer is successfully registered, return true, otherwise return false
         return customerService.registerCustomer(customer);
     }
@@ -94,19 +95,19 @@ public class Controller {
     // Get Account Details (This can be accessed by using the customer object)
 
     // Refresh Account
-    public Account refreshAccount(Account account) {
+    public static Account refreshAccount(Account account) {
         // This method will check the database and return the updated account object
         return accountService.refreshAccount(account);
     }
 
     // Deposit
-    public boolean deposit(Account account, Money money) {
+    public static boolean deposit(Account account, Money money) {
         // If the deposit is successful, return true, otherwise return false
         return accountService.deposit(account, money);
     }
 
     // Withdraw
-    public boolean withdraw(Account account, Money money) {
+    public static boolean withdraw(Account account, Money money) {
         // If the withdraw is successful, return true, otherwise return false
         return accountService.withdraw(account, money);
     }
@@ -118,20 +119,20 @@ public class Controller {
     }
 
     // Get Account By Account Number
-    public Account getAccountByAccountNumber(Integer accountNumber) {
+    public static Account getAccountByAccountNumber(Integer accountNumber) {
         // This method will check the database and return the account object
         return accountService.getAccountByAccountNumber(accountNumber);
     }
 
     // Get Transaction History (This can be accessed by using the getTransactionHistory() in account object)
     // However, this method still needs to be implemented when the transaction history needs to be updated
-    public List<Transaction> getTransactionHistory(Account account) {
+    public static List<Transaction> getTransactionHistory(Account account) {
         // This method will check the database and update the transaction history in the account object
         return transactionService.getTransactionsByAccount(account);
     }
 
     // Open Account
-    public boolean openAccount(Customer customer, Account account) {
+    public static boolean openAccount(Customer customer, Account account) {
         // If the account is successfully opened, return true, otherwise return false
         // The account type need to be specified when creating the account object
         return accountService.openAccount(customer, account);
@@ -147,13 +148,13 @@ public class Controller {
 
     // Buy Stock
     // must indicate the money goes to which bankAccount
-    public boolean buyStock(SecurityAccount account, Account bankAccount ,Stock stock, int unit) {
+    public static boolean buyStock(SecurityAccount account, Account bankAccount ,Stock stock, int unit) {
         // If the stock is successfully bought, return true, otherwise return false
         return securityService.buyStock(account,bankAccount,stock,unit);
     }
 
     // Sell Stock
-    public boolean sellStock(SecurityAccount securityAccount,Account bankAccount, BoughtStock boughtStock, int unit) {
+    public static boolean sellStock(SecurityAccount securityAccount,Account bankAccount, BoughtStock boughtStock, int unit) {
         // If the stock is successfully sold, return true, otherwise return false
         return securityService.sellStock(securityAccount,bankAccount,boughtStock,unit);
     }
@@ -208,22 +209,22 @@ public class Controller {
     }
 
     // manager sign up
-    public boolean registerManager(Manager manager){
+    public static boolean registerManager(Manager manager){
         return managerService.registerManager(manager);
     }
 
     // Get Customer By Username
-    public Customer getCustomerByUsername(String username) {
+    public static Customer getCustomerByUsername(String username) {
         // Return the customer object
         return managerService.viewCustomerByName(username);
     }
 
-    public List<Customer> getAllCustomer(){
+    public static List<Customer> getAllCustomer(){
         return managerService.viewAllCustomer();
     }
 
     //day must be in the format of mm-dd-yyyy
-    public List<Transaction> getTransactionByDate(String day) throws ParseException {
+    public static List<Transaction> getTransactionByDate(String day) throws ParseException {
         return managerService.readDailyReport(day);
     }
 
@@ -233,7 +234,7 @@ public class Controller {
 //        return false;
 //    }
 
-    public boolean addStock(String name, int price){
+    public static boolean addStock(String name, int price){
         return StockService.addNewStock(name,price);
     }
 
@@ -243,7 +244,8 @@ public class Controller {
 //        return false;
 //    }
 
-    public boolean deleteStock(int id){
+
+    public static boolean deleteStock(int id){
         return StockService.deleteStock(id);
     }
 
@@ -262,12 +264,12 @@ public class Controller {
     }
 
     // Get Approved Loan List
-    public List<Loan> getApprovedLoanList() {
+    public static List<Loan> getApprovedLoanList() {
         return loanService.getApprovedLoans();
     }
 
     // Get Loans By Customer
-    public List<Loan> getLoansByCustomer(Customer customer) {
+    public static List<Loan> getLoansByCustomer(Customer customer) {
         return loanService.getLoansByCustomer(customer);
     }
 
