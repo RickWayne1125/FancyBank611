@@ -59,6 +59,7 @@ public class LoanDAO implements DAO<Loan> {
         Loan loan = new Loan(Integer.parseInt(row.get("account_no")), row.get("routing_no"), row.get("swift_code"),
                 Double.parseDouble(row.get("interest_rate")), startDate, dueDate);
         loan.setApproved(results2.get(0).get("approved").equals("1"));
+        loan.setUsername(row.get("username"));
         return loan;
     }
 
