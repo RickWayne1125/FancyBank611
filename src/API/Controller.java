@@ -112,6 +112,12 @@ public class Controller {
         return accountService.transfer(fromAccount, toAccount, money);
     }
 
+    // Get Account By Account Number
+    public Account getAccountByAccountNumber(Integer accountNumber) {
+        // This method will check the database and return the account object
+        return accountService.getAccountByAccountNumber(accountNumber);
+    }
+
     // Get Transaction History (This can be accessed by using the getTransactionHistory() in account object)
     // However, this method still needs to be implemented when the transaction history needs to be updated
     public List<Transaction> getTransactionHistory(Account account) {
