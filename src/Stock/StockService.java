@@ -16,28 +16,36 @@ public class StockService {
         return true;
     }
 
-    public static boolean updateStock(String name, int price){
+    public static boolean updateStock(int id, int price){
         Money money = new Money(price,new Currency("USD","$",1));
-        Stock stock = new Stock(1,name,money);
-        if(!stockDao.checkStockExist(name)){
+        Stock stock =getStockByID(id);
+        if(stock == null){
             return false;
         }
+        stock.setCurrentPrice(money);
         stockDao.update(stock);
         return true;
     }
 
-    public static boolean deleteStock(String name){
-        Money money = new Money(0,new Currency("USD","$",1));
-        Stock stock = new Stock(1,name,money);
-        if(!stockDao.checkStockExist(name)){
+    public static boolean deleteStock(int id){
+        Stock stock = getStockByID(id);
+        if(stock == null){
             return false;
         }
         stockDao.delete(stock);
         return true;
     }
 
-    public List<Stock> getAllStock(){
+    public static List<Stock> getAllStock(){
         return stockDao.readAll();
+    }
+
+    public static Stock getStockByID(int id){
+        return stockDao.readByID(id);
+    }
+
+    public double getCurrentStockPriceByID(int id){
+        return getStockByID(id).getCurrentPrice().getAmount();
     }
 
     public static void main(String[] args){

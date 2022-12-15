@@ -53,6 +53,11 @@ public class Controller {
         return stockService.getAllStock();
     }
 
+    // get stock price by id
+    public double getCurrentStockPriceByID(int id){
+        return stockService.getCurrentStockPriceByID(id);
+    }
+
     // Get All Currency Map
     public static Map<String, Currency> getAllCurrencyMap() {
         List<Currency> currencyList = getAllCurrency();
@@ -158,6 +163,18 @@ public class Controller {
         return boughtStockService.viewBoughtStock(securityAccount);
     }
 
+    // get realized
+    public double getRealizedByAccountNumber(int accountNumber){
+        return securityService.getRealizedByAccountNumber(accountNumber);
+    }
+
+    // get un realized
+    public double getUnrealized(SecurityAccount securityAccount){
+        return boughtStockService.getUnrealized(securityAccount);
+    }
+
+
+
     // Add Loan
     public static boolean requestLoan(Customer customer, Loan loan) {
         // This method will add a new loan account to the customer
@@ -226,8 +243,8 @@ public class Controller {
 //        return false;
 //    }
 
-    public boolean deleteStock(String name){
-        return StockService.deleteStock(name);
+    public boolean deleteStock(int id){
+        return StockService.deleteStock(id);
     }
 
     // Update Stock
@@ -235,8 +252,8 @@ public class Controller {
 //        // If the stock is successfully updated, return true, otherwise return false
 //        return false;
 //    }
-    public boolean updateStock(String name, int price){
-        return StockService.updateStock(name,price);
+    public boolean updateStock(int id , int price){
+        return StockService.updateStock(id,price);
     }
 
     // Get Unapproved Loan List
