@@ -58,6 +58,10 @@ public class Controller {
         return stockService.getCurrentStockPriceByID(id);
     }
 
+    public Stock getStockByID(int id){
+        return stockService.getStockByID(id);
+    }
+
     // Get All Currency Map
     public static Map<String, Currency> getAllCurrencyMap() {
         List<Currency> currencyList = getAllCurrency();
