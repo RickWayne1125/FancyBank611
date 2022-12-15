@@ -42,24 +42,24 @@ public class AccountView extends AbstractJPanel {
     private List<Currency> currencies;
     private Currency seletedCurrency;
 
-    public AccountView(Customer customer, AccountType accountType, Account account, boolean managerView, boolean loanAccountsView){
+    public AccountView(Customer customer, AccountType accountType, Account account, boolean managerView, boolean loanAccountsView) {
 
         accountLabel.setText(accountType.name());
         this.currencies = Controller.getAllCurrency();
         this.seletedCurrency = this.currencies.get(0);
 
         this.loadCurrenciesDropdown();
-        this.customer =  customer;
-        if (managerView){
+        this.customer = customer;
+        if (managerView) {
             backButton.setVisible(false);
             customerActionsPanel.setVisible(false);
         }
-        if(loanAccountsView){
+        if (loanAccountsView) {
             currencyType.setVisible(false);
             withdrawField.setVisible(false);
             withdrawButton.setVisible(false);
         }
-        if(account == null){
+        if (account == null) {
             utils.showNotice("ERROR! Please contact support");
         } else {
             this.account = account;
@@ -90,7 +90,7 @@ public class AccountView extends AbstractJPanel {
                 try {
                     double t = Double.parseDouble(text);
                     boolean success;
-                    if(loanAccountsView){
+                    if (loanAccountsView) {
                         success = Controller.payLoanByCash((Loan) account, new Money(t, seletedCurrency));
                     } else {
                         success = Controller.deposit(account, new Money(t, seletedCurrency));
@@ -164,7 +164,7 @@ public class AccountView extends AbstractJPanel {
 
     public void loadTransactionDetails(List<Transaction> transactions) {
         transactionsView.removeAll();
-        String[] columns = new String[] {
+        String[] columns = new String[]{
                 "id", "type", "status", "date", "from", "to", "amount", "balance"
         };
         Object[][] data = new Object[transactions.size()][7];
