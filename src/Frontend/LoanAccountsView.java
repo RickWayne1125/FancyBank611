@@ -21,15 +21,18 @@ public class LoanAccountsView extends AbstractJPanel{
     private JPanel basePanel;
     private JTextField amountField;
     private JButton requestButton;
-    private JTabbedPane tabbedPane1;
     private JTable approvedLoansTable;
     private JTable pendingLoansTable;
     private JComboBox interestField;
     private JComboBox dueDateField;
     private JComboBox currencyField;
+    private JPanel loansPanel;
     private List<Currency> currencies;
     private Currency seletedCurrency;
+    private LoansView loansView;
     public LoanAccountsView() {
+        loansPanel.setLayout(new java.awt.BorderLayout());
+
         this.currencies = Controller.getAllCurrency();
         this.seletedCurrency = this.currencies.get(0);
 
@@ -61,8 +64,6 @@ public class LoanAccountsView extends AbstractJPanel{
                     } else {
                         utils.showNotice("You don't have any collateral for this loan.");
                     }
-
-
                     amountField.setText("");
                     refresh();
                 } catch (Exception ex){
@@ -73,23 +74,9 @@ public class LoanAccountsView extends AbstractJPanel{
     }
 
     public void refresh(){
-        List<Loan> loans = Controller.getLoansByCustomer((Customer) Frontend.getInstance().getUser());
-        System.out.println("asfsdfsdfdasf");
-        System.out.println(loans);
-        List<Loan> approvedLoans = new ArrayList<>();
-        List<Loan> pendingLoans = new ArrayList<>();
-
-        for(Loan loan:loans){
-            if(loan.isApproved()){
-                approvedLoans.add(loan);
-            } else {
-                pendingLoans.add(loan);
-            }
-        }
-
-        loadLoansTable(approvedLoans, approvedLoansTable);
-        loadLoansTable(pendingLoans, pendingLoansTable);
-
+        loansPanel.removeAll();
+        loansView = new LoansView(true, (Customer) Frontend.getInstance().getUser(), false);
+        loansPanel.add(loansView.getBasePanel());
     }
 
     public void loadLoansTable(List<Loan> loans, JTable table){

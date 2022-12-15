@@ -40,6 +40,7 @@ public class AccountView extends AbstractJPanel{
         accountLabel.setText(accountType.name());
 
         if (managerView){
+            backButton.setVisible(false);
             customerActionsPanel.setVisible(false);
         }
 

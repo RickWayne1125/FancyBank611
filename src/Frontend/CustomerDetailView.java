@@ -13,12 +13,14 @@ public class CustomerDetailView extends AbstractJPanel{
     private JTabbedPane tabbedPane1;
     private JPanel savingsAccountPanel;
     private JPanel checkingAccountPanel;
+    private JPanel loanAccountPanel;
     private Customer customer;
 
     public CustomerDetailView(Customer customer) {
         this.customer = customer;
         savingsAccountPanel.setLayout(new java.awt.BorderLayout());
         checkingAccountPanel.setLayout(new java.awt.BorderLayout());
+        loanAccountPanel.setLayout(new java.awt.BorderLayout());
 
         refresh();
         backButton.addActionListener(new ActionListener() {
@@ -33,6 +35,7 @@ public class CustomerDetailView extends AbstractJPanel{
         savingsAccountPanel.removeAll();
         savingsAccountPanel.add(ViewFactory.getAccount(this.customer, AccountType.SAVING, true).getBasePanel());
         checkingAccountPanel.add(ViewFactory.getAccount(this.customer, AccountType.CHECKING, true).getBasePanel());
+        loanAccountPanel.add(ViewFactory.getLoansView(true, this.customer, true).getBasePanel());
     }
 
 
