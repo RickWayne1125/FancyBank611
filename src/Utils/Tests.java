@@ -126,7 +126,8 @@ public class Tests {
 //        unitTest2();
 //        customerLoginAsManager();
 //        customerLogin();
-        requestLoan();
-        approveLoan();
+//        requestLoan();
+//        approveLoan();
+        System.out.println(Controller.getUnapprovedLoanList());
     }
 }

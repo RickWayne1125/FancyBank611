@@ -9,5 +9,7 @@ public class Config {
     public static final double DEFAULT_LOAN_INTEREST_RATE = 0.05;
     public static final double DEFAULT_CHECKING_INTEREST_RATE = 0.02;
     public static final double DEFAULT_SAVING_INTEREST_RATE = 0.03;
+    public static final String BANK_ROUTING_NUMBER = "123456789";
+    public static final String BANK_SWIFT_CODE = "123456789";
     public static boolean DEBUG = true;
 }
