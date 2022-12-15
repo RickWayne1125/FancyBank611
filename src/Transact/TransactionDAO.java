@@ -44,7 +44,7 @@ public class TransactionDAO implements DAO<Transaction> {
         Money money = new Money(Double.parseDouble(result.get("amount")), new CurrencyDAO().read(result.get("currency")));
         TransactionType transactionType = TransactionType.valueOf(result.get("transaction_type"));
         Date date = new Date(result.get("date"));
-        Transaction transaction= new Transaction(date, from, to, money, transactionType);
+        Transaction transaction = new Transaction(date, from, to, money, transactionType);
         transaction.setTransactionStatus(TransactionStatus.valueOf(result.get("transaction_status")));
         transaction.setId(result.get("transaction_id"));
         return transaction;
@@ -64,7 +64,7 @@ public class TransactionDAO implements DAO<Transaction> {
             Money money = new Money(Double.parseDouble(result.get("amount")), new CurrencyDAO().read(result.get("currency")));
             TransactionType transactionType = TransactionType.valueOf(result.get("transaction_type"));
             Date date = new Date(result.get("date"));
-            Transaction transaction= new Transaction(date, from, to, money, transactionType);
+            Transaction transaction = new Transaction(date, from, to, money, transactionType);
             transaction.setTransactionStatus(TransactionStatus.valueOf(result.get("transaction_status")));
             transaction.setId(result.get("transaction_id"));
             transactions.add(transaction);
@@ -98,12 +98,12 @@ public class TransactionDAO implements DAO<Transaction> {
     }
 
     public List<Transaction> readByDay(String day) throws ParseException {
-        String dayStart= "" ;
-        String dayEnd ="";
-        try{
+        String dayStart = "";
+        String dayEnd = "";
+        try {
             dayStart = convertFormat(day);
             dayEnd = convertFormatEnd(day);
-        }catch (ParseException e) {
+        } catch (ParseException e) {
             IO.displayMessage("Error parsing input date string: " + e.getMessage(), MessageType.ERROR);
         }
         String sql = "SELECT * FROM TransactionTable WHERE date >= ? AND date <= ?";
@@ -118,7 +118,7 @@ public class TransactionDAO implements DAO<Transaction> {
             Money money = new Money(Double.parseDouble(result.get("amount")), new CurrencyDAO().read(result.get("currency")));
             TransactionType transactionType = TransactionType.valueOf(result.get("transaction_type"));
             Date date = new Date(result.get("date"));
-            Transaction transaction= new Transaction(date, from, to, money, transactionType);
+            Transaction transaction = new Transaction(date, from, to, money, transactionType);
             transaction.setTransactionStatus(TransactionStatus.valueOf(result.get("transaction_status")));
             transaction.setId(result.get("transaction_id"));
             transactions.add(transaction);
