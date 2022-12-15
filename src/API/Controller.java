@@ -208,7 +208,7 @@ public class Controller {
     }
 
     // Get Customer By Username
-    public Customer getCustomerByUsername(String username) {
+    public static Customer getCustomerByUsername(String username) {
         // Return the customer object
         return managerService.viewCustomerByName(username);
     }
@@ -218,7 +218,7 @@ public class Controller {
     }
 
     //day must be in the format of mm-dd-yyyy
-    public List<Transaction> getTransactionByDate(String day) throws ParseException {
+    public static List<Transaction> getTransactionByDate(String day) throws ParseException {
         return managerService.readDailyReport(day);
     }
 
@@ -253,12 +253,12 @@ public class Controller {
     }
 
     // Get Unapproved Loan List
-    public List<Loan> getUnapprovedLoanList() {
+    public static List<Loan> getUnapprovedLoanList() {
         return loanService.getUnapprovedLoans();
     }
 
     // Get Approved Loan List
-    public List<Loan> getApprovedLoanList() {
+    public static List<Loan> getApprovedLoanList() {
         return loanService.getApprovedLoans();
     }
 
@@ -268,7 +268,7 @@ public class Controller {
     }
 
     // Approve Loan
-    public boolean approveLoan(Loan loan) {
+    public static boolean approveLoan(Loan loan) {
         return loanService.approveLoan(loan);
     }
 

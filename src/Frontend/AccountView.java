@@ -29,21 +29,26 @@ public class AccountView extends AbstractJPanel{
     private JButton depositButton;
     private JTextField withdrawField;
     private JButton withdrawButton;
+    private JPanel customerActionsPanel;
 
     private Account account;
     private Customer customer;
     private List<Currency> currencies;
     private Currency seletedCurrency;
 
-    public AccountView(AccountType accountType){
+    public AccountView(Customer customer, AccountType accountType, boolean managerView){
         accountLabel.setText(accountType.name());
+
+        if (managerView){
+            customerActionsPanel.setVisible(false);
+        }
 
 
         this.currencies = Controller.getAllCurrency();
         this.seletedCurrency = this.currencies.get(0);
 
         this.loadCurrenciesDropdown();
-        this.customer =  (Customer) Frontend.getInstance().getUser();
+        this.customer =  customer;
         this.account = Helpers.getAccount(accountType, customer.getAccounts());
         if (this.account == null) {
             this.account = Helpers.createNewAccount(accountType);
@@ -149,7 +154,7 @@ public class AccountView extends AbstractJPanel{
         String[] columns = new String[] {
                 "id", "status", "date", "from", "to", "amount", "balance"
         };
-        Object[][] data = new Object[transactions.size()][5];
+        Object[][] data = new Object[transactions.size()][7];
         double balance = 0;
         for (int i = 0; i<transactions.size(); i++){
             Transaction transaction = transactions.get(i);

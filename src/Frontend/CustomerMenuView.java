@@ -1,5 +1,8 @@
 package Frontend;
 
+import Account.AccountType;
+import Person.Customer.Customer;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,13 +28,13 @@ public class CustomerMenuView extends AbstractJPanel {
         savingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frontend.getInstance().next(ViewFactory.getSavingsAccount());
+                Frontend.getInstance().next(ViewFactory.getAccount((Customer) Frontend.getInstance().getUser(), AccountType.SAVING, false));
             }
         });
         checkingButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frontend.getInstance().next(ViewFactory.getCheckingAccount());
+                Frontend.getInstance().next(ViewFactory.getAccount((Customer) Frontend.getInstance().getUser(), AccountType.CHECKING, false));
             }
         });
         profileButton.addActionListener(new ActionListener() {

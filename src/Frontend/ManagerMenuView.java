@@ -11,6 +11,7 @@ public class ManagerMenuView extends AbstractJPanel{
     private JPanel basePanel;
     private JButton loansButton;
     private JButton stocksButton;
+    private JButton viewTransactionsButton;
 
     public ManagerMenuView() {
         logOutButton.addActionListener(new ActionListener() {
@@ -35,6 +36,18 @@ public class ManagerMenuView extends AbstractJPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Frontend.getInstance().next(ViewFactory.getManagerStockView());
+            }
+        });
+        viewTransactionsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frontend.getInstance().next(ViewFactory.getTransactionsView());
+            }
+        });
+        loansButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frontend.getInstance().next(ViewFactory.getLoansView(false, null, true));
             }
         });
     }

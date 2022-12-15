@@ -1,6 +1,7 @@
 package Frontend;
 
 import Account.AccountType;
+import Person.Customer.Customer;
 
 public class ViewFactory {
     public static AbstractJPanel getLoginPage(){
@@ -14,13 +15,10 @@ public class ViewFactory {
         return new ManagerMenuView();
     }
 
-    public static AbstractJPanel getSavingsAccount(){
-        return new AccountView(AccountType.SAVING);
+    public static AbstractJPanel getAccount(Customer customer, AccountType accountType, Boolean managerView){
+        return new AccountView(customer, accountType, managerView);
     }
 
-    public static AbstractJPanel getCheckingAccount(){
-        return new AccountView(AccountType.CHECKING);
-    }
     public static AbstractJPanel getCustomersListView() {return new CustomersListView();}
 
     public static AbstractJPanel getCreateEditUserView(String action, String userType) {
@@ -37,5 +35,14 @@ public class ViewFactory {
     public static AbstractJPanel getManagerStockView(){
         return new ManagerStocksView();
     }
+    public static AbstractJPanel getCustomerDetailView(Customer customer){
+        return new CustomerDetailView(customer);
+    }
+    public static AbstractJPanel getTransactionsView(){
+        return new TransactionsView();
+    }
 
+    public static AbstractJPanel getLoansView(Boolean hideBackButton, Customer customer, Boolean managerView){
+        return new LoansView(hideBackButton, customer, managerView);
+    }
 }

@@ -6,6 +6,7 @@ import Account.Loan.Loan;
 import Account.Saving;
 import Account.Checking;
 import Account.AccountType;
+import Account.Security.SecurityAccount;
 import Money.Currency;
 import Money.Money;
 import Person.Customer.Customer;
@@ -30,6 +31,9 @@ public class Helpers {
         if (accountType.equals(AccountType.CHECKING)) {
             return new Checking(accountNumber, routingNumber, swiftCode);
         }
+        if (accountType.equals(AccountType.SECURITY)) {
+            return new SecurityAccount(accountNumber, routingNumber, swiftCode);
+        }
         return null;
     };
 
@@ -51,6 +55,9 @@ public class Helpers {
         }
         if (accountType.equals(AccountType.CHECKING)) {
             return "Checking";
+        }
+        if (accountType.equals(AccountType.SECURITY)) {
+            return "Security";
         }
         return null;
     }
