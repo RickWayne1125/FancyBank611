@@ -120,7 +120,8 @@ public class LoanService {
         List<Loan> loans = new ArrayList<>();
         for (Account account : customer.getAccounts()) {
             if (account.getType() == AccountType.LOAN) {
-                loans.add(loanDAO.readByAccountNumber(account.getAccountNumber()));
+                AccountDAO accountDAO = new AccountDAO();
+                loans.add((Loan) accountDAO.readByAccountNumber(account.getAccountNumber()));
             }
         }
         return loans;

@@ -1,5 +1,7 @@
 package Account.Loan;
 
+import Account.AccountDAO;
+import Account.AccountService;
 import Account.AccountType;
 import DataBase.DataBase;
 import Money.Money;
@@ -78,7 +80,8 @@ public class LoanDAO implements DAO<Loan> {
             return loans;
         }
         for (Map<String, String> row : results) {
-            Loan loan = readByAccountNumber(Integer.parseInt(row.get("account_no")));
+            AccountDAO accountDAO = new AccountDAO();
+            Loan loan = (Loan) accountDAO.readByAccountNumber(Integer.parseInt(row.get("account_no")));
             loans.add(loan);
         }
         return loans;
@@ -92,7 +95,8 @@ public class LoanDAO implements DAO<Loan> {
             return loans;
         }
         for (Map<String, String> row : results) {
-            Loan loan = readByAccountNumber(Integer.parseInt(row.get("account_no")));
+            AccountDAO accountDAO = new AccountDAO();
+            Loan loan = (Loan) accountDAO.readByAccountNumber(Integer.parseInt(row.get("account_no")));
             loans.add(loan);
         }
         return loans;
