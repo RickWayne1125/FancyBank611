@@ -22,7 +22,7 @@ public class SecurityService {
     private static BoughtStockDAO boughtStockDAO = new BoughtStockDAO();
     private static CurrencyDAO currencyDAO = new CurrencyDAO();
 
-    public static boolean openStock(Account account, SecurityAccount securityAccount,double initAmount){
+    public static boolean openStock(Customer customer, Account account, SecurityAccount securityAccount,double initAmount){
         // make sure customer has more than 5000 in saving account.
         double savingAmount=0;
         // get all USD in amount
@@ -36,9 +36,11 @@ public class SecurityService {
         }
         // if qualified
         if(savingAmount>=5000.0){
+            securityAccount.setRealized(new Money(0,currencyDAO.read("USD")));
+            securityAccount.setTotalPaid(new Money(0,currencyDAO.read("USD")));
             System.out.println("security account created");
             // create account in account database
-            accountDAO.create(securityAccount);
+            accountService.openAccount(customer,securityAccount);
             // create account in security database
             securityDAO.create(securityAccount);
             // transfer money from saving to security
@@ -122,7 +124,7 @@ public class SecurityService {
         Stock stock = stockDao.read("google");
         Account bank = accountDAO.readByAccountNumber(1);
         // test open
-        openStock(bank,securityAccount1,5000);
+        //openStock(bank,securityAccount1,5000);
         // test buy
         buyStock(securityAccount1,bank,stock,10);
         // test sell
