@@ -86,7 +86,6 @@ public class Controller {
     // Customer Login
     public static Customer loginCustomer(String username, String password) {
         // If the username and password are correct, return the customer object, otherwise return null
-        System.out.println(username + password);
         return customerService.loginCustomer(username, password);
     }
 
