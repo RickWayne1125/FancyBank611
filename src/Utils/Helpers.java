@@ -24,9 +24,9 @@ import java.util.Date;
 import java.util.List;
 
 public class Helpers {
-    public static Account createNewAccount(AccountType accountType){
+    public static Account createNewAccount(AccountType accountType) {
 
-        int accountNumber =  (int) ((Math.random() * (9999999 - 1111111)) + 1111111);
+        int accountNumber = (int) ((Math.random() * (9999999 - 1111111)) + 1111111);
         String routingNumber = "1234ABCD";
         String swiftCode = "ABCDPEQ";
 
@@ -40,10 +40,11 @@ public class Helpers {
             return new SecurityAccount(accountNumber, routingNumber, swiftCode);
         }
         return null;
-    };
+    }
 
-    public static Loan createLoanAccount(Money money, Double interest, Date start, Date end){
-        int accountNumber =  (int) ((Math.random() * (9999999 - 1111111)) + 1111111);
+
+    public static Loan createLoanAccount(Money money, Double interest, Date start, Date end) {
+        int accountNumber = (int) ((Math.random() * (9999999 - 1111111)) + 1111111);
         String routingNumber = "1234ABCD";
         String swiftCode = "ABCDPEQ";
 
@@ -54,7 +55,7 @@ public class Helpers {
         return loan;
     }
 
-    public static String getAccountTypeString(AccountType accountType){
+    public static String getAccountTypeString(AccountType accountType) {
         if (accountType.equals(AccountType.SAVING)) {
             return "Savings";
         }
@@ -67,9 +68,9 @@ public class Helpers {
         return null;
     }
 
-    public static Account getAccount(AccountType type, List<Account> accounts){
-        for (Account account:accounts){
-            if (account.getType().equals(type)){
+    public static Account getAccount(AccountType type, List<Account> accounts) {
+        for (Account account : accounts) {
+            if (account.getType().equals(type)) {
                 return account;
             }
         }
@@ -78,24 +79,24 @@ public class Helpers {
 
     public static List<Transaction> filterTransactionsByCurrency(List<Transaction> transactions, Currency currency) {
         List<Transaction> filteredTransactions = new ArrayList<>();
-        for (Transaction transaction:transactions){
-            if(transaction.getMoney().getCurrency().getCurrencyName().equals(currency.getCurrencyName())){
+        for (Transaction transaction : transactions) {
+            if (transaction.getMoney().getCurrency().getCurrencyName().equals(currency.getCurrencyName())) {
                 filteredTransactions.add(transaction);
             }
         }
         return filteredTransactions;
     }
 
-    public static boolean createUser(String userType, String username, String firstName, String middleName, String lastName, String email, String password, String contact, String address){
-        if(userType.equals("customer")) {
+    public static boolean createUser(String userType, String username, String firstName, String middleName, String lastName, String email, String password, String contact, String address) {
+        if (userType.equals("customer")) {
             return Controller.registerCustomer(new Customer(username, firstName, middleName, lastName, email, password, contact, address));
-        } else if(userType.equals("manager")){
+        } else if (userType.equals("manager")) {
             return Controller.registerManager(new Manager(username, firstName, middleName, lastName, email, password, contact, address));
         }
         return false;
     }
 
-    public static boolean editUser(String firstName, String middleName, String lastName, String email, String password, String contact, String address, Person person){
+    public static boolean editUser(String firstName, String middleName, String lastName, String email, String password, String contact, String address, Person person) {
         try {
             person.setFirstName(firstName);
             person.setMiddleName(middleName);
@@ -105,38 +106,38 @@ public class Helpers {
             person.setContact(contact);
             person.setAddress(address);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public static void securityAccountView(){
-        Customer customer =  (Customer) Frontend.getInstance().getUser();
+    public static void securityAccountView() {
+        Customer customer = (Customer) Frontend.getInstance().getUser();
         SecurityAccount account = (SecurityAccount) Helpers.getAccount(AccountType.SECURITY, customer.getAccounts());
         System.out.println("asd");
         System.out.println(account);
         if (account == null) {
             String amount = javax.swing.JOptionPane.showInputDialog("Enter initial amount");
-            try{
+            try {
                 int amt = Integer.parseInt(amount);
-                if ( amt < 1000 ){
+                if (amt < 1000) {
                     utils.showNotice("Minimum 1000 USD required.");
 
                 } else {
                     Account savingsAccount = Helpers.getAccount(AccountType.SAVING, customer.getAccounts());
-                    if (savingsAccount == null){
+                    if (savingsAccount == null) {
                         utils.showNotice("You need to open a savings account first");
                     } else {
                         account = (SecurityAccount) Helpers.createNewAccount(AccountType.SECURITY);
-                        if(!Controller.openStock(savingsAccount, account, amt)){
+                        if (!Controller.openStock(customer, savingsAccount, account, amt)) {
                             utils.showNotice("Minimum 5000 required in savings to create a securities account");
-                        }else {
+                        } else {
                             utils.showNotice("New " + Helpers.getAccountTypeString(AccountType.SECURITY) + " account created!");
                             Frontend.getInstance().next(ViewFactory.getSecurityAccount(account));
                         }
                     }
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 utils.showNotice("Please enter a valid amount");
             }
         } else {
@@ -144,31 +145,31 @@ public class Helpers {
         }
     }
 
-    public static boolean sellStock(SecurityAccount secAcc, BoughtStock stock){
+    public static boolean sellStock(SecurityAccount secAcc, BoughtStock stock) {
         try {
             String count = javax.swing.JOptionPane.showInputDialog("Enter units");
             int cnt = Integer.parseInt(count);
-            if(!Controller.sellStock(secAcc, Controller.getAccountByAccountNumber(1), stock, cnt)){
+            if (!Controller.sellStock(secAcc, Controller.getAccountByAccountNumber(1), stock, cnt)) {
                 utils.showNotice("Failed");
             } else {
                 return true;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             utils.showNotice("Failed");
         }
         return false;
     }
 
-    public static boolean buyStock(SecurityAccount secAcc, Stock stock){
+    public static boolean buyStock(SecurityAccount secAcc, Stock stock) {
         try {
             String count = javax.swing.JOptionPane.showInputDialog("Enter units");
             int cnt = Integer.parseInt(count);
-            if(!Controller.buyStock(secAcc, Controller.getAccountByAccountNumber(1), stock, cnt)){
+            if (!Controller.buyStock(secAcc, Controller.getAccountByAccountNumber(1), stock, cnt)) {
                 utils.showNotice("Failed");
             } else {
                 return true;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             utils.showNotice("Failed");
         }
         return false;
