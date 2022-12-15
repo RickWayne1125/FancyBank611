@@ -2,6 +2,8 @@ package Account.Loan;
 
 import Account.AccountType;
 import DataBase.DataBase;
+import Money.Money;
+import Money.MoneyDAO;
 import Utils.DAO;
 
 import java.util.ArrayList;
@@ -18,6 +20,11 @@ public class LoanDAO implements DAO<Loan> {
         String sql = "INSERT INTO Loan (account_no, start_date, end_date, approved) VALUES (?,?,?,?)";
         dataBase.execute(sql, new String[]{String.valueOf(loan.getAccountNumber()), String.valueOf(loan.getStartDate()),
                 String.valueOf(loan.getDueDate()), loan.isApproved() ? "1" : "0"});
+        // Update Money table
+        MoneyDAO moneyDAO = new MoneyDAO();
+        for (Money money : loan.getCurrentBalance()) {
+            moneyDAO.create(money);
+        }
     }
 
     @Override

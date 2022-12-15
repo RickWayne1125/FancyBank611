@@ -17,6 +17,7 @@ import Transact.TransactionService;
 
 import DataBase.DataBase;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -69,11 +70,12 @@ public class Tests {
         System.out.println(getAccountByAccountNumber(123456789).getCurrentBalance());
         System.out.println(TransactionService.getTransactionsByAccount(checking));
         // Test transfer
-        money = new Money(100, currencyDAO.read("USD"));
+        money = new Money(200, currencyDAO.read("USD"));
         IO.displayMessage("Test transfer", Utils.MessageType.INFO);
         AccountService.deposit(checking, money);
         System.out.println(getAccountByAccountNumber(123456789).getCurrentBalance());
-        AccountService.transfer(checking, saving, money);
+        Money money1 = new Money(100, currencyDAO.read("USD"));
+        AccountService.transfer(checking, saving, money1);
         System.out.println(getAccountByAccountNumber(123456789).getCurrentBalance());
         System.out.println(getAccountByAccountNumber(987654321).getCurrentBalance());
         System.out.println(TransactionService.getTransactionsByAccount(checking));
@@ -103,6 +105,10 @@ public class Tests {
         Customer customer = Controller.loginCustomer("rick", "test");
         Controller.setHasCollateral(customer, true);
         Loan loan = new Loan("loan1", "loan1", 0.1, new Date(), new Date());
+        Money money = new Money(100, new CurrencyDAO().read("USD"));
+        List<Money> currentBalance = new ArrayList<>();
+        currentBalance.add(money);
+        loan.setCurrentBalance(currentBalance);
         Controller.requestLoan(customer, loan);
     }
 
@@ -117,11 +123,12 @@ public class Tests {
     }
 
     public static void main(String[] args) {
-//        unitTest1();
+        unitTest1();
 //        unitTest2();
 //        customerLoginAsManager();
-//        customerLogin();
-//        requestLoan();
-        approveLoan();
+        customerLogin();
+        requestLoan();
+//        approveLoan();
+//        System.out.println(Controller.getUnapprovedLoanList());
     }
 }
