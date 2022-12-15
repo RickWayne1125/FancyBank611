@@ -192,7 +192,7 @@ public class Controller {
     }
 
     // Pay Loan
-    public boolean payLoanByCash(Loan account, Money money) {
+    public static boolean payLoanByCash(Loan account, Money money) {
         // If the loan is successfully paid, return true, otherwise return false
         return loanService.payLoanByCash(account, money);
     }
@@ -261,7 +261,7 @@ public class Controller {
 //        // If the stock is successfully updated, return true, otherwise return false
 //        return false;
 //    }
-    public boolean updateStock(int id, int price) {
+    public static boolean updateStock(int id, int price) {
         return StockService.updateStock(id, price);
     }
 

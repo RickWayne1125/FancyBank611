@@ -1,6 +1,7 @@
 package Frontend;
 
 import API.Controller;
+import Account.AccountType;
 import Account.Loan.Loan;
 import Person.Customer.Customer;
 
@@ -13,12 +14,16 @@ public class LoanView extends AbstractJPanel {
     private JPanel basePanel;
     private JButton approveButton;
     private JTable loanDetail;
+    private JButton viewButton;
     private Loan loan;
 
-    public LoanView(Loan loan, Boolean showApproveButton, LoansView parent) {
+    public LoanView(Loan loan, Boolean showApproveButton, LoansView parent, Boolean showPayButton) {
         this.loan = loan;
         if (!showApproveButton) {
             approveButton.setVisible(false);
+        }
+        if(!showPayButton){
+            viewButton.setVisible(false);
         }
         refresh();
         approveButton.addActionListener(new ActionListener() {
@@ -26,6 +31,12 @@ public class LoanView extends AbstractJPanel {
             public void actionPerformed(ActionEvent e) {
                 Controller.approveLoan(loan);
                 parent.refresh();
+            }
+        });
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frontend.getInstance().next(ViewFactory.getAccount((Customer) Frontend.getInstance().getUser(), AccountType.LOAN, loan, false, showPayButton));
             }
         });
     }

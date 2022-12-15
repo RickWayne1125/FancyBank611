@@ -11,6 +11,8 @@ import Transact.Transaction;
 import Transact.TransactionService;
 import Transact.TransactionStatus;
 import Transact.TransactionType;
+import Utils.IO;
+import Utils.MessageType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +123,8 @@ public class LoanService {
         for (Account account : customer.getAccounts()) {
             if (account.getType() == AccountType.LOAN) {
                 AccountDAO accountDAO = new AccountDAO();
-                loans.add((Loan) accountDAO.readByAccountNumber(account.getAccountNumber()));
+                Loan loan = (Loan) accountDAO.readByAccountNumber(account.getAccountNumber());
+                loans.add(loan);
             }
         }
         return loans;

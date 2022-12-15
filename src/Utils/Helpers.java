@@ -175,4 +175,29 @@ public class Helpers {
         return false;
     }
 
+    public static void openAccountView(Customer customer, AccountType accountType, Boolean managerView){
+        Account account = Helpers.getAccount(accountType, customer.getAccounts());
+        if (account == null) {
+            if(managerView){
+                utils.showNotice("User doesn't have a "+accountType+" account yet.");
+            } else {
+                account = Helpers.createNewAccount(accountType);
+                Controller.openAccount(customer, account);
+                utils.showNotice("New " + Helpers.getAccountTypeString(accountType) + " account created!");
+                Frontend.getInstance().next(ViewFactory.getAccount(customer, accountType, account, false, false));
+            }
+        } else {
+            Frontend.getInstance().next(ViewFactory.getAccount(customer, accountType, account, managerView, false));
+        }
+    }
+
+    public static void editStockPrice(Stock stock){
+        try {
+            String count = javax.swing.JOptionPane.showInputDialog("Enter new value");
+            int cnt = Integer.parseInt(count);
+            Controller.updateStock(stock.getStockId(), cnt);
+        } catch (Exception e) {
+            utils.showNotice("Failed");
+        }
+    }
 }
