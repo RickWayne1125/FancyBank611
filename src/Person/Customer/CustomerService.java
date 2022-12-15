@@ -1,5 +1,6 @@
 package Person.Customer;
 
+import Account.Account;
 import Account.AccountService;
 import Account.Checking;
 import Account.Loan.Loan;
@@ -23,8 +24,19 @@ public class CustomerService {
         Customer customer = customerDAO.read(username);
         // check if the user is a customer
         if (customer != null && customer.getPassword().equals(password)) {
-            // TODO: Update all the interests then update the last login time
+            // Update all the interests then update the last login time
+            // if one day has passed since the last login
             Date date = new Date();
+            if (date.getTime() - customer.getLastLogin().getTime() >= Config.INTEREST_FREQUENCY) {
+                long days = (long) ((date.getTime() - customer.getLastLogin().getTime()) / Config.INTEREST_FREQUENCY);
+                // update all the interests
+                for (Account account:customer.getAccounts()){
+                    AccountService.updateInterest(account, days);
+                }
+                // update the last login time
+                customer.setLastLogin(date);
+                customerDAO.update(customer);
+            }
             customer.setLastLogin(date);
             customerDAO.update(customer);
             return customer;

@@ -17,6 +17,7 @@ import Transact.TransactionService;
 
 import DataBase.DataBase;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -122,13 +123,18 @@ public class Tests {
         System.out.println(Controller.getUnapprovedLoanList());
     }
 
-    public static void main(String[] args) {
-        unitTest1();
+    public static void getDailyReport() throws ParseException {
+        System.out.println(Controller.getTransactionByDate("12-15-2022"));
+    }
+
+    public static void main(String[] args) throws ParseException {
+//        unitTest1();
 //        unitTest2();
 //        customerLoginAsManager();
-        customerLogin();
-        requestLoan();
+//        customerLogin();
+//        requestLoan();
 //        approveLoan();
 //        System.out.println(Controller.getUnapprovedLoanList());
+        getDailyReport();
     }
 }
