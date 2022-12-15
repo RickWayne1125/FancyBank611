@@ -40,12 +40,12 @@ public class SecurityService {
             securityAccount.setTotalPaid(new Money(0,currencyDAO.read("USD")));
             System.out.println("security account created");
             // create account in account database
-            accountService.openAccount(customer,securityAccount);
-            // create account in security database
-            securityDAO.create(securityAccount);
-            // transfer money from saving to security
-            accountService.transfer(account,securityAccount,new Money(initAmount,new Currency("USD","$",1)));
-            return true;
+            if(accountService.openAccount(customer,securityAccount)) {
+                // transfer money from saving to security
+                accountService.transfer(account, securityAccount, new Money(initAmount, new Currency("USD", "$", 1)));
+                return true;
+            }
+            return false;
         }
         else{
             System.out.println("account has less than 5000 usd");
