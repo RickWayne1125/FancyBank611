@@ -122,11 +122,11 @@ public class Tests {
     }
 
     public static void main(String[] args) {
-//        unitTest1();
-//        unitTest2();
+        unitTest1();
+        unitTest2();
 //        customerLoginAsManager();
 //        customerLogin();
-//        requestLoan();
+        requestLoan();
 //        approveLoan();
         System.out.println(Controller.getUnapprovedLoanList());
     }

@@ -12,4 +12,5 @@ public class Config {
     public static final String BANK_ROUTING_NUMBER = "123456789";
     public static final String BANK_SWIFT_CODE = "123456789";
     public static boolean DEBUG = true;
+    public static double DEFAULT_SERVICE_FEE_RATE = 0.01;
 }
