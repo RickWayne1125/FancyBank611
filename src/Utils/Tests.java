@@ -17,6 +17,7 @@ import Transact.TransactionService;
 
 import DataBase.DataBase;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -103,6 +104,10 @@ public class Tests {
         Customer customer = Controller.loginCustomer("rick", "test");
         Controller.setHasCollateral(customer, true);
         Loan loan = new Loan("loan1", "loan1", 0.1, new Date(), new Date());
+        Money money = new Money(100, new CurrencyDAO().read("USD"));
+        List<Money> currentBalance = new ArrayList<>();
+        currentBalance.add(money);
+        loan.setCurrentBalance(currentBalance);
         Controller.requestLoan(customer, loan);
     }
 
@@ -121,7 +126,7 @@ public class Tests {
 //        unitTest2();
 //        customerLoginAsManager();
 //        customerLogin();
-//        requestLoan();
+        requestLoan();
         approveLoan();
     }
 }
