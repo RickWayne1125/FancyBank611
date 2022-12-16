@@ -144,8 +144,6 @@ public class AccountView extends AbstractJPanel{
 
 
         this.loadAccountDetails();
-        System.out.println(transactions);
-        System.out.println(currencyTransactions);
         this.loadTransactionDetails(currencyTransactions);
     }
 
@@ -177,10 +175,16 @@ public class AccountView extends AbstractJPanel{
         };
         Object[][] data = new Object[transactions.size()][7];
         double balance = 0;
-        for (int i = 0; i<transactions.size(); i++){
+        for (int i = 0; transactions!=null && i<transactions.size(); i++){
             Transaction transaction = transactions.get(i);
-            String from = ""+transaction.getFrom().getAccountNumber();
-            String to = ""+transaction.getTo().getAccountNumber();
+            String from = "";
+            if(transaction.getFrom()!=null){
+                from = ""+transaction.getFrom().getAccountNumber();
+            }
+            String to = "";
+            if(transaction.getTo()!=null){
+                to = ""+transaction.getTo().getAccountNumber();
+            }
             double money = transaction.getMoney().getAmount();
             if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)){
                 from = null;
