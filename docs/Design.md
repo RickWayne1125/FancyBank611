@@ -240,4 +240,22 @@ The balance of the account can be get from the Money table, as one account can h
 | account_no | pk, fk |      |
 | Stock_unit | Int    |      |
 
-##  Panel Prototype
+##  User Interface 
+UI Design:
+1) abstract AbstractPanel
+All main pages inherit a common abstract class called AbstractPanel. AbstractPanel extends a JPanel, and defines an abstract method called getBasePanel().
+This is used in Frontend.java so that we can switch between panels effortlessly without having to create new JFrames.
+
+
+2) ViewFactory:
+A Factory class to return different views. All functions return an AbstractPanel instance.
+
+3) Frontend.java
+A singleton class that keeps track of the state. The state here comprises of the user object and type of user (manager or customer).
+This class always returns the same instance of the frontend and is used to traverse within the app.
+back() is used to pop the panel on the top to go back to the previous screen while next() is used to traverse forward.
+
+4) Helpers.java
+Utility functions helping in working with the functions in Controller.java, to abstract out the functions away from ui classes.
+
+5) .form files. Form files are bound to it's classes (classes with the same name) and are used to design the ui components
