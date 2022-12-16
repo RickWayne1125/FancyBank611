@@ -3,6 +3,7 @@ package Frontend;
 import API.Controller;
 import Account.Account;
 import Account.AccountType;
+import Account.Loan.Loan;
 import Money.Currency;
 import Money.Money;
 import Person.Customer.Customer;
@@ -35,35 +36,38 @@ public class AccountView extends AbstractJPanel {
     private JTextField withdrawField;
     private JButton withdrawButton;
     private JPanel customerActionsPanel;
+    private JButton closeAccountButton;
 
     private Account account;
     private Customer customer;
     private List<Currency> currencies;
     private Currency seletedCurrency;
 
-    public AccountView(Customer customer, AccountType accountType, boolean managerView) {
+    public AccountView(Customer customer, AccountType accountType, Account account, boolean managerView, boolean loanAccountsView) {
+
         accountLabel.setText(accountType.name());
-
-        if (managerView) {
-            backButton.setVisible(false);
-            customerActionsPanel.setVisible(false);
-        }
-
-
         this.currencies = Controller.getAllCurrency();
         this.seletedCurrency = this.currencies.get(0);
 
         this.loadCurrenciesDropdown();
         this.customer = customer;
-        this.account = Helpers.getAccount(accountType, customer.getAccounts());
-        if (this.account == null) {
-            this.account = Helpers.createNewAccount(accountType);
-            Controller.openAccount(this.customer, this.account);
-            utils.showNotice("New " + Helpers.getAccountTypeString(accountType) + " account created!");
+        if (managerView) {
+            backButton.setVisible(false);
+            customerActionsPanel.setVisible(false);
+            closeAccountButton.setVisible(false);
         }
-
-
-        this.refresh();
+        if (loanAccountsView) {
+            currencyType.setVisible(false);
+            withdrawField.setVisible(false);
+            withdrawButton.setVisible(false);
+            closeAccountButton.setVisible(false);
+        }
+        if (account == null) {
+            utils.showNotice("ERROR! Please contact support");
+        } else {
+            this.account = account;
+            this.refresh();
+        }
 
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -88,7 +92,12 @@ public class AccountView extends AbstractJPanel {
                 String text = depositField.getText();
                 try {
                     double t = Double.parseDouble(text);
-                    boolean success = Controller.deposit(account, new Money(t, seletedCurrency));
+                    boolean success;
+                    if (loanAccountsView) {
+                        success = Controller.payLoanByCash((Loan) account, new Money(t, seletedCurrency));
+                    } else {
+                        success = Controller.deposit(account, new Money(t, seletedCurrency));
+                    }
                     if (success) {
                         utils.showNotice(t + seletedCurrency.getCurrencyName() + " Deposited");
                         refresh();
@@ -120,6 +129,17 @@ public class AccountView extends AbstractJPanel {
                 }
             }
         });
+        closeAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Controller.closeAccount(customer, account)) {
+                    utils.showNotice("Account has been closed.");
+                    Frontend.getInstance().back();
+                } else {
+                    utils.showNotice("ERROR. Please maintain a min balance of 10 to close the account");
+                }
+            }
+        });
     }
 
     public void refresh() {
@@ -129,8 +149,6 @@ public class AccountView extends AbstractJPanel {
 
 
         this.loadAccountDetails();
-        System.out.println(transactions);
-        System.out.println(currencyTransactions);
         this.loadTransactionDetails(currencyTransactions);
     }
 
@@ -151,7 +169,7 @@ public class AccountView extends AbstractJPanel {
                 {"Routing Number", this.account.getRoutingNumber()},
                 {"Swift Code", this.account.getSwiftCode()},
                 {"Interest Rate", this.account.getInterestRate() + "%"},
-                {"Current Balance", this.account.getCurrentBalance()}
+                {"Current Balance", Helpers.getBalance(this.account.getCurrentBalance(), seletedCurrency)}
         };
         accountDetails.setModel(utils.getTableModel(data, columns));
     }
@@ -159,26 +177,40 @@ public class AccountView extends AbstractJPanel {
     public void loadTransactionDetails(List<Transaction> transactions) {
         transactionsView.removeAll();
         String[] columns = new String[]{
-                "id", "status", "date", "from", "to", "amount", "balance"
+                "id", "type", "status", "date", "from", "to", "amount", "balance"
         };
         Object[][] data = new Object[transactions.size()][7];
         double balance = 0;
-        for (int i = 0; i < transactions.size(); i++) {
+        for (int i = 0; transactions != null && i < transactions.size(); i++) {
             Transaction transaction = transactions.get(i);
-            String from = "" + transaction.getFrom().getAccountNumber();
-            String to = "" + transaction.getTo().getAccountNumber();
             double money = transaction.getMoney().getAmount();
+            String from = "";
+            if (transaction.getFrom() != null) {
+                from = "" + transaction.getFrom().getAccountNumber();
+            }
+            String to = "";
+            if (transaction.getTo() != null) {
+                to = "" + transaction.getTo().getAccountNumber();
+            }
             if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)) {
                 from = null;
             }
             if (transaction.getTransactionType().equals(TransactionType.WITHDRAW)) {
                 to = null;
-                money = money * -1;
+                money*=-1;
             }
+            if (transaction.getTransactionType().equals(TransactionType.SERVICE_FEE)) {
+                money*=-1;
+            }
+
+            if (transaction.getTransactionType().equals(TransactionType.TRANSFER) && from.equals(""+account.getAccountNumber())) {
+                money*=-1;
+            }
+
             if (transaction.getTransactionStatus().equals(TransactionStatus.SUCCESS)) {
                 balance += money;
             }
-            data[transactions.size() - i - 1] = new Object[]{transaction.getId(), transaction.getTransactionStatus(), transaction.getDate().toString(), from, to, money, balance};
+            data[transactions.size() - i - 1] = new Object[]{transaction.getId(), transaction.getTransactionType(),transaction.getTransactionStatus(), transaction.getDate().toString(), from, to, money, balance};
         }
         transactionsView.setModel(utils.getTableModel(data, columns));
         transactionsView.revalidate();
@@ -206,7 +238,7 @@ public class AccountView extends AbstractJPanel {
      */
     private void $$$setupUI$$$() {
         basePanel = new JPanel();
-        basePanel.setLayout(new GridLayoutManager(4, 6, new Insets(0, 0, 0, 0), -1, -1));
+        basePanel.setLayout(new GridLayoutManager(5, 6, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 6, new Insets(0, 0, 0, 0), -1, -1));
         basePanel.add(panel1, new GridConstraints(0, 0, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -255,6 +287,11 @@ public class AccountView extends AbstractJPanel {
         customerActionsPanel.add(withdrawButton, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         customerActionsPanel.add(spacer3, new GridConstraints(0, 2, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        closeAccountButton = new JButton();
+        closeAccountButton.setText("Close Account");
+        basePanel.add(closeAccountButton, new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer4 = new Spacer();
+        basePanel.add(spacer4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
     }
 
     /**

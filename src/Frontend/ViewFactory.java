@@ -1,5 +1,6 @@
 package Frontend;
 
+import Account.Account;
 import Account.AccountType;
 import Account.Security.SecurityAccount;
 import Person.Customer.Customer;
@@ -16,8 +17,8 @@ public class ViewFactory {
         return new ManagerMenuView();
     }
 
-    public static AbstractJPanel getAccount(Customer customer, AccountType accountType, Boolean managerView){
-        return new AccountView(customer, accountType, managerView);
+    public static AbstractJPanel getAccount(Customer customer, AccountType accountType, Account account, Boolean managerView, Boolean loanAccountView){
+        return new AccountView(customer, accountType, account, managerView, loanAccountView);
     }
 
     public static AbstractJPanel getCustomersListView() {return new CustomersListView();}
@@ -49,5 +50,9 @@ public class ViewFactory {
 
     public static AbstractJPanel getSecurityAccount(SecurityAccount account){
         return new SecurityAccountView(account);
+    }
+
+    public static AbstractJPanel getTransfersPage(){
+        return new MoneyTransferView();
     }
 }

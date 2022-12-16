@@ -1,5 +1,7 @@
 package Money;
 
+import Account.Account;
+
 import java.util.List;
 
 public class MoneyService {
@@ -14,6 +16,7 @@ public class MoneyService {
         moneyDAO.update(money);
         return true;
     }
+
 
     public static boolean convert(Money money, String currencyName) {
         Currency currency = currencyDAO.read(currencyName);

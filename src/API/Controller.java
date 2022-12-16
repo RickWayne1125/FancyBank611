@@ -116,7 +116,7 @@ public class Controller {
     }
 
     // Transfer
-    public boolean transfer(Account fromAccount, Account toAccount, Money money) {
+    public static boolean transfer(Account fromAccount, Account toAccount, Money money) {
         // If the transfer is successful, return true, otherwise return false
         return accountService.transfer(fromAccount, toAccount, money);
     }
@@ -142,7 +142,7 @@ public class Controller {
     }
 
     // Close Account
-    public boolean closeAccount(Customer customer, Account account) {
+    public static boolean closeAccount(Customer customer, Account account) {
         // If the account is successfully closed, return true, otherwise return false
         return accountService.closeAccount(customer, account);
     }
@@ -192,21 +192,20 @@ public class Controller {
     }
 
     // Pay Loan
-    public boolean payLoanByCash(Loan account, Money money) {
+    public static boolean payLoanByCash(Loan account, Money money) {
         // If the loan is successfully paid, return true, otherwise return false
         return loanService.payLoanByCash(account, money);
     }
 
-    public boolean payLoanByTransfer(Loan account, Account fromAccount, Money money) {
+    public static boolean payLoanByTransfer(Loan account, Account fromAccount, Money money) {
         // If the loan is successfully paid, return true, otherwise return false
         return loanService.payLoanByTransfer(account, fromAccount, money);
     }
 
     // Convert Currency
-    public boolean convertCurrency(Account account, String fromCurrency, String toCurrency, double amount) {
-        // TODO: implement this method
+    public boolean convertCurrency(Account account, String fromCurrency, Money money) throws CloneNotSupportedException {
         // If the currency is successfully converted, return true, otherwise return false
-        return false;
+        return AccountService.buyCurrency(account, fromCurrency, money);
     }
 
     /* Manager Functions */
@@ -261,7 +260,7 @@ public class Controller {
 //        // If the stock is successfully updated, return true, otherwise return false
 //        return false;
 //    }
-    public boolean updateStock(int id, int price) {
+    public static boolean updateStock(int id, int price) {
         return StockService.updateStock(id, price);
     }
 
