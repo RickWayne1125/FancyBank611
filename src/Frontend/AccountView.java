@@ -36,6 +36,7 @@ public class AccountView extends AbstractJPanel {
     private JTextField withdrawField;
     private JButton withdrawButton;
     private JPanel customerActionsPanel;
+    private JButton closeAccountButton;
 
     private Account account;
     private Customer customer;
@@ -53,11 +54,13 @@ public class AccountView extends AbstractJPanel {
         if (managerView) {
             backButton.setVisible(false);
             customerActionsPanel.setVisible(false);
+            closeAccountButton.setVisible(false);
         }
         if (loanAccountsView) {
             currencyType.setVisible(false);
             withdrawField.setVisible(false);
             withdrawButton.setVisible(false);
+            closeAccountButton.setVisible(false);
         }
         if (account == null) {
             utils.showNotice("ERROR! Please contact support");
@@ -126,6 +129,17 @@ public class AccountView extends AbstractJPanel {
                 }
             }
         });
+        closeAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Controller.closeAccount(customer, account)){
+                    utils.showNotice("Account has been closed.");
+                    Frontend.getInstance().back();
+                } else {
+                    utils.showNotice("ERROR. Please maintain a min balance of 10 to close the account");
+                }
+            }
+        });
     }
 
     public void refresh() {
@@ -135,8 +149,6 @@ public class AccountView extends AbstractJPanel {
 
 
         this.loadAccountDetails();
-        System.out.println(transactions);
-        System.out.println(currencyTransactions);
         this.loadTransactionDetails(currencyTransactions);
     }
 
@@ -169,10 +181,16 @@ public class AccountView extends AbstractJPanel {
         };
         Object[][] data = new Object[transactions.size()][7];
         double balance = 0;
-        for (int i = 0; i < transactions.size(); i++) {
+        for (int i = 0; transactions!=null && i<transactions.size(); i++){
             Transaction transaction = transactions.get(i);
-            String from = "" + transaction.getFrom().getAccountNumber();
-            String to = "" + transaction.getTo().getAccountNumber();
+            String from = "";
+            if(transaction.getFrom()!=null){
+                from = ""+transaction.getFrom().getAccountNumber();
+            }
+            String to = "";
+            if(transaction.getTo()!=null){
+                to = ""+transaction.getTo().getAccountNumber();
+            }
             double money = transaction.getMoney().getAmount();
             if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)) {
                 from = null;
