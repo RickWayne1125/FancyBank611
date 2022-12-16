@@ -137,7 +137,7 @@ public class AccountDAO implements DAO<Account> {
                 row = results.get(0);
                 CurrencyDAO currencyDAO = new CurrencyDAO();
                 securityAccount.setRealized(new Money(Double.parseDouble(row.get("realized")), currencyDAO.read("USD")));
-                securityAccount.setUnrealized(new Money(Double.parseDouble(row.get("total_paid")), currencyDAO.read("USD")));
+                securityAccount.setTotalPaid(new Money(Double.parseDouble(row.get("total_paid")), currencyDAO.read("USD")));
                 StockDao stockDAO = new StockDao();
                 double unrealized = 0;
                 // read BoughtStock table
