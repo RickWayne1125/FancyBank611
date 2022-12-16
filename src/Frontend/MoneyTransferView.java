@@ -89,7 +89,7 @@ public class MoneyTransferView extends AbstractJPanel{
     public void loadCurrenciesDropdown(){
         this.currencyField.removeAllItems();
         for(Currency curr:this.currencies){
-            this.currencyField.addItem(curr.toString());
+            this.currencyField.<String>addItem(curr.toString());
         }
     }
 
@@ -99,7 +99,7 @@ public class MoneyTransferView extends AbstractJPanel{
             try{
                 int num = Integer.parseInt(acnum);
                 return Controller.getAccountByAccountNumber(num);
-            }catch (Exception e){
+            }catch (Exception ignored){
 
             }
         }

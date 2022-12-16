@@ -216,4 +216,18 @@ public class Helpers {
             utils.showNotice("Transferred");
         }
     }
+    public static Money getBalance(List<Money> balances, Currency curr){
+        System.out.println(balances);
+        System.out.println(curr);
+        if(balances != null && balances.size()>0){
+            for(Money balance:balances){
+                if(balance.getCurrency().getCurrencyName().equals(curr.getCurrencyName())){
+                    System.out.println("returned");
+                    return balance;
+                }
+
+            }
+        }
+        return null;
+    }
 }
