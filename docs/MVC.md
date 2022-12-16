@@ -1,78 +1,14 @@
 # MVC
+This project is using a typical MVC structure. We divided it into several layers, which are GUI, Controller, Service and DAO. It is kind of like a SpringBoot project.
+
+The GUI is for customers to do the operations. The Controller has all the functions that GUI needs to generate the objects or fetch the data. The Controller also
+
 ## Controller
 * CurrentCustomer
 * CurrentManager
 * CurrencyList
 * StockList
-## Currency
-### DAO
-* create
-* readByCurrencyName
-* update
-* delete
-## Money
-### Service
-* add
-* reduce
-* convert
-### DAO
-* create
-* Map<String,Money>readByAccount
-* update
-* delete
 
-## Account
-### Service
-* deposit
-* withdraw
-* convertCurrency
-* transfer
+## Service
 
-### DAO
-* create
-* List\<Account>readByUsername
-* update
-* delete
-## Checking&Saving
-### Service
-* getAccountInfo
-## SecurityAccount
-### Service
-* buyStock
-* sellStock
-* getAccountInfo
-## Stock
-### Service
-* addStock
-* removeStock
-* updateStock
-* getAllStocks
-### DAO
-* create
-* readByStockId
-* update
-* delete
-## Loan
-### Service
-* payLoan
-* getAccountInfo
-
-### DAO
-* create
-* readByAccountNumber
-* update
-* delete
-## Person
-### Service
-* login
-* register
-* resetPassword
-* updateInfo
-
-### DAO
-* create
-* readByUsername
-* update
-* delete
-## Customer
-### Service
+## DAO
