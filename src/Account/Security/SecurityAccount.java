@@ -5,6 +5,7 @@ import Money.Money;
 import Stock.Stock;
 import Account.AccountType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SecurityAccount extends Account {
@@ -18,12 +19,14 @@ public class SecurityAccount extends Account {
         super(accountNumber,routingNumber,swiftCode);
         super.setType(AccountType.SECURITY);
         setInterestRate(0.0);
+        stocks = new HashMap<Stock, Integer>();
     }
 
     public SecurityAccount(String routingNumber, String swiftCode){
         super(routingNumber,swiftCode);
         super.setType(AccountType.SECURITY);
         setInterestRate(0.0);
+        stocks = new HashMap<Stock, Integer>();
     }
 
 
@@ -60,5 +63,13 @@ public class SecurityAccount extends Account {
 
     public Money getTotalPaid() {
         return totalPaid;
+    }
+
+    public void setStocks(Map<Stock, Integer> stocks) {
+        this.stocks = stocks;
+    }
+
+    public Map<Stock, Integer> getStocks() {
+        return stocks;
     }
 }

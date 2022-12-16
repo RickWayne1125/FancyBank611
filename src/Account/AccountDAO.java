@@ -7,11 +7,15 @@ import Account.Security.SecurityDAO;
 import DataBase.DataBase;
 import Money.Money;
 import Money.MoneyDAO;
+import Money.CurrencyDAO;
+import Stock.Stock;
+import Stock.StockDao;
 import Utils.DAO;
 import Utils.IO;
 import Utils.MessageType;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -120,8 +124,46 @@ public class AccountDAO implements DAO<Account> {
                 SecurityAccount securityAccount = new SecurityAccount(Integer.parseInt(row.get("account_no")), row.get("routing_no"), row.get("swift_code"));
                 securityAccount.setCurrentBalance(moneyDAO.readByAccount(accountNumber));
                 securityAccount.setUsername(row.get("username"));
-                // TODO: check the BoughtStock table to set stock map
+                // read SecurityAccount table
+                SecurityDAO securityDAO = new SecurityDAO();
+                sql = "SELECT * FROM SecurityAccount WHERE account_no = ?";
+                results = dataBase.query(sql, new String[]{String.valueOf(accountNumber)});
+                if (results.size() == 0) {
+                    return null;
+                }
+                if (results.size() > 1) {
+                    throw new RuntimeException("More than one row returned");
+                }
+                row = results.get(0);
+                CurrencyDAO currencyDAO = new CurrencyDAO();
+                securityAccount.setRealized(new Money(Double.parseDouble(row.get("realized")), currencyDAO.read("USD")));
+                securityAccount.setUnrealized(new Money(Double.parseDouble(row.get("total_paid")), currencyDAO.read("USD")));
+                StockDao stockDAO = new StockDao();
+                double unrealized = 0;
+                // read BoughtStock table
+                sql = "SELECT * FROM BoughtStock WHERE account_no = ?";
+                List<Stock> stocks = stockDAO.readAll();
+                results = dataBase.query(sql, new String[]{String.valueOf(accountNumber)});
+                for (Map<String, String> result : results) {
+                    Stock stock = findStockByID(stocks, Integer.parseInt(result.get("stock_id")));
+                    unrealized += stock.getCurrentPrice().getAmount() * Integer.parseInt(result.get("stock_unit"));
+                    if (securityAccount.getStocks().containsKey(stock)) {
+                        securityAccount.getStocks().put(stock, securityAccount.getStocks().get(stock) + Integer.parseInt(result.get("stock_unit")));
+                    } else {
+                        securityAccount.getStocks().put(stock, Integer.parseInt(result.get("stock_unit")));
+                    }
+                }
+                securityAccount.setUnrealized(new Money(unrealized, currencyDAO.read("USD")));
                 return securityAccount;
+        }
+        return null;
+    }
+
+    private static Stock findStockByID(List<Stock> stocks, int id) {
+        for (Stock stock : stocks) {
+            if (stock.getStockId() == id) {
+                return stock;
+            }
         }
         return null;
     }
