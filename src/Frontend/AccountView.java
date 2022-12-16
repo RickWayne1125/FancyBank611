@@ -132,7 +132,7 @@ public class AccountView extends AbstractJPanel {
         closeAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Controller.closeAccount(customer, account)){
+                if (Controller.closeAccount(customer, account)) {
                     utils.showNotice("Account has been closed.");
                     Frontend.getInstance().back();
                 } else {
@@ -181,15 +181,15 @@ public class AccountView extends AbstractJPanel {
         };
         Object[][] data = new Object[transactions.size()][7];
         double balance = 0;
-        for (int i = 0; transactions!=null && i<transactions.size(); i++){
+        for (int i = 0; transactions != null && i < transactions.size(); i++) {
             Transaction transaction = transactions.get(i);
             String from = "";
-            if(transaction.getFrom()!=null){
-                from = ""+transaction.getFrom().getAccountNumber();
+            if (transaction.getFrom() != null) {
+                from = "" + transaction.getFrom().getAccountNumber();
             }
             String to = "";
-            if(transaction.getTo()!=null){
-                to = ""+transaction.getTo().getAccountNumber();
+            if (transaction.getTo() != null) {
+                to = "" + transaction.getTo().getAccountNumber();
             }
             double money = transaction.getMoney().getAmount();
             if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)) {
@@ -230,7 +230,7 @@ public class AccountView extends AbstractJPanel {
      */
     private void $$$setupUI$$$() {
         basePanel = new JPanel();
-        basePanel.setLayout(new GridLayoutManager(4, 6, new Insets(0, 0, 0, 0), -1, -1));
+        basePanel.setLayout(new GridLayoutManager(5, 6, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 6, new Insets(0, 0, 0, 0), -1, -1));
         basePanel.add(panel1, new GridConstraints(0, 0, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -279,6 +279,11 @@ public class AccountView extends AbstractJPanel {
         customerActionsPanel.add(withdrawButton, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         customerActionsPanel.add(spacer3, new GridConstraints(0, 2, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        closeAccountButton = new JButton();
+        closeAccountButton.setText("Close Account");
+        basePanel.add(closeAccountButton, new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer4 = new Spacer();
+        basePanel.add(spacer4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
     }
 
     /**
