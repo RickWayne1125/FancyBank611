@@ -193,4 +193,12 @@ public class AccountService {
     public static Account getAccountByAccountNumber(int accountNumber) {
         return accountDAO.readByAccountNumber(accountNumber);
     }
+
+    public static void updateInterest(Account account, long days) {
+        double interestRate = account.getInterestRate();
+        for (Money m : account.getCurrentBalance()) {
+            MoneyService.update(m, m.getAmount() * interestRate * days / 365);
+        }
+        accountDAO.update(account);
+    }
 }

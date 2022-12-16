@@ -203,10 +203,9 @@ public class Controller {
     }
 
     // Convert Currency
-    public boolean convertCurrency(Account account, String fromCurrency, String toCurrency, double amount) {
-        // TODO: implement this method
+    public boolean convertCurrency(Account account, String fromCurrency, Money money) throws CloneNotSupportedException {
         // If the currency is successfully converted, return true, otherwise return false
-        return false;
+        return AccountService.buyCurrency(account, fromCurrency, money);
     }
 
     /* Manager Functions */

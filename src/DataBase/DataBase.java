@@ -4,6 +4,8 @@ import Utils.Config;
 import Utils.IO;
 import Utils.MessageType;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +23,7 @@ public class DataBase {
 //        createTables();
     }
 
-    private void createTables() {
+    public static void createTables() {
         // Create User table
         String sql = "CREATE TABLE IF NOT EXISTS User (\n"
                 + "    username text PRIMARY KEY,\n"
@@ -188,7 +190,7 @@ public class DataBase {
         IO.displayMessage("Table " + tableName + " cleared", MessageType.INFO);
     }
 
-    public void clearDatabase() {
+    public static void clearDatabase() {
         IO.displayMessage("Clearing database", MessageType.WARNING);
         // Drop all tables
         String sql = "DROP TABLE IF EXISTS User";
@@ -234,6 +236,9 @@ public class DataBase {
 //    }
 
     public static Connection connect() {
+        // if database does not exist, create it
+        String databasePath = Config.DB_URL.split(":")[1];
+        File databaseFile = new File(databasePath);
         Connection conn = null;
         try {
             // db parameters
