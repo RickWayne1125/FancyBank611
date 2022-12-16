@@ -27,9 +27,8 @@ For the project structure, please check the `MVC` document in the same folder.
 |-------------------|----------| ---------------------------------------- |
 | amount            | double   |                                          |
 | currency          | Currency |                                          |
+| accountNumber     | Integer  |                                          |
 | convert(Currency) | Money    | Convert the currency into a new currency |
-| setUnit(int)      | int      |                                          |
-| getUnit()         | int      |                                          |
 
 ### Bank
 
@@ -42,51 +41,50 @@ For the project structure, please check the `MVC` document in the same folder.
 
 ### Account <\<abstract>>
 
-|                          | Type         | Desc                                                         |
-| ------------------------ |--------------| ------------------------------------------------------------ |
-| accountNumber            | Integer      |                                                              |
-| rountingNumber           | String       |                                                              |
-| swiftCode                | String       |                                                              |
-| currentBalance           | List\<Money> |                                                              |
-| getBalance()             | List\<Money> |                                                              |
-| updateBalance()          | Boolean      | Return the status of operation                               |
-| close()                  | Boolean      |                                                              |
-| open(String)             | Boolean      |                                                              |
-| transact(Money, Account) | Boolean      | Make a transaction from the current account to the target account |
-
+|                              | Type               | Desc                                                         |
+|------------------------------|--------------------| ------------------------------------------------------------ |
+| accountNumber                | Integer            |                                                              |
+| rountingNumber               | String             |                                                              |
+| swiftCode                    | String             |                                                              |
+| type                         | AccountType        |                                                              |
+| currentBalance               | List\<Money>       |                                                              |
+| transactionHistory           | List\<Transaction> |                                                              |
+| interestRate                 | double             |                                                              |
+| username                     | String             |                                                              |
+| getBalanceByCurrency(String) | double             |                                                              |
 ### Saving <- Account
 
-|                | Type | Desc |
-| -------------- | ---- | ---- |
-| Saving(String) |      |      |
+|                             | Type | Desc |
+|-----------------------------| ---- | ---- |
+| Saving(int, String, String) |      |      |
+| Saving(String, String)      |      |      |
 
 ### Checking <- Account
 
-|                  | Type | Desc |
-| ---------------- | ---- | ---- |
-| Checking(String) |      |      |
+|                               | Type | Desc |
+|-------------------------------| ---- | ---- |
+| Checking(int, String, String) |      |      |
+| Checking(String, String)      |      |      |
 
 ### Loan <- Account
 
 |              | Type                  | Desc |
-| ------------ | --------------------- | ---- |
-| interestRate | Integer/Double        |      |
+|--------------|-----------------------| ---- |
 | dueDate      | Date (unix timestamp) |      |
-| paymentFreq  | Integer               |      |
-| Loan(String) |                       |      |
+| startDate    | Date (unix timestamp) |      |
+| isApproved   | boolean               |      |
+| setApproved  |                       |      |
 
 ### Security Account
 
 |                                | Type             | Desc                                                         |
-| ------------------------------ | ---------------- | ------------------------------------------------------------ |
+|--------------------------------| ---------------- | ------------------------------------------------------------ |
 | stocks                         | Map<Stock, int\> | key is the Stock, value is the units bought for this stock. So when updating the currenct price for one stock, we can just use the object to calculate the current money of this stock.<br />$Stock.currentPrice*unit$ |
 | realized                       | Money            |                                                              |
 | unrealized                     | Money            |                                                              |
-| buyStockByMoney(Stock, Money)  | Boolean          |                                                              |
-| sellStockByMoney(Stock, Money) | Boolean          |                                                              |
+| totalPaid                      | Money            |                                                              |
 | buyStockByUnit(Stock, int)     | Boolean          |                                                              |
 | sellStockByUnit(Stock, int)    | Boolean          |                                                              |
-| getBoughtStocks()              | List<Stock\>     |                                                              |
 
 ### Stock
 
@@ -95,6 +93,15 @@ For the project structure, please check the `MVC` document in the same folder.
 | stockId      | int    |                                      |
 | stockName    | String |                                      |
 | currentPrice | Money  | Current price of this stock per unit |
+
+### BoughtStock
+
+|            | Type   | Desc                                                              |
+|------------|--------|-------------------------------------------------------------------|
+| accountNo  | int    |                                                                   |
+| stockId    | int    |                                                                   |
+| stockUnit  | int    | finish stock and stock account part, including buying and selling |
+| stockPrice | double |                                                                   |
 
 ### Person \<\<abstract>>
 
@@ -105,8 +112,10 @@ For the project structure, please check the `MVC` document in the same folder.
 | lastName   | String |      |
 | middleName | String |      |
 | email      | String |      |
+| password   | String |      |
 | contact    | String |      |
 | address    | String |      |
+| lastLogin  | Date   |      |
 
 ### Manager <- Person
 
@@ -121,10 +130,6 @@ For the project structure, please check the `MVC` document in the same folder.
 | ----------------------------- | -------------- | ---- |
 | hasCollateral                 | Boolean        |      |
 | accounts                      | List\<Account> |      |
-| createSavingAccount(String)   | Boolean        |      |
-| createCheckingAccount(String) | Boolean        |      |
-| getTotalDebt()                | Money          |      |
-| createSecurityAccount(String) | Boolean        |      |
 
 ### Transact \<\<interface>>
 
@@ -137,15 +142,14 @@ For the project structure, please check the `MVC` document in the same folder.
 ### Transaction \<\<abstract>>
 
 |                    | Type               | Desc |
-| ------------------ | ------------------ | ---- |
+|--------------------| ------------------ | ---- |
 | id                 | int                |      |
 | date               | Date               |      |
 | from               | Account            |      |
 | to                 | Account            |      |
-| amount             | Money              |      |
+| money              | Money              |      |
 | transactionType    | TransactionType    |      |
 | transactionStatus  | TransacttionStatus |      |
-| printTransaction() | Void               |      |
 
 ### TransactionType
 
@@ -166,25 +170,30 @@ For the project structure, please check the `MVC` document in the same folder.
 
 This table includes both customers and managers
 
-| Attribute   | Type   | Desc |
-|-------------| ------ | ---- |
-| Username    | Pk     |      |
-| First_name  | String |      |
-| Middle_name | String |      |
-| last_name   | String |      |
-| Password    |        |      |
-| email       | String |      |
-| contact     | String |      |
-| address     | String |      |
-| is_customer | Bool   |      |
+| Attribute      | Type   | Desc |
+|----------------|--------| ---- |
+| Username       | Pk     |      |
+| First_name     | String |      |
+| Middle_name    | String |      |
+| last_name      | String |      |
+| Password       |        |      |
+| email          | String |      |
+| contact        | String |      |
+| address        | String |      |
+| is_customer    | Bool   |      |
+| last_login     | String |      |
+| has_collateral | Bool   |      |
 
 ### Currency
 
-| Attribute     | Type       | Desc                               |
-| ------------- | ---------- | ---------------------------------- |
-| currency_name | pk, string |                                    |
-| symbol        | string     |                                    |
-| usd_rate      | double     | the currency rate comparing to USD |
+| Attribute     | Type   | Desc                               |
+|---------------|--------| ---------------------------------- |
+| account_no    | int    |                                    |
+| account_type  | string |                                    |
+| username      | string |                                    |
+| routing_no    | int    |                                    |
+| swift_code    | int    |                                    |
+| interest_rate | double | the currency rate comparing to USD |
 
 ### Bank(ATM)
 
@@ -195,50 +204,64 @@ This table includes both customers and managers
 | branch    | string  |      |
 | is_open   | bool    |      |
 
+### TransactionTable
+
+| Attribute  | Type   | Desc |
+|------------|--------| ---- |
+| account_no | int    |      |
+| currency   | string |      |
+| amount     | double |      |
+
 ### Account
 
 The balance of the account can be get from the Money table, as one account can hold money of different currency
 
-| Attribute     | Type    | Desc                          |
-| ------------- | ------- | ----------------------------- |
-| account_no    | pk, int | account number                |
-| user_id       | fk, int |                               |
-| routing_no    | string  | routing number                |
-| swift_code    | string  |                               |
-| account_type  | string  | Saving/Checking/Security/Loan |
-| Interest_rate | Double  |                               |
+| Attribute          | Type       | Desc |
+|--------------------|------------|------|
+| transaction_id     | pk, string |      |
+| transaction_status | string     |      |
+| from_account       | int        |      |
+| to_account         | int        |      |
+| transaction_type   | string     |      |
+| amount             | double     |      |
+| currency           | string     |      |
+| date               | string     |      |
 
 ### Money
 
-| Attribute  | Type   | Desc |
-| ---------- | ------ | ---- |
-| account_no | pk fk  |      |
-| currency   | pk fk  |      |
-| Amount     | double |      |
+| Attribute  | Type     | Desc |
+|------------|----------|------|
+| account_no | pk fk    |      |
+| start_date | string   |      |
+| end_date   | string   |      |
+| approved   | int      |      |
 
 ### Loan
 
-| Attribute  | Type   | Desc                               |
-| ---------- | ------ | ---------------------------------- |
-| account_no | pk, fk | One loan account bind with one row |
-| start_date | date   |                                    |
-| End_date   | date   |                                    |
+
+| Attribute     | Type   | Desc |
+|---------------|--------|------|
+| stock_id      | int pk |      |
+| stock_name    | string |      |
+| current_price | double |      |
 
 ### Stock
 
-| Attribute     | Type    | Desc                     |
-| ------------- | ------- | ------------------------ |
-| stock_id      | pk, int |                          |
-| stock_name    | string  |                          |
-| current_price | Int     | Price of stock unit(USD) |
+| Attribute   | Type    | Desc |
+|-------------|---------|------|
+| bought_id   | pk, int |      |
+| account_no  | int     |      |
+| stock_id    | int     |      |
+| stock_unit  | int     |      |
+| stock_price | double  |      |
 
 ### BoughtStock
 
-| Attribute  | Type   | Desc |
-| ---------- | ------ | ---- |
-| Stock_id   | pk, fk |      |
-| account_no | pk, fk |      |
-| Stock_unit | Int    |      |
+| Attribute  | Type    | Desc |
+|------------|---------| ---- |
+| account_no | int, pk |      |
+| realized   | double  |      |
+| total_paid | double  |      |
 
 ##  User Interface 
 UI Design:
