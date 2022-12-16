@@ -59,6 +59,10 @@ public class AccountService {
             TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
             return false;
         }
+        if (money.getAmount() < 0) {
+            TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
+            return false;
+        }
         // check money list in account
         for (Money m : account.getCurrentBalance()) {
             if (m.getCurrency().getCurrencyName().equals(money.getCurrency().getCurrencyName())) {
@@ -83,6 +87,10 @@ public class AccountService {
         Transaction transaction = TransactionService.create(account, account, money, TransactionType.WITHDRAW);
         // if the account is a loan account
         if (account.getType() == AccountType.LOAN) {
+            TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
+            return false;
+        }
+        if (money.getAmount() < 0) {
             TransactionService.setTransactionStatus(transaction, TransactionStatus.FAILED);
             return false;
         }
