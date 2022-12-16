@@ -31,6 +31,7 @@ public class AccountView extends AbstractJPanel{
     private JTextField withdrawField;
     private JButton withdrawButton;
     private JPanel customerActionsPanel;
+    private JButton closeAccountButton;
 
     private Account account;
     private Customer customer;
@@ -48,11 +49,13 @@ public class AccountView extends AbstractJPanel{
         if (managerView){
             backButton.setVisible(false);
             customerActionsPanel.setVisible(false);
+            closeAccountButton.setVisible(false);
         }
         if(loanAccountsView){
             currencyType.setVisible(false);
             withdrawField.setVisible(false);
             withdrawButton.setVisible(false);
+            closeAccountButton.setVisible(false);
         }
         if(account == null){
             utils.showNotice("ERROR! Please contact support");
@@ -118,6 +121,17 @@ public class AccountView extends AbstractJPanel{
                 } catch (Exception ex){
                     utils.showNotice("Invalid value");
                     depositField.setText("");
+                }
+            }
+        });
+        closeAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Controller.closeAccount(customer, account)){
+                    utils.showNotice("Account has been closed.");
+                    Frontend.getInstance().back();
+                } else {
+                    utils.showNotice("ERROR. Please maintain a min balance of 10 to close the account");
                 }
             }
         });

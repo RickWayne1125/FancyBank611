@@ -16,6 +16,7 @@ public class CustomerMenuView extends AbstractJPanel {
     private JPanel basePanel;
     private JButton logOutButton;
     private JButton profileButton;
+    private JButton transferButton;
 
     public CustomerMenuView() {
         logOutButton.addActionListener(new ActionListener() {
@@ -54,6 +55,12 @@ public class CustomerMenuView extends AbstractJPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Helpers.securityAccountView();
+            }
+        });
+        transferButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frontend.getInstance().next(ViewFactory.getTransfersPage());
             }
         });
     }

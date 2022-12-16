@@ -200,4 +200,20 @@ public class Helpers {
             utils.showNotice("Failed");
         }
     }
+
+    public static void transfer(Account from, Account to, Money money){
+        if(from == null || to == null){
+            utils.showNotice("Select one or more accounts");
+        } else if(from.getType().equals(AccountType.LOAN)){
+            utils.showNotice("Can't transfer from a loan account");
+        } else if(from.getAccountNumber()==to.getAccountNumber()){
+            utils.showNotice("Please select two different accounts");
+        } else if(to.getType().equals(AccountType.LOAN)){
+            Controller.payLoanByTransfer((Loan) to, from, money);
+            utils.showNotice("Transferred");
+        } else {
+            Controller.transfer(from, to, money);
+            utils.showNotice("Transferred");
+        }
+    }
 }

@@ -51,4 +51,8 @@ public class ViewFactory {
     public static AbstractJPanel getSecurityAccount(SecurityAccount account){
         return new SecurityAccountView(account);
     }
+
+    public static AbstractJPanel getTransfersPage(){
+        return new MoneyTransferView();
+    }
 }
