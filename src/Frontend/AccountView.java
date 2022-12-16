@@ -169,7 +169,7 @@ public class AccountView extends AbstractJPanel {
                 {"Routing Number", this.account.getRoutingNumber()},
                 {"Swift Code", this.account.getSwiftCode()},
                 {"Interest Rate", this.account.getInterestRate() + "%"},
-                {"Current Balance", this.account.getCurrentBalance()}
+                {"Current Balance", Helpers.getBalance(this.account.getCurrentBalance(), seletedCurrency)}
         };
         accountDetails.setModel(utils.getTableModel(data, columns));
     }
@@ -183,6 +183,7 @@ public class AccountView extends AbstractJPanel {
         double balance = 0;
         for (int i = 0; transactions != null && i < transactions.size(); i++) {
             Transaction transaction = transactions.get(i);
+            double money = transaction.getMoney().getAmount();
             String from = "";
             if (transaction.getFrom() != null) {
                 from = "" + transaction.getFrom().getAccountNumber();
@@ -191,18 +192,25 @@ public class AccountView extends AbstractJPanel {
             if (transaction.getTo() != null) {
                 to = "" + transaction.getTo().getAccountNumber();
             }
-            double money = transaction.getMoney().getAmount();
             if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)) {
                 from = null;
             }
             if (transaction.getTransactionType().equals(TransactionType.WITHDRAW)) {
                 to = null;
-                money = money * -1;
+                money*=-1;
             }
+            if (transaction.getTransactionType().equals(TransactionType.SERVICE_FEE)) {
+                money*=-1;
+            }
+
+            if (transaction.getTransactionType().equals(TransactionType.TRANSFER) && from.equals(""+account.getAccountNumber())) {
+                money*=-1;
+            }
+
             if (transaction.getTransactionStatus().equals(TransactionStatus.SUCCESS)) {
                 balance += money;
             }
-            data[transactions.size() - i - 1] = new Object[]{transaction.getId(), transaction.getTransactionStatus(), transaction.getDate().toString(), from, to, money, balance};
+            data[transactions.size() - i - 1] = new Object[]{transaction.getId(), transaction.getTransactionType(),transaction.getTransactionStatus(), transaction.getDate().toString(), from, to, money, balance};
         }
         transactionsView.setModel(utils.getTableModel(data, columns));
         transactionsView.revalidate();

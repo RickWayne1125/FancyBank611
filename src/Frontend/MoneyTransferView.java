@@ -105,8 +105,7 @@ public class MoneyTransferView extends AbstractJPanel {
             try {
                 int num = Integer.parseInt(acnum);
                 return Controller.getAccountByAccountNumber(num);
-            } catch (Exception e) {
-
+            }catch (Exception ignored){
             }
         }
         utils.showNotice("Invalid Account Number");
