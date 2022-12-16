@@ -8,7 +8,7 @@
 | Rui(Richard) Wei          | rickwei@bu.edu  | U02377614 |
 | Prithviraj Pankaj Khelkar | pkhelkar@bu.edu | U41575882 |
 | Taoyu Chen                | mirack@bu.edu   | U82740711 |
-| Yuxuan Zhang              |                 |           |
+| Yuxuan Zhang              | zyx0512@bu.edu  | U71366232 |
 
 
 ## Files
@@ -49,13 +49,7 @@ src # code
 
 ## Notes
 ---------------------------------------------------------------------------
-1. <Files to be parsed should be stored in ConfigFiles, for parser class to
 
-[//]: # (   read class>)
-
-[//]: # (2. <Bonus Done>)
-
-[//]: # (3. <Notes to grader>)
 
 ## How to compile and run
 ---------------------------------------------------------------------------
